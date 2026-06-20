@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Follow on Mastodon – Tech YouTubers Directory</title>
+  <meta name="description" content="Follow your favorite tech YouTubers on Mastodon in one click. Uses secure PKCE OAuth – no passwords or secrets are ever stored." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/theme/css/style.css" />
+  <style>
+    /* ── Follow-page specific styles ─────────────────────────────── */
+    .follow-hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .follow-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 60% at 80% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .follow-hero h1 {
+      margin: 0 0 0.5rem;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      background: linear-gradient(135deg, #a5b4fc 0%, #60a5fa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .follow-hero p {
+      margin: 0;
+      color: #94a3b8;
+      max-width: 56ch;
+    }
+    .security-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+      border-radius: 99px;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 1rem;
+    }
+    .security-badge svg { flex-shrink: 0; }
+
+    /* Step cards */
+    .step-section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.2rem;
+    }
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 0.85rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .step-header h2 {
+      margin: 0;
+      font-size: 1.1rem;
+      border: none;
+      padding: 0;
+    }
+
+    /* Form controls */
+    label.field-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+    .field-input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.6rem 0.9rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+    .field-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    /* Buttons */
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.15s;
+      background: var(--panel-strong);
+      color: var(--text);
+    }
+    .btn:hover:not(:disabled) {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: var(--accent-strong);
+      border-color: var(--accent-strong);
+    }
+    .btn-danger {
+      background: transparent;
+      border-color: #ef4444;
+      color: #f87171;
+    }
+    .btn-danger:hover:not(:disabled) {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    /* Auth status pill */
+    #authStatus {
+      margin-top: 0.9rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    #authStatus code {
+      background: var(--panel-strong);
+      padding: 0.1rem 0.3rem;
+      border-radius: 5px;
+      font-size: 0.82rem;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 99px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .pill-ok  { background: rgba(16,185,129,.15); color: #34d399; border: 1px solid rgba(16,185,129,.3); }
+    .pill-warn{ background: rgba(234,179,8,.12);  color: #fbbf24; border: 1px solid rgba(234,179,8,.3); }
+    .pill-bad { background: rgba(239,68,68,.12);  color: #f87171; border: 1px solid rgba(239,68,68,.3); }
+
+    /* Creator cards */
+    #accountList { margin-top: 1rem; }
+    .creator-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      margin-bottom: 0.6rem;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .creator-card:hover { border-color: var(--accent); transform: translateX(2px); }
+    .creator-name { font-weight: 700; font-size: 0.95rem; }
+    .creator-handle {
+      font-family: 'Courier New', ui-monospace, monospace;
+      font-size: 0.82rem;
+      color: var(--accent-strong);
+      margin-top: 0.15rem;
+    }
+    .creator-status {
+      font-size: 0.8rem;
+      margin-top: 0.2rem;
+      color: var(--muted);
+    }
+    .creator-actions { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: flex-end; }
+
+    /* Log */
+    #log {
+      font-family: 'Courier New', ui-monospace, monospace;
+      font-size: 0.82rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      min-height: 5rem;
+      max-height: 14rem;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      line-height: 1.55;
+    }
+    .log-ok   { color: #34d399; }
+    .log-warn { color: #fbbf24; }
+    .log-err  { color: #f87171; }
+
+    @media (prefers-color-scheme: light) {
+      .follow-hero {
+        background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 50%, #eff6ff 100%);
+        border-color: #e2e8f0;
+      }
+      .follow-hero h1 {
+        background: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .creator-card { background: var(--panel-strong); }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-shell">
+    <!-- ── Header (matches site template) ───────────────────────── -->
+    <header class="site-header">
+      <div class="site-header__inner">
+        <div class="site-branding">
+          <a class="site-title" href="/">Tech YouTubers Directory</a>
+          <p class="site-tagline">Find and bulk follow tech celebrities with a Mastodon or Bluesky presence.</p>
+        </div>
+        <nav class="top-nav" aria-label="Primary">
+          <a href="/">Home</a>
+          <a href="/javascript/">JavaScript</a>
+          <a href="/rust/">Rust</a>
+          <a href="/go/">Go</a>
+          <a href="/python/">Python</a>
+          <a href="/mobile/">Mobile</a>
+          <a href="/databases/">Databases</a>
+          <a href="/youtubers/">All YouTubers</a>
+          <a href="/bulk-follow/">Bulk Follow</a>
+          <a class="active" href="/mastodon-follow/">Follow on Mastodon</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="site-content">
+      <!-- ── Sidebar ─────────────────────────────────────────────── -->
+      <aside class="site-sidebar">
+        <nav class="section-nav" aria-label="Section">
+          <p class="section-nav__title">Tech Stacks</p>
+          <ul>
+            <li><a href="/javascript/">JavaScript / TypeScript</a></li>
+            <li><a href="/rust/">Rust</a></li>
+            <li><a href="/go/">Go</a></li>
+            <li><a href="/python/">Python</a></li>
+            <li><a href="/mobile/">Mobile Dev</a></li>
+            <li><a href="/databases/">Databases &amp; Systems</a></li>
+          </ul>
+          <p class="section-nav__title">Browse</p>
+          <ul>
+            <li><a href="/youtubers/">All YouTubers</a></li>
+            <li><a href="/bulk-follow/">Bulk Follow Guide</a></li>
+            <li class="active"><a href="/mastodon-follow/">Follow on Mastodon</a></li>
+            <li><a href="/about/">About</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- ── Main content ────────────────────────────────────────── -->
+      <main class="site-main">
+        <div class="follow-hero">
+          <div class="security-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            PKCE OAuth · No secrets stored · Session-only token
+          </div>
+          <h1>Follow Tech YouTubers on Mastodon</h1>
+          <p>Connect to your Mastodon instance and follow your favourite tech creators in one click — like a Bluesky starter pack, but for Mastodon.</p>
+        </div>
+
+        <!-- Step 1: Connect -->
+        <section class="step-section" id="section-connect">
+          <div class="step-header">
+            <span class="step-badge">1</span>
+            <h2>Connect your Mastodon instance</h2>
+          </div>
+
+          <label class="field-label" for="instance">Your home Mastodon instance</label>
+          <input
+            id="instance"
+            class="field-input"
+            type="text"
+            placeholder="mastodon.social"
+            autocomplete="off"
+            spellcheck="false"
+          />
+
+          <div class="btn-row">
+            <button id="btnConnect" class="btn btn-primary">Connect &amp; Authorize</button>
+            <button id="btnLogout" class="btn btn-danger">Forget Credentials</button>
+          </div>
+
+          <div id="authStatus">Enter your instance above and click Connect.</div>
+        </section>
+
+        <!-- Step 2: Creator list -->
+        <section class="step-section" id="section-accounts">
+          <div class="step-header">
+            <span class="step-badge">2</span>
+            <h2>Choose creators to follow</h2>
+          </div>
+
+          <div class="btn-row" style="margin-top:0; margin-bottom:0.75rem;">
+            <button id="btnFollowAll" class="btn btn-primary" disabled>
+              ⚡ Follow All (slowly)
+            </button>
+            <button id="btnResolveAll" class="btn" disabled>Resolve All</button>
+            <button id="btnSelectAll" class="btn">Select All</button>
+            <button id="btnSelectNone" class="btn">Deselect All</button>
+          </div>
+
+          <div id="accountList" aria-live="polite"></div>
+        </section>
+
+        <!-- Log -->
+        <section class="step-section">
+          <div class="step-header" style="margin-bottom:0.8rem;">
+            <span class="step-badge" style="background:var(--panel-strong);color:var(--muted);">✦</span>
+            <h2>Activity log</h2>
+          </div>
+          <div id="log" role="log" aria-label="Activity log"></div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <p>&copy; 2026 Tech YouTubers Directory.</p>
+        <p>Follow tool uses <strong>PKCE OAuth</strong> — your Mastodon password is never seen by this page.</p>
+      </div>
+    </footer>
+  </div>
+
+<script>
+/* ================================================================
+   Tech YouTubers – Mastodon Follow Pack
+   Security model
+   ─────────────────────────────────────────────────────────────────
+   • PKCE flow: no client_secret is ever requested, sent or stored.
+     A random code_verifier is hashed (SHA-256) to a code_challenge
+     sent to the Mastodon auth endpoint. The code_verifier is only
+     kept in sessionStorage during the auth handshake, then deleted.
+   • Access tokens live in sessionStorage (per-tab).
+     sessionStorage is NOT accessible from other pages/tabs on the
+     same origin, so XSS on a sibling GitHub Pages path cannot
+     steal it — unlike localStorage which would be shared.
+   • client_id (public, non-secret) is cached in localStorage so
+     users don't have to re-register the app on every page load.
+   • The only thing in localStorage: instance name + client_id.
+     Neither of these are sensitive credentials.
+================================================================ */
+(() => {
+  "use strict";
+
+  /* ── Starter creators (from data/starter.md) ─────────────────── */
+  const STARTER_ACCOUNTS = [
+    { name: "Jeff Geerling",              acct: "geerlingguy@mastodon.social",   niche: "Raspberry Pi, homelab, open source" },
+    { name: "Nick / The Linux Experiment",acct: "thelinuxEXP@mastodon.social",   niche: "Linux desktop, FOSS" },
+    { name: "Matt Ferrell / Undecided",   acct: "mattferrell@mastodon.social",   niche: "Clean tech, energy, future tech" },
+    { name: "Aaron Zollo / Zollotech",    acct: "zollotech@mastodon.social",     niche: "Apple/iOS/general tech" },
+    { name: "Tom Lawrence / LawSys",      acct: "tomlawrence@infosec.exchange",  niche: "Networking, pfSense, homelab" },
+    { name: "Brodie Robertson",           acct: "BrodieOnLinux@mstdn.social",    niche: "Linux, Wayland, FOSS commentary" },
+    { name: "Techno Tim",                 acct: "technotim@mastodon.social",     niche: "Homelab, Kubernetes, self-hosting" },
+    { name: "Wolfgang's Channel",         acct: "notthebee@tilde.zone",          niche: "Linux, NixOS, self-hosting" },
+    { name: "EposVox",                    acct: "EposVox@glitch.lgbt",           niche: "Streaming tech, OBS, capture cards" },
+    { name: "David Bombal",               acct: "davidbombal@infosec.exchange",  niche: "Networking, cybersecurity, IT training" },
+    { name: "Fireship",                   acct: "fireship@mastodon.social",      niche: "JavaScript, web dev, '100 Seconds'" },
+    { name: "Corey Schafer",              acct: "coreyschafer@mastodon.social",  niche: "Python, Django, Flask tutorials" },
+    { name: "Takuya Matsuyama (devaslife)",acct: "craftzdog@mastodon.social",    niche: "React Native, macOS, Vim, lo-fi" },
+  ];
+
+  const APP_NAME    = "Tech YouTubers Follow Pack";
+  const APP_WEBSITE = "https://matthewdeanmartin.github.io/tech_youtubers/";
+  const DEFAULT_SCOPES = "profile read:accounts read:search read:follows write:follows";
+
+  /* ── Helpers ─────────────────────────────────────────────────── */
+  function qs(sel) { return document.querySelector(sel); }
+
+  const els = {
+    instance:     qs("#instance"),
+    btnConnect:   qs("#btnConnect"),
+    btnLogout:    qs("#btnLogout"),
+    btnFollowAll: qs("#btnFollowAll"),
+    btnResolveAll:qs("#btnResolveAll"),
+    btnSelectAll: qs("#btnSelectAll"),
+    btnSelectNone:qs("#btnSelectNone"),
+    accountList:  qs("#accountList"),
+    authStatus:   qs("#authStatus"),
+    log:          qs("#log"),
+  };
+
+  /* ── Logging ─────────────────────────────────────────────────── */
+  function log(msg, level = "info") {
+    const ts   = new Date().toLocaleTimeString();
+    const cls  = level === "error" ? "log-err" : level === "warn" ? "log-warn" : "log-ok";
+    const span = document.createElement("span");
+    span.className = cls;
+    span.textContent = `[${ts}] ${msg}\n`;
+    els.log.appendChild(span);
+    els.log.scrollTop = els.log.scrollHeight;
+    console[level === "error" ? "error" : "log"](msg);
+  }
+
+  /* ── Instance helpers ────────────────────────────────────────── */
+  function normalizeInstance(raw) {
+    return (raw || "").trim().replace(/^https?:\/\//i, "").replace(/\/+$/g, "");
+  }
+
+  function instanceBase() {
+    const inst = normalizeInstance(els.instance.value);
+    if (!inst) throw new Error("Enter your Mastodon instance first (e.g. mastodon.social).");
+    return `https://${inst}`;
+  }
+
+  function redirectUri() {
+    // Works both on file:// (dev) and https:// (GitHub Pages)
+    if (location.origin === "null") {
+      return location.href.split("?")[0].split("#")[0];
+    }
+    return location.origin + location.pathname;
+  }
+
+  /* ── PKCE helpers ────────────────────────────────────────────── */
+  function generateVerifier() {
+    const arr = new Uint8Array(64);
+    crypto.getRandomValues(arr);
+    return btoa(String.fromCharCode(...arr))
+      .replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+  }
+
+  async function sha256Base64Url(plain) {
+    const data = new TextEncoder().encode(plain);
+    const hash = await crypto.subtle.digest("SHA-256", data);
+    return btoa(String.fromCharCode(...new Uint8Array(hash)))
+      .replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+  }
+
+  /* ── Storage (sessionStorage for secrets, localStorage for public) */
+  const LS_INSTANCE_KEY = "mf-pack:lastInstance";
+
+  function lsClientIdKey(inst) { return `mf-pack:${inst}:client_id`; }
+
+  // Token ONLY in sessionStorage (per-tab, XSS-isolated from other pages)
+  function getToken() {
+    const inst = normalizeInstance(els.instance.value);
+    const raw = sessionStorage.getItem(`mf-pack:${inst}:token`);
+    return raw ? JSON.parse(raw) : null;
+  }
+  function setToken(inst, tokenObj) {
+    sessionStorage.setItem(`mf-pack:${inst}:token`, JSON.stringify(tokenObj));
+  }
+  function clearToken(inst) {
+    sessionStorage.removeItem(`mf-pack:${inst}:token`);
+  }
+
+  // code_verifier is transient – sessionStorage only
+  function getVerifier()        { return sessionStorage.getItem("mf-pack:pkce:verifier"); }
+  function setVerifier(v)       { sessionStorage.setItem("mf-pack:pkce:verifier", v); }
+  function clearVerifier()      { sessionStorage.removeItem("mf-pack:pkce:verifier"); }
+  function getOAuthState()      { return sessionStorage.getItem("mf-pack:pkce:state"); }
+  function setOAuthState(s)     { sessionStorage.setItem("mf-pack:pkce:state", s); }
+  function clearOAuthState()    { sessionStorage.removeItem("mf-pack:pkce:state"); }
+
+  /* ── API fetch ───────────────────────────────────────────────── */
+  async function apiFetch(path, options = {}) {
+    const url = path.startsWith("http") ? path : `${instanceBase()}${path}`;
+    const res  = await fetch(url, options);
+    const text = await res.text();
+    let   data = null;
+    try { data = text ? JSON.parse(text) : null; } catch { data = text; }
+    if (!res.ok) {
+      const detail = (typeof data === "object" && data && data.error) ? data.error : text;
+      throw new Error(`${res.status} ${res.statusText}: ${detail}`);
+    }
+    return data;
+  }
+
+  /* ── App registration (fetches/caches client_id, PKCE = no secret) */
+  async function ensureAppRegistered(inst) {
+    const cacheKey = lsClientIdKey(inst);
+    const cached   = localStorage.getItem(cacheKey);
+    if (cached) return cached;  // client_id is public; safe in localStorage
+
+    const body = new FormData();
+    body.set("client_name",    APP_NAME);
+    body.set("redirect_uris",  redirectUri());
+    body.set("scopes",         DEFAULT_SCOPES);
+    body.set("website",        APP_WEBSITE);
+
+    // Note: we do NOT use the returned client_secret at all.
+    // With PKCE the server authenticates using the code_verifier instead.
+    const app = await apiFetch("/api/v1/apps", { method: "POST", body });
+    localStorage.setItem(cacheKey, app.client_id);
+    log(`App registered on ${inst} (client_id cached, no secret stored).`);
+    return app.client_id;
+  }
+
+  /* ── Connect / authorize flow ────────────────────────────────── */
+  async function connect() {
+    const inst = normalizeInstance(els.instance.value);
+    if (!inst) throw new Error("Enter an instance first.");
+    localStorage.setItem(LS_INSTANCE_KEY, inst);
+
+    const clientId   = await ensureAppRegistered(inst);
+    const verifier   = generateVerifier();
+    const challenge  = await sha256Base64Url(verifier);
+    const state      = crypto.randomUUID();
+
+    // Store verifier + state temporarily in sessionStorage
+    setVerifier(verifier);
+    setOAuthState(state);
+
+    const params = new URLSearchParams({
+      response_type:         "code",
+      client_id:             clientId,
+      redirect_uri:          redirectUri(),
+      scope:                 DEFAULT_SCOPES,
+      state,
+      code_challenge:        challenge,
+      code_challenge_method: "S256",
+    });
+
+    log("Redirecting to Mastodon authorization…");
+    location.href = `https://${inst}/oauth/authorize?${params}`;
+  }
+
+  /* ── Handle OAuth callback ───────────────────────────────────── */
+  async function handleCallback() {
+    const url  = new URL(location.href);
+    const code = url.searchParams.get("code");
+    if (!code) return;
+
+    // Restore instance from localStorage (survives the redirect)
+    const inst = localStorage.getItem(LS_INSTANCE_KEY) || "";
+    if (inst) els.instance.value = inst;
+
+    const expectedState = getOAuthState();
+    const returnedState = url.searchParams.get("state");
+    if (expectedState && returnedState !== expectedState) {
+      clearVerifier(); clearOAuthState();
+      throw new Error("OAuth state mismatch – possible CSRF. Aborting.");
+    }
+
+    const verifier = getVerifier();
+    if (!verifier) throw new Error("PKCE verifier missing from session. Please try connecting again.");
+
+    const clientId = localStorage.getItem(lsClientIdKey(inst));
+    if (!clientId) throw new Error("No app registration found. Please try connecting again.");
+
+    // Exchange code for token using verifier (PKCE – no client_secret)
+    const body = new URLSearchParams({
+      grant_type:    "authorization_code",
+      code,
+      client_id:     clientId,
+      redirect_uri:  redirectUri(),
+      scope:         DEFAULT_SCOPES,
+      code_verifier: verifier,
+    });
+
+    const token = await apiFetch("/oauth/token", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body,
+    });
+
+    // Store token in sessionStorage ONLY (not localStorage)
+    setToken(inst, {
+      access_token: token.access_token,
+      token_type:   token.token_type,
+      scope:        token.scope,
+      created_at:   new Date().toISOString(),
+    });
+
+    // Clean up transient PKCE data
+    clearVerifier();
+    clearOAuthState();
+
+    // Remove code/state from address bar
+    history.replaceState({}, document.title, redirectUri());
+    log("Authorization successful. Token stored in session (this tab only).", "ok");
+  }
+
+  /* ── Auth helpers ────────────────────────────────────────────── */
+  function authHeaders() {
+    const token = getToken();
+    if (!token || !token.access_token) throw new Error("Not logged in. Click 'Connect & Authorize' first.");
+    return { Authorization: `Bearer ${token.access_token}` };
+  }
+
+  async function verifyCredentials() {
+    const acct = await apiFetch("/api/v1/accounts/verify_credentials", { headers: authHeaders() });
+    log(`Logged in as @${acct.acct} on ${normalizeInstance(els.instance.value)}.`, "ok");
+    return acct;
+  }
+
+  function logout() {
+    const inst = normalizeInstance(els.instance.value);
+    if (!inst) return;
+    clearToken(inst);
+    clearVerifier(); clearOAuthState();
+    updateAuthStatus();
+    log(`Session cleared for ${inst}. (App registration remains; revoke on Mastodon if desired.)`);
+  }
+
+  /* ── Auth status UI ──────────────────────────────────────────── */
+  function updateAuthStatus() {
+    const inst  = normalizeInstance(els.instance.value);
+    const token = inst ? getToken() : null;
+    const cid   = inst ? localStorage.getItem(lsClientIdKey(inst)) : null;
+
+    const parts = [];
+    if (inst)  parts.push(`Instance: <code>${esc(inst)}</code>`);
+    if (cid)   parts.push(`<span class="pill pill-ok">✓ app registered</span>`);
+    else       parts.push(`<span class="pill pill-warn">⚠ app not yet registered</span>`);
+    if (token) parts.push(`<span class="pill pill-ok">✓ token (session-only)</span>`);
+    else       parts.push(`<span class="pill pill-warn">⚠ not authorized</span>`);
+
+    els.authStatus.innerHTML = parts.join(" &nbsp;·&nbsp; ");
+
+    const connected = !!(inst && token);
+    els.btnFollowAll.disabled  = !connected;
+    els.btnResolveAll.disabled = !connected;
+  }
+
+  /* ── Resolve & follow ────────────────────────────────────────── */
+  async function resolveAccount(acct) {
+    const params = new URLSearchParams({ q: acct, type: "accounts", resolve: "true", limit: "5" });
+    const result = await apiFetch(`/api/v2/search?${params}`, { headers: authHeaders() });
+    const accounts = result.accounts || [];
+    const wanted   = acct.toLowerCase();
+
+    const exact = accounts.find(a =>
+      String(a.acct || "").toLowerCase() === wanted ||
+      String(a.url  || "").toLowerCase().includes(`/@${wanted.split("@")[0]}`)
+    );
+    if (!exact) {
+      const cands = accounts.map(a => a.acct).filter(Boolean).join(", ");
+      throw new Error(`Could not resolve @${acct}${cands ? `. Candidates: ${cands}` : ""}`);
+    }
+    return exact;
+  }
+
+  async function followAccount(id) {
+    return apiFetch(`/api/v1/accounts/${encodeURIComponent(id)}/follow`, {
+      method:  "POST",
+      headers: authHeaders(),
+    });
+  }
+
+  async function getRelationship(id) {
+    const params = new URLSearchParams();
+    params.append("id[]", id);
+    const rels = await apiFetch(`/api/v1/accounts/relationships?${params}`, { headers: authHeaders() });
+    return rels[0] || null;
+  }
+
+  /* ── Creator card rendering ──────────────────────────────────── */
+  function setCardStatus(card, msg, level = "muted") {
+    const el = card.querySelector(".creator-status");
+    if (el) {
+      el.textContent = msg;
+      el.style.color = level === "ok" ? "var(--accent-strong)"
+                     : level === "err" ? "#f87171"
+                     : level === "warn" ? "#fbbf24"
+                     : "var(--muted)";
+    }
+  }
+
+  function esc(str) {
+    return String(str)
+      .replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;").replaceAll("'", "&#039;");
+  }
+
+  async function runCard(card, action) {
+    const acct = card.dataset.acct;
+    if (!acct) return;
+
+    try {
+      setCardStatus(card, `Resolving @${acct}…`);
+      const account = await resolveAccount(acct);
+      card.dataset.accountId = account.id;
+      setCardStatus(card, `Resolved · ${account.display_name || account.acct}`, "ok");
+      log(`Resolved @${acct} → id ${account.id}`, "ok");
+
+      if (action === "follow") {
+        const before = await getRelationship(account.id);
+        if (before && before.following) {
+          setCardStatus(card, `Already following @${acct}`, "ok");
+          log(`Already following @${acct}`, "ok");
+          return;
+        }
+        setCardStatus(card, `Following @${acct}…`);
+        const rel = await followAccount(account.id);
+        if (rel.following) {
+          setCardStatus(card, `✓ Following @${acct}`, "ok");
+          log(`Followed @${acct}`, "ok");
+        } else if (rel.requested) {
+          setCardStatus(card, `⏳ Follow request sent to @${acct}`, "warn");
+          log(`Follow request sent to @${acct}`, "warn");
+        } else {
+          setCardStatus(card, `Unexpected state – check Mastodon manually`, "warn");
+          log(`Unexpected relationship for @${acct}: ${JSON.stringify(rel)}`, "warn");
+        }
+      }
+    } catch (err) {
+      setCardStatus(card, err.message, "err");
+      log(`Error for @${acct}: ${err.message}`, "error");
+    }
+  }
+
+  function renderList() {
+    els.accountList.innerHTML = "";
+
+    for (const creator of STARTER_ACCOUNTS) {
+      const card = document.createElement("div");
+      card.className = "creator-card";
+      card.dataset.acct = creator.acct;
+
+      const info = document.createElement("div");
+      info.innerHTML = `
+        <div class="creator-name">${esc(creator.name)}</div>
+        <div class="creator-handle">@${esc(creator.acct)}</div>
+        <div class="creator-status">${esc(creator.niche)}</div>
+      `;
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = true;
+      checkbox.className = "creator-select";
+      checkbox.setAttribute("aria-label", `Select ${creator.name}`);
+      checkbox.style.cssText = "width:1.1rem;height:1.1rem;accent-color:var(--accent);cursor:pointer;";
+
+      const actions = document.createElement("div");
+      actions.className = "creator-actions";
+
+      const resolveBtn = document.createElement("button");
+      resolveBtn.className = "btn";
+      resolveBtn.style.fontSize = "0.8rem";
+      resolveBtn.textContent = "Resolve";
+      resolveBtn.addEventListener("click", () => safely(() => runCard(card, "resolve")));
+
+      const followBtn = document.createElement("button");
+      followBtn.className = "btn btn-primary";
+      followBtn.style.fontSize = "0.8rem";
+      followBtn.textContent = "Follow";
+      followBtn.addEventListener("click", () => safely(() => runCard(card, "follow")));
+
+      const openBtn = document.createElement("button");
+      openBtn.className = "btn";
+      openBtn.style.fontSize = "0.8rem";
+      openBtn.textContent = "🔍 Search";
+      openBtn.addEventListener("click", () => {
+        const url = `${instanceBase()}/search?q=${encodeURIComponent("@" + creator.acct)}`;
+        window.open(url, "_blank", "noopener,noreferrer");
+      });
+
+      actions.append(resolveBtn, followBtn, openBtn, checkbox);
+      card.append(info, actions);
+      els.accountList.append(card);
+    }
+    log(`Rendered ${STARTER_ACCOUNTS.length} creators.`);
+  }
+
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  async function resolveAll() {
+    for (const card of [...els.accountList.querySelectorAll(".creator-card")]) {
+      const cb = card.querySelector(".creator-select");
+      if (cb && !cb.checked) continue;
+      await runCard(card, "resolve");
+    }
+  }
+
+  async function followAllSlowly() {
+    const cards = [...els.accountList.querySelectorAll(".creator-card")];
+    for (const card of cards) {
+      const cb = card.querySelector(".creator-select");
+      if (cb && !cb.checked) continue;
+      await runCard(card, "follow");
+      await sleep(1500);  // rate-limit courtesy delay
+    }
+  }
+
+  function selectAll(state) {
+    els.accountList.querySelectorAll(".creator-select").forEach(cb => cb.checked = state);
+  }
+
+  /* ── Error wrapper ───────────────────────────────────────────── */
+  async function safely(fn) {
+    try { await fn(); }
+    catch (err) {
+      log(err.message || String(err), "error");
+    }
+  }
+
+  /* ── Initialise ──────────────────────────────────────────────── */
+  async function init() {
+    // Restore last instance
+    const last = localStorage.getItem(LS_INSTANCE_KEY);
+    if (last) els.instance.value = last;
+
+    // Wire buttons
+    els.btnConnect.addEventListener("click",    () => safely(connect));
+    els.btnLogout.addEventListener("click",     () => { logout(); });
+    els.btnFollowAll.addEventListener("click",  () => safely(followAllSlowly));
+    els.btnResolveAll.addEventListener("click", () => safely(resolveAll));
+    els.btnSelectAll.addEventListener("click",  () => selectAll(true));
+    els.btnSelectNone.addEventListener("click", () => selectAll(false));
+    els.instance.addEventListener("input",      updateAuthStatus);
+
+    renderList();
+    updateAuthStatus();
+
+    // Handle OAuth redirect
+    try {
+      await handleCallback();
+      updateAuthStatus();
+      const token = getToken();
+      if (token) await verifyCredentials();
+    } catch (err) {
+      log(`OAuth callback error: ${err.message}`, "error");
+    }
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>

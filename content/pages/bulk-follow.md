@@ -29,19 +29,19 @@ Copy the CSV content below and save it as `follows.csv` on your computer:
 
 ```csv
 Account address,Show boosts
+@davidbombal@infosec.exchange,true
+@geerlingguy@mastodon.social,true
+@technotim@mastodon.social,true
+@tomlawrence@infosec.exchange,true
+@zollotech@mastodon.social,true
+@BrodieOnLinux@mstdn.social,true
+@EposVox@glitch.lgbt,true
+@mattferrell@mastodon.social,true
+@thelinuxEXP@mastodon.social,true
+@notthebee@tilde.zone,true
 @fireship@mastodon.social,true
 @craftzdog@mastodon.social,true
 @coreyschafer@mastodon.social,true
-@geerlingguy@mastodon.social,true
-@thelinuxEXP@mastodon.social,true
-@mattferrell@mastodon.social,true
-@zollotech@mastodon.social,true
-@tomlawrence@infosec.exchange,true
-@BrodieOnLinux@mstdn.social,true
-@technotim@mastodon.social,true
-@notthebee@tilde.zone,true
-@EposVox@glitch.lgbt,true
-@davidbombal@infosec.exchange,true
 ```
 
 #### Step 2: Import into Mastodon

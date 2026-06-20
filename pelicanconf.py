@@ -49,3 +49,4 @@ CATEGORIES_SAVE_AS = ''
 TAG_URL = 'tag/{slug}/'
 TAG_SAVE_AS = 'tag/{slug}/index.html'
 TAGS_SAVE_AS = 'tags/index.html'
+
