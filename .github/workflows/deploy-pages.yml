@@ -69,9 +69,12 @@ jobs:
         # static/ holds pages with complex client-side JS (e.g. the PKCE Mastodon
         # follow tool) that are not Pelican content.  publishconf.py sets
         # DELETE_OUTPUT_DIRECTORY=True, so we must copy these AFTER Pelican runs.
+        # {{SITEURL}} placeholders in HTML are substituted with the production base
+        # URL so CSS and nav links resolve correctly under the /tech_youtubers/ prefix.
         run: |
-          python - <<'EOF'
-          import shutil, pathlib
+          python - /tech_youtubers <<'EOF'
+          import shutil, pathlib, sys
+          siteurl = sys.argv[1]
           src = pathlib.Path("static")
           dst = pathlib.Path("output")
           if src.is_dir():
@@ -80,8 +83,12 @@ jobs:
                       rel = f.relative_to(src)
                       target = dst / rel
                       target.parent.mkdir(parents=True, exist_ok=True)
-                      shutil.copy2(f, target)
-                      print(f"  copied: {rel}")
+                      if f.suffix in (".html", ".htm"):
+                          text = f.read_text(encoding="utf-8").replace("{{SITEURL}}", siteurl)
+                          target.write_text(text, encoding="utf-8")
+                      else:
+                          shutil.copy2(f, target)
+                      print(f"  copied: {rel} (siteurl={siteurl!r})")
           EOF
 
       - name: Run Python quality gates

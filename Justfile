@@ -34,11 +34,13 @@ html:
     uv run pelican content -o output -s pelicanconf.py
 
 # Copy hand-crafted static pages into output/ after Pelican runs.
-# These pages aren't Pelican content (complex JS, etc.) but must ship with the site.
-# Pelican's DELETE_OUTPUT_DIRECTORY would wipe them if they lived only in output/.
-copy-static:
+# HTML files have {{SITEURL}} placeholders substituted with the real base URL
+# so the page works under subdirectories (e.g. /tech_youtubers/ on GitHub Pages).
+# Usage: just copy-static "" (dev) or just copy-static "/tech_youtubers" (prod)
+copy-static siteurl="":
     uv run python -c "
-import shutil, pathlib
+import shutil, pathlib, sys
+siteurl = sys.argv[1]
 src = pathlib.Path('static')
 dst = pathlib.Path('output')
 if src.is_dir():
@@ -47,12 +49,17 @@ if src.is_dir():
             rel = f.relative_to(src)
             target = dst / rel
             target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(f, target)
-            print(f'  copied: {rel}')
-"
+            if f.suffix in ('.html', '.htm'):
+                text = f.read_text(encoding='utf-8').replace('{{SITEURL}}', siteurl)
+                target.write_text(text, encoding='utf-8')
+            else:
+                shutil.copy2(f, target)
+            print(f'  copied: {rel} (siteurl={siteurl!r})')
+" -- '{{siteurl}}'
 
-# Full build: generate pages then build HTML then copy static files
-build: generate-pages html copy-static
+# Full build: generate pages then build HTML then copy static files (dev, empty SITEURL)
+build: generate-pages html
+    just copy-static ""
 
 # Remove generated output
 clean:
@@ -69,17 +76,19 @@ devserver:
 # Generate production HTML (publishconf uses DELETE_OUTPUT_DIRECTORY=True)
 publish: generate-pages
     uv run pelican content -o output -s publishconf.py
-    just copy-static
+    just copy-static "/tech_youtubers"
 
 # ── Quality gates ─────────────────────────────────────────────────────────────
 
 # Python-only deterministic gates: generated artifact lint + internal links
-quality-python: html copy-static
+quality-python: html
+    just copy-static ""
     uv run python scripts/check_pelican_artifacts.py --site-dir output
     uv run python scripts/check_links.py --site-dir output --internal-only
 
 # Cached external link audit
-quality-links: html copy-static
+quality-links: html
+    just copy-static ""
     uv run python scripts/check_links.py --site-dir output
 
 # Node-only gates: HTML validation, CSS browser support, accessibility
