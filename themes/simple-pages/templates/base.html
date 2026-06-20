@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="{{ DEFAULT_LANG }}">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{{ SITENAME | e }}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/style.css" />
+</head>
+<body>
+    {% set current_slug = page.slug if page is defined else article.slug if article is defined else "" %}
+    <div class="site-shell">
+        <header class="site-header">
+            <div class="site-header__inner">
+                <div class="site-branding">
+                    <a class="site-title" href="{{ SITEURL }}/">{{ SITENAME | e }}</a>
+                    <p class="site-tagline">{{ SITESUBTITLE | default("Find and bulk follow tech celebrities with a Mastodon or Bluesky presence.") | e }}</p>
+                </div>
+                <nav class="top-nav" aria-label="Primary">
+                    <a{% if page is defined and (page.slug == "home" or not page.url) %} class="active"{% endif %} href="{{ SITEURL }}/">Home</a>
+                    <a{% if current_slug == "javascript" %} class="active"{% endif %} href="{{ SITEURL }}/javascript/">JavaScript</a>
+                    <a{% if current_slug == "rust" %} class="active"{% endif %} href="{{ SITEURL }}/rust/">Rust</a>
+                    <a{% if current_slug == "go" %} class="active"{% endif %} href="{{ SITEURL }}/go/">Go</a>
+                    <a{% if current_slug == "python" %} class="active"{% endif %} href="{{ SITEURL }}/python/">Python</a>
+                    <a{% if current_slug == "mobile" %} class="active"{% endif %} href="{{ SITEURL }}/mobile/">Mobile</a>
+                    <a{% if current_slug == "databases" %} class="active"{% endif %} href="{{ SITEURL }}/databases/">Databases</a>
+                    <a{% if page is defined and page.slug == "youtubers" %} class="active"{% endif %} href="{{ SITEURL }}/youtubers/">All YouTubers</a>
+                    <a{% if page is defined and page.slug == "bulk-follow" %} class="active"{% endif %} href="{{ SITEURL }}/bulk-follow/">Bulk Follow</a>
+                    <a{% if page is defined and page.slug == "mastodon-follow" %} class="active"{% endif %} href="{{ SITEURL }}/mastodon-follow/">Follow on Mastodon</a>
+                </nav>
+            </div>
+        </header>
+
+        <div class="site-content">
+            <aside class="site-sidebar">
+                <nav class="section-nav" aria-label="Section">
+                    <p class="section-nav__title">Tech Stacks</p>
+                    <ul>
+                        <li{% if current_slug == "javascript" %} class="active"{% endif %}><a href="{{ SITEURL }}/javascript/">JavaScript / TypeScript</a></li>
+                        <li{% if current_slug == "rust" %} class="active"{% endif %}><a href="{{ SITEURL }}/rust/">Rust</a></li>
+                        <li{% if current_slug == "go" %} class="active"{% endif %}><a href="{{ SITEURL }}/go/">Go</a></li>
+                        <li{% if current_slug == "python" %} class="active"{% endif %}><a href="{{ SITEURL }}/python/">Python</a></li>
+                        <li{% if current_slug == "mobile" %} class="active"{% endif %}><a href="{{ SITEURL }}/mobile/">Mobile Dev</a></li>
+                        <li{% if current_slug == "databases" %} class="active"{% endif %}><a href="{{ SITEURL }}/databases/">Databases &amp; Systems</a></li>
+                        <li{% if current_slug == "devops" %} class="active"{% endif %}><a href="{{ SITEURL }}/devops/">DevOps &amp; Cloud</a></li>
+                        <li{% if current_slug == "general" %} class="active"{% endif %}><a href="{{ SITEURL }}/general/">General Tech</a></li>
+                    </ul>
+
+                    <p class="section-nav__title">Browse</p>
+                    <ul>
+                        <li{% if page is defined and page.slug == "youtubers" %} class="active"{% endif %}><a href="{{ SITEURL }}/youtubers/">All YouTubers</a></li>
+                        <li{% if page is defined and page.slug == "bulk-follow" %} class="active"{% endif %}><a href="{{ SITEURL }}/bulk-follow/">Bulk Follow Guide</a></li>
+                        <li{% if page is defined and page.slug == "mastodon-follow" %} class="active"{% endif %}><a href="{{ SITEURL }}/mastodon-follow/">Follow on Mastodon</a></li>
+                        <li{% if page is defined and page.slug == "about" %} class="active"{% endif %}><a href="{{ SITEURL }}/about/">About</a></li>
+                    </ul>
+                </nav>
+            </aside>
+            <main class="site-main">
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+
+        <footer class="site-footer">
+            <div class="site-footer__inner">
+                <p>&copy; {{ CURRENTYEAR }} {{ AUTHOR }}. Built with <a href="https://getpelican.com/">Pelican</a>.</p>
+                <p>Generated {{ GENERATED_DATE }}.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

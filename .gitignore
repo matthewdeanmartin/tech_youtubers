@@ -216,3 +216,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Pelican & Node site build outputs
+/output/
+/node_modules/
+/.cache/
+/.uv-cache/
+.idea
