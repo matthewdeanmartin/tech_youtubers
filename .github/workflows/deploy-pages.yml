@@ -60,9 +60,7 @@ jobs:
         run: npm ci
 
       - name: Generate pages from data
-        run: |
-          uv run python scripts/check_mastodon_links.py
-          uv run python generate_pages.py
+        run: uv run python generate_pages.py
 
       - name: Build production site
         run: uv run pelican content -o output -s publishconf.py

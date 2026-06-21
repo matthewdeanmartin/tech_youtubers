@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from pathlib import Path
 
@@ -9,11 +10,19 @@ from mastodon import MastodonError
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from pipeline import mastodon, youtuber_store
 
+_REQUIRED_ENV = ("MASTODON_ID_TECH_BASE_URL", "MASTODON_ID_TECH_ACCESS_TOKEN")
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Verify every source Mastodon account through its server API.")
     parser.add_argument("--timeout", type=float, default=12.0)
     args = parser.parse_args()
+
+    if not all(os.environ.get(v) for v in _REQUIRED_ENV):
+        missing = [v for v in _REQUIRED_ENV if not os.environ.get(v)]
+        print(f"Skipping Mastodon checks — credentials not set ({', '.join(missing)}).")
+        print("Run locally with the required env vars or via `just` to enable these checks.")
+        return 0
 
     try:
         youtubers = youtuber_store.load()

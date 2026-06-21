@@ -103,8 +103,9 @@ def generate_youtubers_page(youtubers: list[dict]) -> str:
         category = CATEGORY_LABELS.get(creator.get("category", "other"), "Other")
         account_type = ACCOUNT_TYPE_LABELS.get(creator.get("account_type", "native"), "Other")
         followers = str(creator.get("followers") or "—")
+        lang = html.escape(creator.get("language") or "en", quote=True)
         rows.append(
-            "        <tr>"
+            f'        <tr data-lang="{lang}">'
             f'<td class="tools-table__name"><a href="{youtube}" target="_blank" rel="noopener noreferrer">{name}</a></td>'
             f"<td>{html.escape(category)}</td>"
             f"<td>{html.escape(account_type)}</td>"
@@ -113,8 +114,22 @@ def generate_youtubers_page(youtubers: list[dict]) -> str:
             "</tr>"
         )
 
+    filter_bar = (
+        '<div class="lang-filter-bar">'
+        '<p>Showing creators in your browser language.</p>'
+        '<button id="lang-filter-btn" type="button" aria-pressed="false">'  # label set by JS
+        "&#x1F30D; Show all languages"
+        "</button>"
+        "</div>"
+        '<p id="lang-filter-empty" hidden>'
+        "No creators match your browser language. "
+        "Use the button above to show all languages."
+        "</p>"
+    )
+
     table = "\n".join(
         [
+            filter_bar,
             '<table class="tools-table">',
             "    <thead>",
             "        <tr>",
@@ -156,33 +171,65 @@ Want to follow the native accounts in bulk? Head to the [Bulk Follow Page]({{fil
 """
 
 
+def _lang_attr(creator: dict) -> str:
+    """Return a data-lang HTML attribute string for the creator."""
+    lang = html.escape(creator.get("language") or "en", quote=True)
+    return f' data-lang="{lang}"'
+
+
 def generate_category_page(category: str, youtubers: list[dict]) -> str:
     label = CATEGORY_LABELS[category]
     items = [item for item in youtubers if item.get("category") == category]
     native = [item for item in items if item.get("account_type") == "native"]
     feeds = [item for item in items if item.get("account_type") != "native"]
-    sections = [f"## Native Mastodon accounts ({len(native)})", ""]
-    if not native:
-        sections.append("No native accounts in this category yet.")
+
+    # Native section — wrapped in a data-lang-section div so JS can collapse
+    # the whole block when all items are filtered out.
+    native_items = []
     for creator in sorted(native, key=lambda item: item.get("name", "").casefold()):
-        sections.append(
-            f"- **[{creator['name']}]({creator['youtube_url']})** · "
+        lang = html.escape(creator.get("language") or "en", quote=True)
+        native_items.append(
+            f'<li data-lang="{lang}">'
+            f"**[{creator['name']}]({creator['youtube_url']})** · "
             f"[Mastodon]({creator['mastodon_url']}) — {creator.get('description') or ''}"
+            "</li>"
         )
+
+    if native_items:
+        native_block = (
+            f'<div data-lang-section="native">\n'
+            f"## Native Mastodon accounts ({len(native)})\n\n"
+            "<ul>\n" + "\n".join(native_items) + "\n</ul>\n"
+            "</div>"
+        )
+    else:
+        native_block = f"## Native Mastodon accounts ({len(native)})\n\nNo native accounts in this category yet."
+
+    feeds_block = ""
     if feeds:
-        sections.extend([f"\n## Automated channel feeds ({len(feeds)})", ""])
+        feed_items = []
         for creator in sorted(feeds, key=lambda item: item.get("name", "").casefold()):
-            sections.append(
-                f"- **[{creator['name']}]({creator['youtube_url']})** · "
+            lang = html.escape(creator.get("language") or "en", quote=True)
+            feed_items.append(
+                f'<li data-lang="{lang}">'
+                f"**[{creator['name']}]({creator['youtube_url']})** · "
                 f"[Feed]({creator['mastodon_url']}) — {creator.get('description') or ''}"
+                "</li>"
             )
+        feeds_block = (
+            f'\n<div data-lang-section="feeds">\n'
+            f"## Automated channel feeds ({len(feeds)})\n\n"
+            "<ul>\n" + "\n".join(feed_items) + "\n</ul>\n"
+            "</div>"
+        )
+
     return f"""Title: {label} YouTubers
 Date: 2026-06-20
 Slug: {category}
 sortorder: {CATEGORY_SORTORDER.index(category) + 10}
 Summary: {label} YouTube creators and channel feeds on Mastodon.
 
-{chr(10).join(sections)}
+{native_block}{feeds_block}
 """
 
 
