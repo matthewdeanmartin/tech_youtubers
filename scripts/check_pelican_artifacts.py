@@ -52,7 +52,7 @@ class DocumentSummary(HTMLParser):
             self.title_parts.append(data)
 
 
-def site_path_for_url(site_dir: Path, url: str) -> Path | None:
+def site_path_for_url(site_dir: Path, url: str, siteurl_prefix: str = "") -> Path | None:
     parsed = urlparse(url)
     if parsed.scheme or parsed.netloc or url.startswith(("#", "data:", "mailto:", "tel:", "javascript:")):
         return None
@@ -60,6 +60,12 @@ def site_path_for_url(site_dir: Path, url: str) -> Path | None:
     path = unquote(parsed.path)
     if not path or path == "/":
         return site_dir / "index.html"
+
+    # Strip the sub-path prefix injected by copy_static.py (e.g. /tech_youtubers)
+    # so that /tech_youtubers/theme/css/style.css resolves to
+    # <site_dir>/theme/css/style.css instead of <site_dir>/tech_youtubers/theme/…
+    if siteurl_prefix and path.startswith(siteurl_prefix):
+        path = path[len(siteurl_prefix):] or "/"
 
     relative = path.lstrip("/")
     candidate = site_dir / relative
@@ -71,7 +77,16 @@ def site_path_for_url(site_dir: Path, url: str) -> Path | None:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Lint generated Pelican output for basic artifact sanity.")
     parser.add_argument("--site-dir", default="output", type=Path)
+    parser.add_argument(
+        "--siteurl",
+        default="",
+        help="Sub-path prefix used in production (e.g. /tech_youtubers). "
+             "Must match the value passed to copy_static.py.",
+    )
     args = parser.parse_args()
+
+    # Normalise: strip trailing slash, keep leading slash (or empty string).
+    siteurl_prefix = args.siteurl.rstrip("/")
 
     site_dir = args.site_dir.resolve()
     html_files = sorted(site_dir.rglob("*.html"))
@@ -111,7 +126,7 @@ def main() -> int:
             errors.append(f"{rel}: missing an h1")
 
         for tag, url in summary.assets:
-            asset_path = site_path_for_url(site_dir, url)
+            asset_path = site_path_for_url(site_dir, url, siteurl_prefix)
             if asset_path and not asset_path.exists():
                 errors.append(f"{rel}: {tag} asset does not exist: {url}")
 
