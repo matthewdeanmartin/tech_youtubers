@@ -25,7 +25,7 @@ help:
 	@echo 'Quality gates:'
 	@echo '   make quality-python    lint generated HTML artifacts and internal links'
 	@echo '   make quality-node      validate HTML, CSS browser support, and a11y'
-	@echo '   make quality           build + all quality gates'
+	@echo '   make quality           build (production) + all quality gates (mirrors GHA)'
 
 generate-pages:
 	$(UV) run python generate_pages.py
@@ -50,13 +50,20 @@ devserver:
 publish:
 	$(UV) run pelican "$(INPUTDIR)" -o "$(OUTPUTDIR)" -s "$(PUBLISHCONF)" $(PELICANOPTS)
 
-quality-python: html
-	$(UV) run python scripts/check_pelican_artifacts.py --site-dir "$(OUTPUTDIR)"
-	$(UV) run python scripts/check_links.py --site-dir "$(OUTPUTDIR)" --internal-only
+# Build with production settings then run all quality gates — mirrors GHA exactly.
+# Uses publishconf.py (RELATIVE_URLS=False, feeds enabled) so the same HTML
+# that will be deployed is validated.
+quality-python: publish copy-static
+	$(UV) run python -m unittest discover -s tests
+	$(UV) run python scripts/check_pelican_artifacts.py --site-dir "$(OUTPUTDIR)" --siteurl /tech_youtubers
+	$(UV) run python scripts/check_links.py --site-dir "$(OUTPUTDIR)" --internal-only --siteurl /tech_youtubers
 
-quality-node: html
+quality-node: publish copy-static
 	npm run quality
 
 quality: build quality-python quality-node
 
-.PHONY: help generate-pages stubs build html clean serve devserver publish quality-python quality-node quality
+copy-static:
+	$(UV) run python scripts/copy_static.py /tech_youtubers
+
+.PHONY: help generate-pages stubs build html clean serve devserver publish copy-static quality-python quality-node quality

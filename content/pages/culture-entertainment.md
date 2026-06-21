@@ -9,7 +9,7 @@ Summary: Culture & Entertainment YouTube creators and channel feeds on Mastodon.
 
 <ul>
 <li data-lang="en">**[TarantinoToriyama (Youtube)](https://www.youtube.com/channel/UCCUhe7cfOGwZwpu1K637b7A)** · [Mastodon](https://mastodon.social/@tarantinotoriyama) — Con o sin tu ayuda no voy a rendirme. Trabajaré duro para que Tarantinotoriyama sea un canal de referencia en Youtube 💪💪 ⤵️⤵️ https://www. youtube.com/TarantinoToriyama ⭐NUEVO⭐ Canal⭐ CapitanHater 👇 Críticas⤵️⤵️ https://www. youtube.com/channel/UCCUhe7cfO GwZwpu1K637b7A</li>
-<li data-lang="en">**[TechHut](https://www.youtube.com/c/techhuthd)** · [Mastodon](https://fosstodon.org/@techhut) — Yes, I use this account and check it out frequently. No, you don't need to tag an admin to try to get me in trouble. TechHut Media.</li>
+<li data-lang="en">**[TechHut](https://www.youtube.com/c/techhuthd)** · [Mastodon](https://fosstodon.org/@techhut) — Yes, I use this account and check it out frequently. No, you don&#x27;t need to tag an admin to try to get me in trouble. TechHut Media.</li>
 <li data-lang="ja">**[だだだTV@YouTuber](https://www.youtube.com/channel/UC2GkSteQXqwcJp0TeEsFegw)** · [Mastodon](https://mstdn.jp/@dadadaTV) — 新米YouTuberのだだだTVです!!!面白いことをお届けしていきます！お気軽にフォローしてください！ ↓↓↓チャンネルはこちら↓↓↓ https://www. youtube.com/channel/UC2GkSteQX qwcJp0TeEsFegw</li>
 </ul>
 </div>

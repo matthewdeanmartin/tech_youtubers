@@ -188,10 +188,14 @@ def generate_category_page(category: str, youtubers: list[dict]) -> str:
     native_items = []
     for creator in sorted(native, key=lambda item: item.get("name", "").casefold()):
         lang = html.escape(creator.get("language") or "en", quote=True)
+        name = html.escape(creator["name"])
+        youtube_url = html.escape(creator["youtube_url"], quote=True)
+        mastodon_url = html.escape(creator["mastodon_url"], quote=True)
+        description = html.escape(creator.get("description") or "")
         native_items.append(
             f'<li data-lang="{lang}">'
-            f"**[{creator['name']}]({creator['youtube_url']})** · "
-            f"[Mastodon]({creator['mastodon_url']}) — {creator.get('description') or ''}"
+            f"**[{name}]({youtube_url})** · "
+            f"[Mastodon]({mastodon_url}) — {description}"
             "</li>"
         )
 
@@ -210,10 +214,14 @@ def generate_category_page(category: str, youtubers: list[dict]) -> str:
         feed_items = []
         for creator in sorted(feeds, key=lambda item: item.get("name", "").casefold()):
             lang = html.escape(creator.get("language") or "en", quote=True)
+            name = html.escape(creator["name"])
+            youtube_url = html.escape(creator["youtube_url"], quote=True)
+            mastodon_url = html.escape(creator["mastodon_url"], quote=True)
+            description = html.escape(creator.get("description") or "")
             feed_items.append(
                 f'<li data-lang="{lang}">'
-                f"**[{creator['name']}]({creator['youtube_url']})** · "
-                f"[Feed]({creator['mastodon_url']}) — {creator.get('description') or ''}"
+                f"**[{name}]({youtube_url})** · "
+                f"[Feed]({mastodon_url}) — {description}"
                 "</li>"
             )
         feeds_block = (
