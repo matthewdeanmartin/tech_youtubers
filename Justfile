@@ -1,7 +1,8 @@
-# Tech YouTubers Directory — task runner
+# YouTubers on Mastodon — task runner
 # Run `just` to see available recipes.
 
 set dotenv-load := true
+set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
 
 # ── Dependency management ──────────────────────────────────────────────────────
 
@@ -18,6 +19,34 @@ generate-pages:
 # Preview page generation without writing
 generate-pages-dry-run:
     uv run python generate_pages.py --dry-run
+
+# Search Mastodon profiles first and persist all candidates/evidence in SQLite.
+discover-mastodon *args:
+    uv run python -m pipeline.discover_mastodon collect {{args}}
+
+# Import the current published directory into the candidate database.
+seed-mastodon:
+    uv run python -m pipeline.discover_mastodon seed
+
+# Preview removal of entries without Mastodon-hosted YouTube channel evidence.
+audit-creators:
+    uv run python -m pipeline.discover_mastodon audit
+
+# Apply the strict Mastodon + YouTube evidence rule to data/youtubers.json.
+prune-creators:
+    uv run python -m pipeline.discover_mastodon audit --write
+
+# Review discovered profiles that have direct YouTube channel links.
+mastodon-candidates *args:
+    uv run python -m pipeline.discover_mastodon report {{args}}
+
+# Categorize all YouTube-linked profiles and store reviewable evidence in SQLite.
+categorize-mastodon:
+    uv run python -m pipeline.discover_mastodon classify
+
+# Publish the categorized candidate catalog to data/youtubers.json.
+publish-candidates:
+    uv run python -m pipeline.publish_candidates
 
 # Generate stub articles for all unreviewed YouTubers
 stubs:
@@ -38,27 +67,12 @@ html:
 # so the page works under subdirectories (e.g. /tech_youtubers/ on GitHub Pages).
 # Usage: just copy-static "" (dev) or just copy-static "/tech_youtubers" (prod)
 copy-static siteurl="":
-    uv run python -c "
-import shutil, pathlib, sys
-siteurl = sys.argv[1]
-src = pathlib.Path('static')
-dst = pathlib.Path('output')
-if src.is_dir():
-    for f in src.rglob('*'):
-        if f.is_file():
-            rel = f.relative_to(src)
-            target = dst / rel
-            target.parent.mkdir(parents=True, exist_ok=True)
-            if f.suffix in ('.html', '.htm'):
-                text = f.read_text(encoding='utf-8').replace('{{SITEURL}}', siteurl)
-                target.write_text(text, encoding='utf-8')
-            else:
-                shutil.copy2(f, target)
-            print(f'  copied: {rel} (siteurl={siteurl!r})')
-" -- '{{siteurl}}'
+    uv run python scripts/copy_static.py "{{siteurl}}"
 
-# Full build: generate pages then build HTML then copy static files (dev, empty SITEURL)
-build: generate-pages html
+# Full build: regenerate pages into a clean output directory.
+build: generate-pages
+    just clean
+    just html
     just copy-static ""
 
 # Remove generated output
@@ -83,13 +97,19 @@ publish: generate-pages
 # Python-only deterministic gates: generated artifact lint + internal links
 quality-python: html
     just copy-static ""
+    uv run python -m unittest discover -s tests
     uv run python scripts/check_pelican_artifacts.py --site-dir output
     uv run python scripts/check_links.py --site-dir output --internal-only
 
 # Cached external link audit
 quality-links: html
     just copy-static ""
+    uv run python scripts/check_mastodon_links.py
     uv run python scripts/check_links.py --site-dir output
+
+# Verify source Mastodon accounts through each server's API
+check-mastodon:
+    uv run python scripts/check_mastodon_links.py
 
 # Node-only gates: HTML validation, CSS browser support, accessibility
 quality-node: html copy-static
@@ -97,4 +117,3 @@ quality-node: html copy-static
 
 # Full quality pass
 quality: build quality-python quality-node
-

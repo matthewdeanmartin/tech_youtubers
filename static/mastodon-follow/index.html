@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Follow on Mastodon – Tech YouTubers Directory</title>
-  <meta name="description" content="Follow your favorite tech YouTubers on Mastodon in one click. Uses secure PKCE OAuth – no passwords or secrets are ever stored." />
+  <title>Follow on Mastodon – YouTubers on Mastodon</title>
+  <meta name="description" content="Follow native Mastodon accounts belonging to YouTube creators in one click. Uses secure PKCE OAuth." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -260,17 +260,16 @@
     <header class="site-header">
       <div class="site-header__inner">
         <div class="site-branding">
-          <a class="site-title" href="{{SITEURL}}/">Tech YouTubers Directory</a>
-          <p class="site-tagline">Find and bulk follow tech celebrities with a Mastodon or Bluesky presence.</p>
+          <a class="site-title" href="{{SITEURL}}/">YouTubers on Mastodon</a>
+          <p class="site-tagline">Find YouTube creators, channel feeds, and real people to follow on Mastodon.</p>
         </div>
         <nav class="top-nav" aria-label="Primary">
           <a href="{{SITEURL}}/">Home</a>
-          <a href="{{SITEURL}}/javascript/">JavaScript</a>
-          <a href="{{SITEURL}}/rust/">Rust</a>
-          <a href="{{SITEURL}}/go/">Go</a>
-          <a href="{{SITEURL}}/python/">Python</a>
-          <a href="{{SITEURL}}/mobile/">Mobile</a>
-          <a href="{{SITEURL}}/databases/">Databases</a>
+          <a href="{{SITEURL}}/technology/">Technology</a>
+          <a href="{{SITEURL}}/gaming/">Gaming</a>
+          <a href="{{SITEURL}}/science-education/">Education</a>
+          <a href="{{SITEURL}}/music/">Music</a>
+          <a href="{{SITEURL}}/news-society/">News</a>
           <a href="{{SITEURL}}/youtubers/">All YouTubers</a>
           <a href="{{SITEURL}}/bulk-follow/">Bulk Follow</a>
           <a class="active" href="{{SITEURL}}/mastodon-follow/">Follow on Mastodon</a>
@@ -282,14 +281,16 @@
       <!-- ── Sidebar ─────────────────────────────────────────────── -->
       <aside class="site-sidebar">
         <nav class="section-nav" aria-label="Section">
-          <p class="section-nav__title">Tech Stacks</p>
+          <p class="section-nav__title">Topics</p>
           <ul>
-            <li><a href="{{SITEURL}}/javascript/">JavaScript / TypeScript</a></li>
-            <li><a href="{{SITEURL}}/rust/">Rust</a></li>
-            <li><a href="{{SITEURL}}/go/">Go</a></li>
-            <li><a href="{{SITEURL}}/python/">Python</a></li>
-            <li><a href="{{SITEURL}}/mobile/">Mobile Dev</a></li>
-            <li><a href="{{SITEURL}}/databases/">Databases &amp; Systems</a></li>
+            <li><a href="{{SITEURL}}/technology/">Technology &amp; Computing</a></li>
+            <li><a href="{{SITEURL}}/gaming/">Gaming &amp; VTubers</a></li>
+            <li><a href="{{SITEURL}}/science-education/">Science &amp; Education</a></li>
+            <li><a href="{{SITEURL}}/music/">Music</a></li>
+            <li><a href="{{SITEURL}}/art-making/">Art, Design &amp; Making</a></li>
+            <li><a href="{{SITEURL}}/news-society/">News, Politics &amp; Society</a></li>
+            <li><a href="{{SITEURL}}/culture-entertainment/">Culture &amp; Entertainment</a></li>
+            <li><a href="{{SITEURL}}/lifestyle-hobbies/">Lifestyle, Travel &amp; Hobbies</a></li>
           </ul>
           <p class="section-nav__title">Browse</p>
           <ul>
@@ -308,8 +309,8 @@
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             PKCE OAuth · No secrets stored · Session-only token
           </div>
-          <h1>Follow Tech YouTubers on Mastodon</h1>
-          <p>Connect to your Mastodon instance and follow your favourite tech creators in one click — like a Bluesky starter pack, but for Mastodon.</p>
+          <h1>Follow YouTubers on Mastodon</h1>
+          <p>Connect to your Mastodon instance and follow native creator accounts in one click. Automated channel feeds are intentionally excluded.</p>
         </div>
 
         <!-- Step 1: Connect -->
@@ -369,7 +370,7 @@
 
     <footer class="site-footer">
       <div class="site-footer__inner">
-        <p>&copy; 2026 Tech YouTubers Directory.</p>
+        <p>&copy; 2026 YouTubers on Mastodon.</p>
         <p>Follow tool uses <strong>PKCE OAuth</strong> — your Mastodon password is never seen by this page.</p>
       </div>
     </footer>
@@ -377,7 +378,7 @@
 
 <script>
 /* ================================================================
-   Tech YouTubers – Mastodon Follow Pack
+   YouTubers on Mastodon – Follow Pack
    Security model
    ─────────────────────────────────────────────────────────────────
    • PKCE flow: no client_secret is ever requested, sent or stored.
@@ -396,24 +397,72 @@
 (() => {
   "use strict";
 
-  /* ── Starter creators (from data/starter.md) ─────────────────── */
+  /* ── Creators (generated from data/youtubers.json) ───────────── */
+  /* DATA:START */
   const STARTER_ACCOUNTS = [
-    { name: "Jeff Geerling",              acct: "geerlingguy@mastodon.social",   niche: "Raspberry Pi, homelab, open source" },
-    { name: "Nick / The Linux Experiment",acct: "thelinuxEXP@mastodon.social",   niche: "Linux desktop, FOSS" },
-    { name: "Matt Ferrell / Undecided",   acct: "mattferrell@mastodon.social",   niche: "Clean tech, energy, future tech" },
-    { name: "Aaron Zollo / Zollotech",    acct: "zollotech@mastodon.social",     niche: "Apple/iOS/general tech" },
-    { name: "Tom Lawrence / LawSys",      acct: "tomlawrence@infosec.exchange",  niche: "Networking, pfSense, homelab" },
-    { name: "Brodie Robertson",           acct: "BrodieOnLinux@mstdn.social",    niche: "Linux, Wayland, FOSS commentary" },
-    { name: "Techno Tim",                 acct: "technotim@mastodon.social",     niche: "Homelab, Kubernetes, self-hosting" },
-    { name: "Wolfgang's Channel",         acct: "notthebee@tilde.zone",          niche: "Linux, NixOS, self-hosting" },
-    { name: "EposVox",                    acct: "EposVox@glitch.lgbt",           niche: "Streaming tech, OBS, capture cards" },
-    { name: "David Bombal",               acct: "davidbombal@infosec.exchange",  niche: "Networking, cybersecurity, IT training" },
-    { name: "Fireship",                   acct: "fireship@mastodon.social",      niche: "JavaScript, web dev, '100 Seconds'" },
-    { name: "Corey Schafer",              acct: "coreyschafer@mastodon.social",  niche: "Python, Django, Flask tutorials" },
-    { name: "Takuya Matsuyama (devaslife)",acct: "craftzdog@mastodon.social",    niche: "React Native, macOS, Vim, lo-fi" },
+    {"name": "Matt Ferrell / Undecided", "acct": "mattferrell@mastodon.social", "niche": "Clean tech, energy, and future technology explained clearly. Covers EVs, solar, wind, and emerging sustainable tech."},
+    {"name": "YouTuber神宮寺匁トロロ", "acct": "tororo_family@fedibird.com", "niche": "プロアーティスト' # 魔術絵師 'チャンネル登録数1万人'荒野の光マント,枠'UUUMネットワーク'荒野のルーキー'㌰㌰らんど'GIFT' ◆タワーレコード⇨ https:// onl.bz/3LW1cEZ ◆リンク⇨ https:// linktr.ee/tororo.family"},
+    {"name": "あき / 写真で癒すYouTuber", "acct": "aki_photo@misskey.io", "niche": "写真好きでオタクで理系（工学系）なお仕事してる私です✨ カメラとか理系分野とか好きな方は絡みましょー ‼️ YouTubeもやってたり...よかったら見てね 💖"},
+    {"name": "ザエモンティーナ", "acct": "TinaZaenon@misskey.io", "niche": "ちょっぴりオジさんっぽい猫、ザエモンティーナとその仲間たちのゆるいイラストを描いてます #1日1ザエモン ​:skeb:​ skeb募集中！ YouTubeにてASMR動画も毎週配信してます ​:youtube:​ リアクション嬉しいです ​:af_rosacat_heart_happy:​ 〔無断転載AI学習禁止 🚫 〕 #一次創作 #オリジナルキャラクター #ねこ"},
+    {"name": "モレシャン/Morechand", "acct": "morechand@misskey.io", "niche": "​:role_illustrator:​ ばすき @morechand@misskey.backspace.fm TCG(ヴァンガード/WIXOSS...etc)＆書籍&ゲーム周りで絵を描いてることがあります 絵と食い物と酒と忙しいアピールを投げます ローカル見て軽率に ​:reaction:​ します フォロフォロバ ​:reaction:​などは​:ikioi_daiji:​​:hunikideyatteru:​ ノリでやってくのでよろしくね 謎にJSAワインエキスパートとワイン国際認定資格WSET Level3持ち 酒はワインしか飲めないからだにされちまった ※イラストおよび写真画像の無…"},
+    {"name": "大麒麟", "acct": "Daikirinn@misskey.io", "niche": "趣味で動画編集してます。 Twitterに何かあった時ようにアカウント作成しました。 https://www.youtube.com/@%E6%AD%A6%E5%86%85%E5%AE%BF%E7%A6%B0-f3l"},
+    {"name": "TarantinoToriyama (Youtube)", "acct": "tarantinotoriyama@mastodon.social", "niche": "Con o sin tu ayuda no voy a rendirme. Trabajaré duro para que Tarantinotoriyama sea un canal de referencia en Youtube 💪💪 ⤵️⤵️ https://www. youtube.com/TarantinoToriyama ⭐NUEVO⭐ Canal⭐ CapitanHater 👇 Críticas⤵️⤵️ https://www. youtube.com/channel/UCCUhe7cfO GwZwpu1K637b7A"},
+    {"name": "TechHut", "acct": "techhut@fosstodon.org", "niche": "Yes, I use this account and check it out frequently. No, you don't need to tag an admin to try to get me in trouble. TechHut Media."},
+    {"name": "だだだTV@YouTuber", "acct": "dadadaTV@mstdn.jp", "niche": "新米YouTuberのだだだTVです!!!面白いことをお届けしていきます！お気軽にフォローしてください！ ↓↓↓チャンネルはこちら↓↓↓ https://www. youtube.com/channel/UC2GkSteQX qwcJp0TeEsFegw"},
+    {"name": "Evan | Streamer & Youtuber", "acct": "ArchetypicalTV@mastodon.social", "niche": "Casual streamer, Youtuber, and content creator. I play games like Geoguessr, PlateUp!, League, and Overwatch."},
+    {"name": "FG_Yue 月伊 遊戲類YouTuber", "acct": "FG_Yue@g0v.social", "niche": "嗨大家好我是遊戲實況主月伊，FPS嚴重成癮，影片不定時更新，主要更新的平台是YouTube，最近也有在Twitch直播 YouTube: https://www. youtube.com/channel/UCbxEe9I-d brb5mS1TM8J0Vw"},
+    {"name": "Pitman", "acct": "pitman@misskey.io", "niche": "​:role_streamer:​ ■RTA走者＆旅行散歩配信者。GeoGuessrのRTAで記録狙いを配信しています。ゲームプレイを極めてタイムを追求していくのが大好きです！外出先から散策の配信もしています。一緒にお出かけしましょう！MinecraftエンドラRTA、マリオワールドRTA（世界記録獲得）も。A Vtuber, Speedrunner, IRL streamer. ■Vtuber（セルフ受肉）/Twitchパートナー/Youtubeパートナー/ジオゲッサー公式認証プレーヤー/RTA in Japan 出場/たまに2.5次元 #ぴとまんアート #Pitman_art #Pitma…"},
+    {"name": "うみさわ＠Vtuber", "acct": "umi38@misskey.io", "niche": "走りながら考えるをモットーに、いろいろやってます フォローしてくれた方は大体フォロバします 配信はじめましたが、動画も作りたい"},
+    {"name": "はや", "acct": "leycia@misskey.io", "niche": "​:role_streamer:​​:role_i_like_star:​ その辺に生えてる腐女子兼完全セルフ受肉VTuber 週3くらいで YouTube ​:youtube:​ 配信してます フォローされたらだいたいフォロバするマン"},
+    {"name": "りーぜ", "acct": "KusozakoNemuiyo@misskey.io", "niche": "​:role_minecraft_player:​​:role_gogh_host:​ ​:gogh:​​:youtube:​​:role_streamer:​ ​:gogh:​ で「作業のためのカフェテリア」という カフェを営業するロールプレイにハマり中 ぜひご来店くださいませ。 店内の様子は ​:youtube:​ でライブ配信を 行なっています！高評価チャンネル登録 ​:yoroshikuonegaishimasu:​ ​:colorcode_c0ffee:​ ​:meow_bab:​​:blobcat_pacifier:​ 睡眠へたくそADHD ​:meow_waitwhat:​ 気分…"},
+    {"name": "ゴールドバイン", "acct": "GOLDVINE@misskey.io", "niche": "​:ohayoo:​超！マルチクリエイターのゴールドバインだよ！絵を描く、3D作る、動画編集する、ゲーム配信する！１次創作、うちよそを描くよ！"},
+    {"name": "ジェット@バーチャルYouTuber", "acct": "jamjet180414@mstdn.vtube.media", "niche": "今はJavascript教えたいお年頃です❤キューブから卒業したい…🌳初心者の講座が終わったらゲームの作り方講座作る予定～～👼ｲｪｨ♪((└(:3｣┌)┘))ｲｪｨ♪ YouTube https://www. youtube.com/channel/UCCMZko5Eb nMbxXMDHl0EtzQ"},
+    {"name": "マオ🍊🍂@バーチャルYoutuber", "acct": "virtual_mao@misskey.io", "niche": "バーチャル二次元美少女youtuber男性マオくんちゃんのアカウント！20歳♂ のJDだよ！ 【hash】 #マオちゃんねる"},
+    {"name": "モブ", "acct": "19xxmob@misskey.io", "niche": "おじさんです。のんびりやっていこうと思います。 TLを遡ってリアクションすることがあります、そういうのが苦手な方はご注意ください。 ゲームをすること、漫画を読むことを趣味に生きています。たまにYouTubeでゲーム配信を垂れ流したりしています。 モブの玉ねぎ農園→ https://www.youtube.com/channel/UCAi7O_H4nOnKlNYMMf14o4g マシュマロ受け付け中です https://marshmallow-qa.com/f0egjwjgpi1j4s9?utm_medium=url_text&utm_source=promotion"},
+    {"name": "熱田アメノ", "acct": "AmenoAtsuta@misskey.io", "niche": "​:role_bisyouzyo:​​:dtmer:​​:role_streamer:​​:role_reaction_shooter:​ ギタリストとDTMerと名古屋バ美肉 #Vtuber と歌ってみたMIX師をやっていてオーディオ​:numa:​に沈んだ​:syounin_yokkyuu_monster:​ 熱田アメノです！ 名前の由来は名古屋にある熱田神宮とそこに祀られている天叢雲剣からです Youtube ​:youtube:​ で歌枠とゲーム配信とコラボ雑談配信をメインにやってます やるゲームはPCゲームならかなり雑食ですが最近は ​:genshin:​やゼンゼロなどのホヨゲーと​…"},
+    {"name": "藻瑠もるい VTuber", "acct": "momomorui07@misskey.io", "niche": "※Misskeyでは​:ecchi:​ イラストも投稿しているので、未成年のフォローはNGです いつもありがとうございます！ ​:youtube:​ でVTuberをしている猫です ・2025年2月から配信活動開始 ・2025年8月に収益化達成！ ・2025年12月にチャンネル登録者数2500人！ 2026/3/23、リンパ腫の猫(10歳)が永眠しました 納豆が好きです ​:syuilo_nattoopen_failed:​ ポケモンZAのカラスバさんが推し お絵描き配信をメインに、ゲーム配信もしてます チャンネル登録よろしくお願いします！ 藻瑠もるいのファンアートタグは #もるいあーと リッ…"},
+    {"name": "速水漣", "acct": "ren_hayami@misskey.io", "niche": "​:eiti:​ ゲームシナリオライターです。 ゆっくりフォロバお返ししております。 【2026/02/11】 うちのこyoutubeチャンネルを開設しました。 ぜひお立ち寄りくださいませ。 https://www.youtube.com/@ren-hayami #一次創作 #うちの子 #代理ちゃん #vtuber"},
+    {"name": "𣜿音サクヤ🏇", "acct": "peyangu485@misskey.io", "niche": "​:role_streamer:​​:role_nsfw:​ 食品 ​:nsfw:​の​:note:​や​:rn:​ があるため、未成年の方はフォローしないでね。 読みはゆずりねです。AIで小説、楽曲、イラストを製作する 1型糖尿病ソフトウェアデベロッパー(SI系) CFT の中の人なんやで 会社員したり、経営者したりしてたんやで 抑うつの休職明けで四苦八苦しつつみすきーに降臨したんや( ​:igyo:​ ) よく使ってる言語は ​:c_sharp:​ ​:internet_roujinkai:​の会員でな、​:steam:​ の積みゲーを増やすんが趣味なんや。 ブログもたまに書いてるで ​:…"},
+    {"name": "Thankyu315@🏓CLUB☆SV☆もの書き☆朗読youtuber", "acct": "yuruk@misskey.io", "niche": "当事者として発信しています。 神社神道など生活に根ざした祈りを大切にしつつ、 卓球・創作・言葉を通して、回復とつながりを探しています。 誰かを変えるためではなく、選択肢を増やすために。 身体（卓球）／生活（祈り・習慣）／語り（創作・当事者研究） この三点から、無理のない回復を実践中。 即効性や支配的な支援より、 本人のペースと沈黙が尊重される関わりを大切にしています。 無理に前向きにならなくて大丈夫。 ASD・統合失調症の当事者 表現の自由を重視／AI活用派・AI差別反対 卓球療法士／カクヨムで執筆 Discord「卓球のよろ鯖」運営 成人済アラサー／札幌 しんどさを一人で抱え込まない場を、 …"},
+    {"name": "ウマ王子【一口馬主YouTuber】", "acct": "umapuri@mastodon.social", "niche": "『ウマ王子の一口馬主ブログ』 https:// uma-oz.hatenablog.com/ 『ウマ王子の競馬ちゃんねる』 https:// youtube.com/@user-tr9df9wi9g"},
+    {"name": "愛花-あいか YouTuber", "acct": "Aika_YouTube@wake.0am.jp", "niche": "初めまして！ 愛花です！ YouTubeで活動していて、歌ってみたやガチャガチャを回したりしているので、よろしくお願いします！ チャンネル登録お願いします！！！ YouTube https://m.youtube.com/channel/UC7nDMtUFCplsIJQ-zod0TCw"},
+    {"name": "YouTuber", "acct": "author/youtuber@upvo.me", "niche": "SUBSCRIBE TO MY YOUTUBE CHANNEL"},
+    {"name": "村卯", "acct": "murau@misskey.io", "niche": "にじりよるドーナツ #サイゼリヤ略 All rights reserved reproduction prohibited"},
+    {"name": "InsiderPhD", "acct": "insiderphd@infosec.exchange", "niche": "Application security, API security, bug bounty hunting, and practical security research education."},
+    {"name": "Kureha_Project(メンサ会員Youtuber)", "acct": "Kureha_Project@mstdn.jp", "niche": "Youtuber / 高IQ団体：METIQ(入会基準：IQ156↑)＆MENSA(入会基準：IQ131↑)所属. / 研究者 / Youtubeチャンネル名：KurehaProject (クレハプロジェクト)."},
+    {"name": "Open Latin", "acct": "lingualatina@colloquium.social", "niche": "Help us create Open Latin resources # Classics # LinguaLatina # latin ? # latineloquor # salvete"},
+    {"name": "Blacks In Cybersecurity HQ", "acct": "blacksincyber@infosec.exchange", "niche": "Blacks In # Cybersecurity ™️ Official HQ 🏠 | # LitLikeBIC |#BlacksInCyber | 34ch-0n3-734ch-M4ny | 2x DC Black Badge CTF 🏆💻🏴‍☠️ blacksincyber@infosec.exchange/defconsocial # ShareTheMicInCyber"},
+    {"name": "Brodie Robertson", "acct": "BrodieOnLinux@mstdn.social", "niche": "Linux, Wayland, and FOSS commentary. Creator of Tech Over Tea and advocate for open-source software."},
+    {"name": "Coding Grace", "acct": "codinggrace@mastodon.ie", "niche": "🇮🇪 An Irish not-for-profit advocating # DiversityInTech through events, collaboration, and curating # NorthernIrish & # Irish events. @ whykay / @ micktwomey / @ roundcrisis"},
+    {"name": "CodingKurzgeschichten", "acct": "CodingKurzgeschichten@mastodontech.de", "niche": "My name is Thomas Schlögl and I love coding 👨‍💻, maths and physics. I am teaching # Programming and # Softwaredevelopment in Vienna at # htldonaustadt in the # Informatik department. Other accounts: 🇦🇹 @ CodingShortStories mostly Vienna related stuff 📱 @hachyderm.io@7h0m45 coding stuff"},
+    {"name": "Emily Bache", "acct": "emilybache@sw-development-is.social", "niche": "Technical Coach, creator of Samman Coaching, Youtuber, Author. she/her."},
+    {"name": "Future Coding", "acct": "shaharyarranjah1@mastodon.social", "niche": "It's shaharyarranjah1 content creator and software engineer and and data scientist Currently teaching on YouTube. # shaharyarranjah1 # softwareengineer # aiengineer https://www. youtube.com/@shaharyarranjah1"},
+    {"name": "Graphics Programming Meetup", "acct": "graphicsmeetup@mastodon.gamedev.place", "niche": "A virtual meetup dedicated to graphics programming. We meet online every week. Organized by @ lesley , @ Cdgiessen , and Jonathan Baker"},
+    {"name": "LINux on MOBile", "acct": "linmob@linuxmobile.social", "niche": "Hi! This is the main Fediverse account of a blog about LINux on MOBile devices – linmob.net. It's has been restarted in 2020 because of the PinePhone and continues to report the news on Mobian, postmarketOS, Sailfish OS, Ubuntu Touch and the hardware these alternative operating systems run on. Used …"},
+    {"name": "Linux For All", "acct": "llp@infosec.exchange", "niche": "GNU/Linux lover, so its content creator. Making people aware of GNU/Linux🐂🐧.  Daily tweets on GNU/Linux🐂🐧, Networking🌐, Shell Scripting✍️ and Security🥷"},
+    {"name": "Linux Lads Podcast", "acct": "linuxlads@mastodon.ie", "niche": "A podcast about Linux and Open Source from a bunch of lads. Co-hosted by Amolith ( @ amolith ), Conor ( @ techcelt ), Mike ( @ mikee ), and Shane ( @ stranded_output ). Edited by Jake ( @ jbauer )."},
+    {"name": "Linux Trend", "acct": "linuxtrend@mastodon.social", "niche": "!!! MOVED to @ neoncipher account !!! https:// mastodon.social/@neoncipher https://www. youtube.com/channel/UCqif17xcn ejoBb43IQTvBZw"},
+    {"name": "Molten Software", "acct": "vileboss@bitbang.social", "niche": "Molten Software - 🌱🇵🇷 T I N K E R E R - Crohn's disease victim"},
+    {"name": "Nir Lichtman / Low Level Learning", "acct": "lowlevellearning@infosec.exchange", "niche": "Low-level programming, operating systems, C, assembly, reverse engineering, and computer internals."},
+    {"name": "Open Titus", "acct": "opentitus@mastodon.uno", "niche": "Youtuber e blogger dal mondo del Pinguino🐧 ❤️ Per sostenere il canale: https:// paypal.me/opentitus"},
+    {"name": "Paul's Hardware", "acct": "paulshardware@techhub.social", "niche": "I make tech videos on YouTube: https:// youtube.com/@paulshardware"},
+    {"name": "Raul Craveiro / Diolinux", "acct": "raulcraveiro@mastodon.online", "niche": "Portuguese-language Linux, open-source software, internet, and productivity content from the Diolinux team."},
+    {"name": "Software Craft Strasbourg", "acct": "swcraftstras@mobilizon.fr", "niche": "@swcraftstras | #swcraftstras La communauté Software Craft Strasbourg réunit les développeu(r|se)s, sans sexisme ni élitisme, quelque soit le langage ou la techno. Venez prolonger les discussions sur le Discord du meetup ! Inscriptions ici . swcraftstras.github.io — Discord — Youtube"},
+    {"name": "Software Defined Talk", "acct": "softwaredefinedtalk@hachyderm.io", "niche": "A weekly podcast covering all the news and events in Enterprise Software and Cloud Computing. Threads: @ softwaredefinedtalk"},
+    {"name": "Tech Interceptor", "acct": "TechInterceptor@mastodon.online", "niche": "Keyboard | Mice | EDC | PC & Gear Loving tech, one gadget at a time! ⚡"},
+    {"name": "Tech Over Tea", "acct": "TechOverTeaShow@mastodon.social", "niche": "Sometimes there will be tech, maybe even some tea, but it'll always be an interesting ride. Hosted by @ BrodieOnLinux"},
+    {"name": "Tech Tales Podcast", "acct": "techtales@mas.to", "niche": "Tech Tales is a podcast exploring the technology world's epic failures, forgotten successes, and everything in between. Hosted by @ corbin . Made without generative AI."},
+    {"name": "Tech Tangents", "acct": "TechTangents@dialup.space", "niche": ""},
+    {"name": "TechHut", "acct": "tech@distrotoot.com", "niche": "Youtube content creator, Linux and open source enthusiast, overall geek."},
+    {"name": "Techlore", "acct": "techlore@social.lol", "niche": "Digital rights, privacy, security, anonymity tools, and practical guidance for safer technology use."},
+    {"name": "Technology Connections", "acct": "TechConnectify@mas.to", "niche": "I'm that snarky, sometimes cranky YouTube person who told you about how dishwashers work. I post many things which should not be taken too seriously (on account of the cranky snark thing). If you think I'm mad at you, I'm almost certainly not! Friendly and helpful, if strongly opinionated."},
+    {"name": "The Cybersecurity Librarian", "acct": "cyberlibrarian@infosec.exchange", "niche": "Cyber Threat Manager, Detection Engineer, Threat Hunter, and CTI analyst... also a professional librarian! CISM, MLIS, CTIA, GCIA, GCWN \"Cataloguing threats, curating intel, and teaching cyber literacy.\" # ThreatHunting # DetectionEngineering # CTI # CyberThreatIntelligence # Librarian # InfoSec # C…"},
+    {"name": "Tom Lawrence / Lawrence Systems", "acct": "tomlawrence@infosec.exchange", "niche": "Networking, pfSense/OPNsense, MSP business, and homelab. Practical deep-dives for IT professionals and self-hosters."},
+    {"name": "Wolfgang's Channel", "acct": "notthebee@tilde.zone", "niche": "Linux, NixOS, self-hosting, and efficient computing. Opinionated takes on minimalist but powerful setups."},
   ];
+  /* DATA:END */
 
-  const APP_NAME    = "Tech YouTubers Follow Pack";
+  const APP_NAME    = "YouTubers on Mastodon Follow Pack";
   const APP_WEBSITE = "https://matthewdeanmartin.github.io/tech_youtubers/";
   const DEFAULT_SCOPES = "profile read:accounts read:search read:follows write:follows";
 

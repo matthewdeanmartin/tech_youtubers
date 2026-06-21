@@ -60,7 +60,9 @@ jobs:
         run: npm ci
 
       - name: Generate pages from data
-        run: uv run python generate_pages.py
+        run: |
+          uv run python scripts/check_mastodon_links.py
+          uv run python generate_pages.py
 
       - name: Build production site
         run: uv run pelican content -o output -s publishconf.py
@@ -71,25 +73,7 @@ jobs:
         # DELETE_OUTPUT_DIRECTORY=True, so we must copy these AFTER Pelican runs.
         # {{SITEURL}} placeholders in HTML are substituted with the production base
         # URL so CSS and nav links resolve correctly under the /tech_youtubers/ prefix.
-        run: |
-          python - /tech_youtubers <<'EOF'
-          import shutil, pathlib, sys
-          siteurl = sys.argv[1]
-          src = pathlib.Path("static")
-          dst = pathlib.Path("output")
-          if src.is_dir():
-              for f in src.rglob("*"):
-                  if f.is_file():
-                      rel = f.relative_to(src)
-                      target = dst / rel
-                      target.parent.mkdir(parents=True, exist_ok=True)
-                      if f.suffix in (".html", ".htm"):
-                          text = f.read_text(encoding="utf-8").replace("{{SITEURL}}", siteurl)
-                          target.write_text(text, encoding="utf-8")
-                      else:
-                          shutil.copy2(f, target)
-                      print(f"  copied: {rel} (siteurl={siteurl!r})")
-          EOF
+        run: uv run python scripts/copy_static.py /tech_youtubers
 
       - name: Run Python quality gates
         run: |

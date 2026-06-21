@@ -8,7 +8,7 @@ CONFFILE=$(BASEDIR)/pelicanconf.py
 PUBLISHCONF=$(BASEDIR)/publishconf.py
 
 help:
-	@echo 'Makefile for Tech YouTubers Directory site'
+	@echo 'Makefile for YouTubers on Mastodon'
 	@echo ''
 	@echo 'Page generation:'
 	@echo '   make generate-pages    generate Pelican pages from data/ JSON'

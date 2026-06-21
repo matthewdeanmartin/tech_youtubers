@@ -1,21 +1,23 @@
-# Tech YouTubers Directory
+# YouTubers on Mastodon
 
-A static website listing and reviewing tech YouTubers with an active Mastodon or Bluesky presence, organized by their primary tech stack.
+A static directory of YouTube creators and channel feeds found through Mastodon profile evidence.
 
-This website makes it easy for users new to Mastodon and Bluesky to find and follow the programming teachers, content creators, and tech celebs they know.
+This website makes it easier to find YouTube creators on Mastodon and distinguish creator-run
+profiles from automated channel feeds.
 
 ## Features
 
-- **Organized by Tech Stack**: Easily browse creators focusing on JavaScript, Python, Rust, Go, Mobile, Databases, etc.
+- **Topic categories**: Browse technology, gaming, education, music, art, news, culture, and hobbies.
 - **Bulk Follow lists**: Copy-paste handle lists or download a CSV to upload directly to Mastodon.
-- **Creator Profiles**: Custom bio pages and reviews of their typical content and social accounts.
+- **Honest account labels**: Native profiles are separated from RSS feeds, bots, and bridges.
 - **Comprehensive Quality Gates**: Built-in HTML validation, link checking, browser compatibility audit, and accessibility (WCAG2AA) verification.
 
 ## Architecture
 
 This site is built with:
 - **[Pelican](https://getpelican.com/)**: Python static site generator.
-- **JSON Database**: `data/youtubers.json` stores creator metadata.
+- **Mastodon-first discovery**: profile searches are collected into a local SQLite evidence store.
+- **Curated JSON directory**: `data/youtubers.json` contains only publishable creators.
 - **Vanilla CSS**: Premium dark/light themes without utility classes.
 
 ## Development Tasks
@@ -43,9 +45,43 @@ just devserver
 just quality
 ```
 
+## Mastodon-first discovery pipeline
+
+The discovery direction is intentionally Mastodon → YouTube. The number of YouTube channels is
+effectively unbounded, while the set of Mastodon profiles that identify themselves as YouTube
+creators is tractable.
+
+Copy `.env.example` to `.env` and supply a Mastodon application access token. `.env` and the local
+SQLite database are gitignored.
+
+```bash
+# Search profile metadata across broad YouTube topics. Results are upserted,
+# so this can be run repeatedly with more queries or pages.
+just discover-mastodon
+just discover-mastodon --query "retro computing youtube" --pages 20
+
+# Inspect profiles whose bio or profile fields contain a direct YouTube channel URL.
+just mastodon-candidates --limit 200
+
+# Categorize every evidence-backed profile, then publish the catalog.
+just categorize-mastodon
+just publish-candidates
+just build
+```
+
+Candidates are stored in `data/mastodon_candidates.sqlite`, including the raw Mastodon account,
+the query that found it, and the exact bio/profile-field evidence for each YouTube channel link.
+A profile mentioning YouTube without linking a channel does not qualify. Category, confidence,
+matched terms, and account type are stored for review. Native accounts are included in follow
+packs; automated channel feeds remain discoverable in the directory but are clearly labeled.
+
+Automatic categories are intentionally reviewable. Add durable human corrections to
+`data/category_overrides.json`, keyed by the full `user@server` Mastodon address; publishing marks
+those classifications as `curated`.
+
 ## Contributing
 
 Suggestions are welcome! To add a creator:
-1. Ensure the creator has a YouTube channel and a Mastodon or Bluesky profile.
+1. Ensure the creator has a YouTube channel and a working Mastodon profile.
 2. Add them to `data/youtubers.json`.
-3. Run `just build` to generate the new pages.
+3. Run `just check-mastodon` and `just build`.

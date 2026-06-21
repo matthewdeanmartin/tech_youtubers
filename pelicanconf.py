@@ -1,8 +1,8 @@
 from datetime import datetime
 
-AUTHOR = 'Tech YouTubers Directory'
-SITENAME = 'Tech YouTubers Directory'
-SITESUBTITLE = 'Find and bulk follow tech celebrities with a Mastodon or Bluesky presence.'
+AUTHOR = 'YouTubers on Mastodon'
+SITENAME = 'YouTubers on Mastodon'
+SITESUBTITLE = 'Find YouTube creators, channel feeds, and real people to follow on Mastodon.'
 SITEURL = ''
 CURRENTYEAR = datetime.now().year
 GENERATED_DATE = datetime.now().strftime('%Y-%m-%d')
@@ -49,4 +49,3 @@ CATEGORIES_SAVE_AS = ''
 TAG_URL = 'tag/{slug}/'
 TAG_SAVE_AS = 'tag/{slug}/index.html'
 TAGS_SAVE_AS = 'tags/index.html'
-

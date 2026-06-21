@@ -1,206 +1,2234 @@
 [
   {
-    "id": "hussein-nasser",
-    "name": "Hussein Nasser",
-    "tech_stack": "databases",
-    "youtube_url": "https://www.youtube.com/@HusseinNasser-",
-    "mastodon_url": null,
-    "bluesky_url": "https://bsky.app/profile/hnasser.bsky.social",
-    "description": "Deep dives into backend engineering, databases, networking protocols, proxy servers (NGINX, HAProxy), and system design.",
-    "subscribers": "320K",
-    "reviewed": true,
-    "review_slug": "hussein-nasser"
+    "id": "bbc-music",
+    "name": "BBC Music",
+    "category": "art-making",
+    "category_confidence": "high",
+    "category_evidence": [
+      "artist",
+      "art"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@BBCMusic",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_BBCMusic",
+    "mastodon_acct": "youtube_BBCMusic@rss-mstdn.studiofreesia.com",
+    "description": "BBC Music brings you the biggest artists in the world from the biggest events.There's tracks from the legendary festivals like Glastonbury and Reading and Le... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 38,
+    "reviewed": false,
+    "review_slug": "bbc-music"
   },
   {
-    "id": "david-bombal",
-    "name": "David Bombal",
-    "tech_stack": "devops",
-    "youtube_url": "https://www.youtube.com/@davidbombal",
-    "mastodon_url": "https://infosec.exchange/@davidbombal",
-    "bluesky_url": null,
-    "description": "Networking, cybersecurity, Linux, and IT training. Covers everything from CCNA prep to ethical hacking and Python scripting.",
-    "subscribers": "1.1M",
+    "id": "korone-ch",
+    "name": "Korone Ch. 戌神ころね",
+    "category": "art-making",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "絵"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@InugamiKorone",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_InugamiKorone",
+    "mastodon_acct": "youtube_InugamiKorone@rss-mstdn.studiofreesia.com",
+    "description": "ホロライブ所属、戌神ころね🥐です！ころねのTwitter https:// twitter.com/inugamikoroneファンアート # できたてころね生放送タグ # 生神もんざえもんファンネーム # ころねすきー 🥐メンバーシップ🥐 ‣名前の後ろにメンバー限定のバッジがつくよ！‣メンバーさんだけの絵文字が使用... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 35,
     "reviewed": false,
-    "review_slug": "david-bombal"
-  },
-  {
-    "id": "jeff-geerling",
-    "name": "Jeff Geerling",
-    "tech_stack": "devops",
-    "youtube_url": "https://www.youtube.com/@JeffGeerling",
-    "mastodon_url": "https://mastodon.social/@geerlingguy",
-    "bluesky_url": null,
-    "description": "Raspberry Pi, homelab, open source, and hardware projects. Runs thorough benchmarks and guides for self-hosters and tinkerers.",
-    "subscribers": "600K",
-    "reviewed": false,
-    "review_slug": "jeff-geerling"
-  },
-  {
-    "id": "techno-tim",
-    "name": "Techno Tim",
-    "tech_stack": "devops",
-    "youtube_url": "https://www.youtube.com/@TechnoTim",
-    "mastodon_url": "https://mastodon.social/@technotim",
-    "bluesky_url": null,
-    "description": "Homelab, Kubernetes, self-hosting, and cloud-native tutorials. Makes HomeLab setups accessible for everyone.",
-    "subscribers": "400K",
-    "reviewed": false,
-    "review_slug": "techno-tim"
-  },
-  {
-    "id": "tom-lawrence",
-    "name": "Tom Lawrence / Lawrence Systems",
-    "tech_stack": "devops",
-    "youtube_url": "https://www.youtube.com/@lawrencesystems",
-    "mastodon_url": "https://infosec.exchange/@tomlawrence",
-    "bluesky_url": null,
-    "description": "Networking, pfSense/OPNsense, MSP business, and homelab. Practical deep-dives for IT professionals and self-hosters.",
-    "subscribers": "220K",
-    "reviewed": false,
-    "review_slug": "tom-lawrence"
-  },
-  {
-    "id": "zollotech",
-    "name": "Aaron Zollo / Zollotech",
-    "tech_stack": "general",
-    "youtube_url": "https://www.youtube.com/@zollotech",
-    "mastodon_url": "https://mastodon.social/@zollotech",
-    "bluesky_url": null,
-    "description": "Tech YouTuber focused mostly on Apple — iOS, macOS, iPad, and general consumer tech reviews and tips.",
-    "subscribers": "900K",
-    "reviewed": false,
-    "review_slug": "zollotech"
-  },
-  {
-    "id": "brodie-robertson",
-    "name": "Brodie Robertson",
-    "tech_stack": "general",
-    "youtube_url": "https://www.youtube.com/@BrodieRobertson",
-    "mastodon_url": "https://mstdn.social/@BrodieOnLinux",
-    "bluesky_url": null,
-    "description": "Linux, Wayland, and FOSS commentary. Creator of Tech Over Tea and strong advocate for open-source software.",
-    "subscribers": "130K",
-    "reviewed": false,
-    "review_slug": "brodie-robertson"
-  },
-  {
-    "id": "eposvox",
-    "name": "EposVox",
-    "tech_stack": "general",
-    "youtube_url": "https://www.youtube.com/@EposVox",
-    "mastodon_url": "https://glitch.lgbt/@EposVox",
-    "bluesky_url": null,
-    "description": "Streaming tech, capture cards, OBS, and creator hardware. Deep technical reviews for content creators.",
-    "subscribers": "300K",
-    "reviewed": false,
-    "review_slug": "eposvox"
+    "review_slug": "korone-ch"
   },
   {
     "id": "matt-ferrell",
     "name": "Matt Ferrell / Undecided",
-    "tech_stack": "general",
+    "category": "art-making",
+    "category_confidence": "high",
+    "category_evidence": [
+      "design",
+      "designer"
+    ],
+    "account_type": "native",
     "youtube_url": "https://www.youtube.com/@undecidedtechnology",
+    "youtube_evidence_source": "bio",
     "mastodon_url": "https://mastodon.social/@mattferrell",
-    "bluesky_url": null,
+    "mastodon_acct": "mattferrell@mastodon.social",
     "description": "Clean tech, energy, and future technology explained clearly. Covers EVs, solar, wind, and emerging sustainable tech.",
-    "subscribers": "730K",
+    "followers": 2947,
     "reviewed": false,
     "review_slug": "matt-ferrell"
   },
   {
-    "id": "the-linux-experiment",
-    "name": "Nick / The Linux Experiment",
-    "tech_stack": "general",
-    "youtube_url": "https://www.youtube.com/@TheLinuxExperiment",
-    "mastodon_url": "https://mastodon.social/@thelinuxEXP",
-    "bluesky_url": null,
-    "description": "Linux desktop news, FOSS reviews, and distro comparisons. Covers the Linux desktop experience from a daily-driver perspective.",
-    "subscribers": "260K",
+    "id": "subaru-ch",
+    "name": "Subaru Ch. 大空スバル",
+    "category": "art-making",
+    "category_confidence": "high",
+    "category_evidence": [
+      "絵",
+      "イラスト"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@OozoraSubaru",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_OozoraSubaru",
+    "mastodon_acct": "youtube_OozoraSubaru@rss-mstdn.studiofreesia.com",
+    "description": "総合格闘技部とe-sports部のマネージャーっす！みんなのファイトのお手伝いするッス!!🌟【関連ツイート】 # 大空スバル 【絵文字】🚑【生放送タグ】 # 生スバル 【アート】 # プロテインザスバル 【ﾌｧﾝﾈｰﾑ】スタンド ※このタグのイラストは使わせてもらう事があるっす！ 大好きな母ちゃん!→@ui_shig このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 67,
     "reviewed": false,
-    "review_slug": "the-linux-experiment"
+    "review_slug": "subaru-ch"
+  },
+  {
+    "id": "youtuber-4",
+    "name": "YouTuber神宮寺匁トロロ",
+    "category": "art-making",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "絵"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UCsvwCi51I9pFl3fVf18pWEQ",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://fedibird.com/@tororo_family",
+    "mastodon_acct": "tororo_family@fedibird.com",
+    "description": "プロアーティスト' # 魔術絵師 'チャンネル登録数1万人'荒野の光マント,枠'UUUMネットワーク'荒野のルーキー'㌰㌰らんど'GIFT' ◆タワーレコード⇨ https:// onl.bz/3LW1cEZ ◆リンク⇨ https:// linktr.ee/tororo.family",
+    "followers": 0,
+    "reviewed": false,
+    "review_slug": "youtuber-4"
+  },
+  {
+    "id": "creator-11",
+    "name": "【アニメ】名探偵コナン",
+    "category": "art-making",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "anime",
+      "アニメ"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@conan_anime",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_conan_anime",
+    "mastodon_acct": "youtube_conan_anime@rss-mstdn.studiofreesia.com",
+    "description": "アニメ「名探偵コナン」放送開始から27年目に突入。【名探偵コナン】 YouTube チャンネルでは、アニメシリーズ、劇場版の情報を中心に名探偵コナンの魅力をお届けしていきます。シリーズ１・第１話から無料配信。人気キャラクターの初登場シーンもお見逃しなく！ぜひチャンネル登録をお願いします！https://bit... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 38,
+    "reviewed": false,
+    "review_slug": "creator-11"
+  },
+  {
+    "id": "youtuber-2",
+    "name": "あき / 写真で癒すYouTuber",
+    "category": "art-making",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "写真"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@aki_photo",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://misskey.io/@aki_photo",
+    "mastodon_acct": "aki_photo@misskey.io",
+    "description": "写真好きでオタクで理系（工学系）なお仕事してる私です✨ カメラとか理系分野とか好きな方は絡みましょー ‼️ YouTubeもやってたり...よかったら見てね 💖",
+    "followers": 32,
+    "reviewed": false,
+    "review_slug": "youtuber-2"
+  },
+  {
+    "id": "2",
+    "name": "さいとうなおき2",
+    "category": "art-making",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "イラスト"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@saitonaoki2",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_saitonaoki2",
+    "mastodon_acct": "youtube_saitonaoki2@rss-mstdn.studiofreesia.com",
+    "description": "イラストレーター さいとうなおきのチャンネル✨2023年3月22日にアカウントを消されてしまったので再出発です🔥イラストに関するお役立ち情報をお届けします🍀【twitter】 https:// twitter.com/_NaokiSaito【Thread s】https://www.threads.net/@_na ... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 52,
+    "reviewed": false,
+    "review_slug": "2"
+  },
+  {
+    "id": "creator-10",
+    "name": "ザエモンティーナ",
+    "category": "art-making",
+    "category_confidence": "high",
+    "category_evidence": [
+      "art",
+      "イラスト"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@monasmr08",
+    "youtube_evidence_source": "field:Youtubeチャンネル🎙️(ザエモンティーナASMR)",
+    "mastodon_url": "https://misskey.io/@TinaZaenon",
+    "mastodon_acct": "TinaZaenon@misskey.io",
+    "description": "ちょっぴりオジさんっぽい猫、ザエモンティーナとその仲間たちのゆるいイラストを描いてます #1日1ザエモン ​:skeb:​ skeb募集中！ YouTubeにてASMR動画も毎週配信してます ​:youtube:​ リアクション嬉しいです ​:af_rosacat_heart_happy:​ 〔無断転載AI学習禁止 🚫 〕 #一次創作 #オリジナルキャラクター #ねこ",
+    "followers": 30,
+    "reviewed": false,
+    "review_slug": "creator-10"
+  },
+  {
+    "id": "morechand",
+    "name": "モレシャン/Morechand",
+    "category": "art-making",
+    "category_confidence": "high",
+    "category_evidence": [
+      "illustrator",
+      "絵",
+      "イラスト",
+      "写真"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UC_PmYp-HbRlbkCqstWl4moA",
+    "youtube_evidence_source": "field:Youtube",
+    "mastodon_url": "https://misskey.io/@morechand",
+    "mastodon_acct": "morechand@misskey.io",
+    "description": "​:role_illustrator:​ ばすき @morechand@misskey.backspace.fm TCG(ヴァンガード/WIXOSS...etc)＆書籍&ゲーム周りで絵を描いてることがあります 絵と食い物と酒と忙しいアピールを投げます ローカル見て軽率に ​:reaction:​ します フォロフォロバ ​:reaction:​などは​:ikioi_daiji:​​:hunikideyatteru:​ ノリでやってくのでよろしくね 謎にJSAワインエキスパートとワイン国際認定資格WSET Level3持ち 酒はワインしか飲めないからだにされちまった ※イラストおよび写真画像の無…",
+    "followers": 336,
+    "reviewed": false,
+    "review_slug": "morechand"
+  },
+  {
+    "id": "creator-3",
+    "name": "大麒麟",
+    "category": "art-making",
+    "category_confidence": "low",
+    "category_evidence": [
+      "動画編集"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@%E6%AD%A6%E5%86%85%E5%AE%BF%E7%A6%B0-f3l",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://misskey.io/@Daikirinn",
+    "mastodon_acct": "Daikirinn@misskey.io",
+    "description": "趣味で動画編集してます。 Twitterに何かあった時ようにアカウント作成しました。 https://www.youtube.com/@%E6%AD%A6%E5%86%85%E5%AE%BF%E7%A6%B0-f3l",
+    "followers": 229,
+    "reviewed": false,
+    "review_slug": "creator-3"
+  },
+  {
+    "id": "boiler-room",
+    "name": "Boiler Room",
+    "category": "culture-entertainment",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "film"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@boilerroom",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_boilerroom",
+    "mastodon_acct": "youtube_boilerroom@rss-mstdn.studiofreesia.com",
+    "description": "Connecting club culture to the wider world, on screen and irl through parties, film and video. このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 115,
+    "reviewed": false,
+    "review_slug": "boiler-room"
+  },
+  {
+    "id": "tarantinotoriyama-youtube",
+    "name": "TarantinoToriyama (Youtube)",
+    "category": "culture-entertainment",
+    "category_confidence": "curated",
+    "category_evidence": [
+      "Spanish-language review and criticism channel."
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UCCUhe7cfOGwZwpu1K637b7A",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://mastodon.social/@tarantinotoriyama",
+    "mastodon_acct": "tarantinotoriyama@mastodon.social",
+    "description": "Con o sin tu ayuda no voy a rendirme. Trabajaré duro para que Tarantinotoriyama sea un canal de referencia en Youtube 💪💪 ⤵️⤵️ https://www. youtube.com/TarantinoToriyama ⭐NUEVO⭐ Canal⭐ CapitanHater 👇 Críticas⤵️⤵️ https://www. youtube.com/channel/UCCUhe7cfO GwZwpu1K637b7A",
+    "followers": 108,
+    "reviewed": false,
+    "review_slug": "tarantinotoriyama-youtube"
+  },
+  {
+    "id": "techhut-2",
+    "name": "TechHut",
+    "category": "culture-entertainment",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "tv",
+      "media"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/c/techhuthd",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://fosstodon.org/@techhut",
+    "mastodon_acct": "techhut@fosstodon.org",
+    "description": "Yes, I use this account and check it out frequently. No, you don't need to tag an admin to try to get me in trouble. TechHut Media.",
+    "followers": 2904,
+    "reviewed": false,
+    "review_slug": "techhut-2"
+  },
+  {
+    "id": "tv-youtuber",
+    "name": "だだだTV@YouTuber",
+    "category": "culture-entertainment",
+    "category_confidence": "low",
+    "category_evidence": [
+      "tv"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UC2GkSteQXqwcJp0TeEsFegw",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://mstdn.jp/@dadadaTV",
+    "mastodon_acct": "dadadaTV@mstdn.jp",
+    "description": "新米YouTuberのだだだTVです!!!面白いことをお届けしていきます！お気軽にフォローしてください！ ↓↓↓チャンネルはこちら↓↓↓ https://www. youtube.com/channel/UC2GkSteQX qwcJp0TeEsFegw",
+    "followers": 14,
+    "reviewed": false,
+    "review_slug": "tv-youtuber"
+  },
+  {
+    "id": "youtube-2",
+    "name": "東映特撮YouTube",
+    "category": "culture-entertainment",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "特撮"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@TTYO",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_TTYO",
+    "mastodon_acct": "youtube_TTYO@rss-mstdn.studiofreesia.com",
+    "description": "＼特撮の＜東映＞が運営するYouTubeチャンネル／仮面ライダーやスーパー戦隊をはじめ、メタルヒーローに不思議コメディといった変わり種まで取り揃えた充実の配信ラインナップ♪東映特撮を思う存分お楽しみください！－レギュラー枠（毎日更新中！）－月曜22時 パワーレンジャー「ＰＯＷＥＲ ＲＡＮＧＥＲＳ ＭＹＳＴＩＣ... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 35,
+    "reviewed": false,
+    "review_slug": "youtube-2"
+  },
+  {
+    "id": "capcomchannel",
+    "name": "CapcomChannel",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "ゲーム",
+      "配信",
+      "capcom",
+      "カプコン"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@capcom",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_capcom",
+    "mastodon_acct": "youtube_capcom@rss-mstdn.studiofreesia.com",
+    "description": "CAPCOM CHANNEL(カプコン チャンネル)は、ゲームソフトメーカー カプコンが運営するチャンネルです。カプコンのゲームタイトルの動画や企画動画などを配信します。 このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 36,
+    "reviewed": false,
+    "review_slug": "capcomchannel"
+  },
+  {
+    "id": "evan-streamer-youtuber",
+    "name": "Evan | Streamer & Youtuber",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "geoguessr",
+      "streamer"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@ArchetypicallyTV",
+    "youtube_evidence_source": "field:Youtube",
+    "mastodon_url": "https://mastodon.social/@ArchetypicalTV",
+    "mastodon_acct": "ArchetypicalTV@mastodon.social",
+    "description": "Casual streamer, Youtuber, and content creator. I play games like Geoguessr, PlateUp!, League, and Overwatch.",
+    "followers": 0,
+    "reviewed": false,
+    "review_slug": "evan-streamer-youtuber"
+  },
+  {
+    "id": "fg-yue-youtuber",
+    "name": "FG_Yue 月伊 遊戲類YouTuber",
+    "category": "gaming",
+    "category_confidence": "low",
+    "category_evidence": [
+      "twitch"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UCbxEe9I-dbrb5mS1TM8J0Vw",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://g0v.social/@FG_Yue",
+    "mastodon_acct": "FG_Yue@g0v.social",
+    "description": "嗨大家好我是遊戲實況主月伊，FPS嚴重成癮，影片不定時更新，主要更新的平台是YouTube，最近也有在Twitch直播 YouTube: https://www. youtube.com/channel/UCbxEe9I-d brb5mS1TM8J0Vw",
+    "followers": 3,
+    "reviewed": false,
+    "review_slug": "fg-yue-youtuber"
+  },
+  {
+    "id": "flare-ch",
+    "name": "Flare Ch. 不知火フレア",
+    "category": "gaming",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "ゲーム"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@ShiranuiFlare",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_ShiranuiFlare",
+    "mastodon_acct": "youtube_ShiranuiFlare@rss-mstdn.studiofreesia.com",
+    "description": "ホロライブ三期生の不知火フレアだよ！歌とゲーム大好きな人間とエルフのハーフエルフ（ダークエルフではない）だよー！よろしくね！ このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 30,
+    "reviewed": false,
+    "review_slug": "flare-ch"
+  },
+  {
+    "id": "marine-ch",
+    "name": "Marine Ch. 宝鐘マリン",
+    "category": "gaming",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "vtuber"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@HoushouMarine",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_HoushouMarine",
+    "mastodon_acct": "youtube_HoushouMarine@rss-mstdn.studiofreesia.com",
+    "description": "宝石、宝、お金が大好きで、海賊になって宝を探すのが夢。海賊船を買うのが目標で今は陸でVTuberをしている。（ようするには今はただの海賊コスプレ女）｡.｡:+* ﾟ ゜ﾟ *+:｡.｡:+* ﾟ ゜ﾟ *+:｡.｡.｡:+*ﾟ ゜ﾟ *+:｡.｡:+*ﾟ ゜ﾟ *+:｡.｡.｡:+*+:｡.｡ホロライブ三期生 ホ... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 68,
+    "reviewed": false,
+    "review_slug": "marine-ch"
+  },
+  {
+    "id": "matsuri-channel",
+    "name": "Matsuri Channel 夏色まつり",
+    "category": "gaming",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "バーチャル",
+      "配信"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@NatsuiroMatsuri",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_NatsuiroMatsuri",
+    "mastodon_acct": "youtube_NatsuiroMatsuri@rss-mstdn.studiofreesia.com",
+    "description": "ホロライブ所属のバーチャルyoutuber、夏色まつりだよっ！！チア部に所属してる美少女JK！！歌歌ったりみんなと話しながら元気に楽しく配信していくから、みんな見てねー！！！Twitterアカウント🏮： https:// twitter.com/natsuiromatsuri＝＝＝ ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ ... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 39,
+    "reviewed": false,
+    "review_slug": "matsuri-channel"
+  },
+  {
+    "id": "mio-channel",
+    "name": "Mio Channel 大神ミオ",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "vtuber",
+      "配信"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@OokamiMio",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_OokamiMio",
+    "mastodon_acct": "youtube_OokamiMio@rss-mstdn.studiofreesia.com",
+    "description": "ホロライブ所属のVtuber✨大神ミオ（ookami mio）だよ🐺Twitter： https:// twitter.com/ookamimio¨¨¨¨¨¨¨¨¨ ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨🎊メンバーシップはじめました🎊🐺大神ミオオリジナルスタンプが使える！🐺メンバーシップ限定配信 ... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 42,
+    "reviewed": false,
+    "review_slug": "mio-channel"
+  },
+  {
+    "id": "nintendo",
+    "name": "Nintendo チャンネル",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "ゲーム",
+      "任天堂"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@NintendoJP",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_NintendoJP",
+    "mastodon_acct": "youtube_NintendoJP@rss-mstdn.studiofreesia.com",
+    "description": "任天堂株式会社のYouTubeチャンネルです。任天堂のゲームに関する映像をお届けします。このチャンネルは日本のお客様を対象としております。ご質問・お問い合わせにはお答えしておりませんのでご容赦ください。 このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 105,
+    "reviewed": false,
+    "review_slug": "nintendo"
+  },
+  {
+    "id": "noel-ch",
+    "name": "Noel Ch. 白銀ノエル",
+    "category": "gaming",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "vtuber"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@ShiroganeNoel",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_ShiroganeNoel",
+    "mastodon_acct": "youtube_ShiroganeNoel@rss-mstdn.studiofreesia.com",
+    "description": "おっとりしているが、なんでも筋力でどうにかする物騒な面を持つ ゆるふわ脳筋女騎士。強さに憧れるあまり、つよつよな人達が集まるVtuber界に武者修行にきた。白銀聖騎士団の団長、白銀ノエルです！是非！白銀聖騎士団の団員さんになってね✨Twitter： https:// twitter.com/shiroganenoel ... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 43,
+    "reviewed": false,
+    "review_slug": "noel-ch"
+  },
+  {
+    "id": "okayu-ch",
+    "name": "Okayu Ch. 猫又おかゆ",
+    "category": "gaming",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "vtuber"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@NekomataOkayu",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_NekomataOkayu",
+    "mastodon_acct": "youtube_NekomataOkayu@rss-mstdn.studiofreesia.com",
+    "description": "Vtuber事務所ホロライブ所属、ゲーマーズの猫又おかゆです😽🍙💭Twitter : https:// twitter.com/nekomataokayu ( sub ) : https:// twitter.com/MO_OKAYU_GU❥・・ ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈ ・・❥Memb... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 62,
+    "reviewed": false,
+    "review_slug": "okayu-ch"
+  },
+  {
+    "id": "patra-channel",
+    "name": "Patra Channel / 周防パトラ",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "vtuber",
+      "ゲーム",
+      "配信",
+      "実況"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@Patra_Suou",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_Patra_Suou",
+    "mastodon_acct": "youtube_Patra_Suou@rss-mstdn.studiofreesia.com",
+    "description": "Vtuberです！ASMR、ゲーム、雑談、歌など配信しています。個人勢です。魔界からヲタク活動したくてやってきた悪魔の女王✨🎮癒しにこだわったASMR配信を毎週月曜日24時にしています。ゲームはジャンル問わず何でも実況！レトロゲーから最新まで実況してます。作曲もしてるよ🎵I'm a demon queen f... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 29,
+    "reviewed": false,
+    "review_slug": "patra-channel"
+  },
+  {
+    "id": "pitman",
+    "name": "Pitman",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "speedrun",
+      "minecraft",
+      "geoguessr",
+      "vtuber",
+      "streamer",
+      "twitch",
+      "ゲーム",
+      "配信"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@Pitman_live",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://misskey.io/@pitman",
+    "mastodon_acct": "pitman@misskey.io",
+    "description": "​:role_streamer:​ ■RTA走者＆旅行散歩配信者。GeoGuessrのRTAで記録狙いを配信しています。ゲームプレイを極めてタイムを追求していくのが大好きです！外出先から散策の配信もしています。一緒にお出かけしましょう！MinecraftエンドラRTA、マリオワールドRTA（世界記録獲得）も。A Vtuber, Speedrunner, IRL streamer. ■Vtuber（セルフ受肉）/Twitchパートナー/Youtubeパートナー/ジオゲッサー公式認証プレーヤー/RTA in Japan 出場/たまに2.5次元 #ぴとまんアート #Pitman_art #Pitma…",
+    "followers": 209,
+    "reviewed": false,
+    "review_slug": "pitman"
+  },
+  {
+    "id": "playstation-japan",
+    "name": "PlayStation Japan",
+    "category": "gaming",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "playstation"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@PlayStationJapan",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_PlayStationJapan",
+    "mastodon_acct": "youtube_PlayStationJapan@rss-mstdn.studiofreesia.com",
+    "description": "ソニー・インタラクティブエンタテインメントジャパンがお届けする、PlayStation® チャンネルへようこそ！最新のタイトルのプロモーションムービーはもちろん、『プレイステーション』がもっと楽しくなるあらゆる動画をご覧いただけます。 このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 71,
+    "reviewed": false,
+    "review_slug": "playstation-japan"
+  },
+  {
+    "id": "roboco-ch",
+    "name": "Roboco Ch. - ロボ子",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "hololive",
+      "twitch"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@Robocosan",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_Robocosan",
+    "mastodon_acct": "youtube_Robocosan@rss-mstdn.studiofreesia.com",
+    "description": "🧸roboco link🧸Twitch : https://www. twitch.tv/robocosan_hololiveTw itter : https:// twitter.com/robocosansubtwitter : https:// twitter.com/maybe_robochan✦••┈┈ ... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 33,
+    "reviewed": false,
+    "review_slug": "roboco-ch"
+  },
+  {
+    "id": "suisei-channel",
+    "name": "Suisei Channel",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "vtuber",
+      "バーチャル",
+      "配信"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@HoshimachiSuisei",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_HoshimachiSuisei",
+    "mastodon_acct": "youtube_HoshimachiSuisei@rss-mstdn.studiofreesia.com",
+    "description": "アイドルVtuberの星街すいせいです！歌とお絵かきとアニメが大好きな１８歳です☄☄目指すはバーチャルライブ！！ぜったい叶えるから応援よろしくね✯▼配信情報etcはTwitterにてチェック！▼ https:// twitter.com/suisei_hosimati このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 45,
+    "reviewed": false,
+    "review_slug": "suisei-channel"
+  },
+  {
+    "id": "tomari-mari-channel",
+    "name": "Tomari Mari channel / 兎鞠",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "ゲーム",
+      "ゲーム配信",
+      "バーチャル",
+      "配信"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@TOMARI_MARI",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_TOMARI_MARI",
+    "mastodon_acct": "youtube_TOMARI_MARI@rss-mstdn.studiofreesia.com",
+    "description": "18:00前後 Shorts🥕毎日Shorts頑張ってるよ✌バーチャルyoutuberの兎鞠まり （とまりまり）です～！雑談とゲーム配信が多めだとおもいまーす！Twitter：@tomari_mari--------------------------------------------------------... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 41,
+    "reviewed": false,
+    "review_slug": "tomari-mari-channel"
+  },
+  {
+    "id": "hololive-vtuber",
+    "name": "hololive ホロライブ - VTuber",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "vtuber",
+      "hololive",
+      "バーチャル"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@hololive",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_hololive",
+    "mastodon_acct": "youtube_hololive@rss-mstdn.studiofreesia.com",
+    "description": "English follows Japanese.VTuber・バーチャルアイドルグループ「ホロライブ」のチャンネルへようこそ！各タレント・チャンネルのチャンネル登録をよろしくお願いします！ホロライブチャンネルでは、3Dショートアニメ『 # ホロぐら 』や動画、所属タレントの企画放送やホロライブの最新情... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 151,
+    "reviewed": false,
+    "review_slug": "hololive-vtuber"
+  },
+  {
+    "id": "vtuber-2",
+    "name": "うみさわ＠Vtuber",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "vtuber",
+      "twitch",
+      "配信"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@UmisawaMizuki",
+    "youtube_evidence_source": "field:Youtube",
+    "mastodon_url": "https://misskey.io/@umi38",
+    "mastodon_acct": "umi38@misskey.io",
+    "description": "走りながら考えるをモットーに、いろいろやってます フォローしてくれた方は大体フォロバします 配信はじめましたが、動画も作りたい",
+    "followers": 420,
+    "reviewed": false,
+    "review_slug": "vtuber-2"
+  },
+  {
+    "id": "creator-6",
+    "name": "はや",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "vtuber",
+      "streamer",
+      "配信"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UCrIwkxSAWkvt5FEteRNfDyw",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://misskey.io/@leycia",
+    "mastodon_acct": "leycia@misskey.io",
+    "description": "​:role_streamer:​​:role_i_like_star:​ その辺に生えてる腐女子兼完全セルフ受肉VTuber 週3くらいで YouTube ​:youtube:​ 配信してます フォローされたらだいたいフォロバするマン",
+    "followers": 1323,
+    "reviewed": false,
+    "review_slug": "creator-6"
+  },
+  {
+    "id": "creator-5",
+    "name": "りーぜ",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "gaming",
+      "minecraft",
+      "vtuber",
+      "streamer",
+      "ゲーム",
+      "配信"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@goghriize",
+    "youtube_evidence_source": "field::youtube: gogh「作業のためのカフェテリア」",
+    "mastodon_url": "https://misskey.io/@KusozakoNemuiyo",
+    "mastodon_acct": "KusozakoNemuiyo@misskey.io",
+    "description": "​:role_minecraft_player:​​:role_gogh_host:​ ​:gogh:​​:youtube:​​:role_streamer:​ ​:gogh:​ で「作業のためのカフェテリア」という カフェを営業するロールプレイにハマり中 ぜひご来店くださいませ。 店内の様子は ​:youtube:​ でライブ配信を 行なっています！高評価チャンネル登録 ​:yoroshikuonegaishimasu:​ ​:colorcode_c0ffee:​ ​:meow_bab:​​:blobcat_pacifier:​ 睡眠へたくそADHD ​:meow_waitwhat:​ 気分…",
+    "followers": 736,
+    "reviewed": false,
+    "review_slug": "creator-5"
+  },
+  {
+    "id": "chvtuber",
+    "name": "アキロゼCh。Vtuber/ホロライブ所属",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "vtuber",
+      "バーチャル"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@AkiRosenthal",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_AkiRosenthal",
+    "mastodon_acct": "youtube_AkiRosenthal@rss-mstdn.studiofreesia.com",
+    "description": "異世界からやってきた癒し系バーチャル女子高生不思議な力で浮いてるツインテールが特徴のハーフエルフオリジナル曲 エルフの故郷曲「シャ・ル・イース」▶ https:// youtu.be/lI861CIVGgo＊＊＊＊＊＊＊＊＊＊ ＊＊＊＊＊＊＊＊＊アローナ！の挨拶で会いに来てね！！みんなの心を癒しにきたアキロゼです！みん ... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 68,
+    "reviewed": false,
+    "review_slug": "chvtuber"
+  },
+  {
+    "id": "creator-13",
+    "name": "ゲームさんぽ /よそ見",
+    "category": "gaming",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "ゲーム"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@gamesampo_yosomi",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_gamesampo_yosomi",
+    "mastodon_acct": "youtube_gamesampo_yosomi@rss-mstdn.studiofreesia.com",
+    "description": "株式会社よそ見（代表：いいだ）の運営するゲームさんぽチャンネルです。概ね週1ペースで更新予定！お仕事のご依頼等々は下記アドレスまでご連絡ください〜！gamesampo@yosomi.co.jp このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 29,
+    "reviewed": false,
+    "review_slug": "creator-13"
+  },
+  {
+    "id": "creator-4",
+    "name": "ゴールドバイン",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "gamer",
+      "twitch",
+      "ゲーム",
+      "ゲーム配信",
+      "配信"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@goldvine",
+    "youtube_evidence_source": "field:YoutubeとXもよかったら見てね！",
+    "mastodon_url": "https://misskey.io/@GOLDVINE",
+    "mastodon_acct": "GOLDVINE@misskey.io",
+    "description": "​:ohayoo:​超！マルチクリエイターのゴールドバインだよ！絵を描く、3D作る、動画編集する、ゲーム配信する！１次創作、うちよそを描くよ！",
+    "followers": 645,
+    "reviewed": false,
+    "review_slug": "creator-4"
+  },
+  {
+    "id": "youtuber-3",
+    "name": "ジェット@バーチャルYouTuber",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "ゲーム",
+      "バーチャル"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UCCMZko5EbnMbxXMDHl0EtzQ",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://mstdn.vtube.media/@jamjet180414",
+    "mastodon_acct": "jamjet180414@mstdn.vtube.media",
+    "description": "今はJavascript教えたいお年頃です❤キューブから卒業したい…🌳初心者の講座が終わったらゲームの作り方講座作る予定～～👼ｲｪｨ♪((└(:3｣┌)┘))ｲｪｨ♪ YouTube https://www. youtube.com/channel/UCCMZko5Eb nMbxXMDHl0EtzQ",
+    "followers": 16,
+    "reviewed": false,
+    "review_slug": "youtuber-3"
+  },
+  {
+    "id": "ch",
+    "name": "フブキCh。白上フブキ",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "ゲーム",
+      "バーチャル"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@ShirakamiFubuki",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_ShirakamiFubuki",
+    "mastodon_acct": "youtube_ShirakamiFubuki@rss-mstdn.studiofreesia.com",
+    "description": "ホロライブ所属、白上フブキです。(Fubuki Shirakami)🌽狐(FOX)のバーチャル狐として活動しています。ゲームや雑談放送や動画を投稿してますよっ。少し…恥ずかしがりな所もあるのですが、皆さんと沢山お話していきたいのでよろしくおねがいします。(^・ω・^§)ﾉ基本オタクです。Twitter➡http... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 63,
+    "reviewed": false,
+    "review_slug": "ch"
+  },
+  {
+    "id": "blue-archive",
+    "name": "ブルーアーカイブ-Blue Archive-",
+    "category": "gaming",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "ゲーム"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@BlueArchive_JP",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_BlueArchive_JP",
+    "mastodon_acct": "youtube_BlueArchive_JP@rss-mstdn.studiofreesia.com",
+    "description": "アプリゲーム「ブルーアーカイブ-Blue Archive-」のYouTubeチャンネルです。サイト： https:// bluearchive.jp/ツイッター：https://t witter.com/Blue_ArchiveJP このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 133,
+    "reviewed": false,
+    "review_slug": "blue-archive"
+  },
+  {
+    "id": "youtube",
+    "name": "ポケモンYouTubeチャンネル",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "ゲーム",
+      "配信",
+      "ポケモン"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@PokemonCoJp",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_PokemonCoJp",
+    "mastodon_acct": "youtube_PokemonCoJp@rss-mstdn.studiofreesia.com",
+    "description": "ポケットモンスター（ポケモン）のYouTubeチャンネルです。ゲーム情報をはじめ、映画、カードゲーム等、ポケモンの全てに関する動画を配信していきます。©2023 Pokémon. ©1995-2023 Nintendo/Creatures Inc./GAME FREAK inc.ポケットモンスター・ポケモン・... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 109,
+    "reviewed": false,
+    "review_slug": "youtube"
+  },
+  {
+    "id": "youtuber-6",
+    "name": "マオ🍊🍂@バーチャルYoutuber",
+    "category": "gaming",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "バーチャル"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@virtualmao",
+    "youtube_evidence_source": "field:【youtube】",
+    "mastodon_url": "https://misskey.io/@virtual_mao",
+    "mastodon_acct": "virtual_mao@misskey.io",
+    "description": "バーチャル二次元美少女youtuber男性マオくんちゃんのアカウント！20歳♂ のJDだよ！ 【hash】 #マオちゃんねる",
+    "followers": 5,
+    "reviewed": false,
+    "review_slug": "youtuber-6"
+  },
+  {
+    "id": "youtuber-8",
+    "name": "ムゥ・フラン・ゾーパー🆒バーチャルYouTuber",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "ゲーム",
+      "バーチャル",
+      "実況"
+    ],
+    "account_type": "bridge",
+    "youtube_url": "https://www.youtube.com/@Zopar_Channel",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://bsky.brid.gy/r/https://bsky.app/profile/zopar.bsky.social",
+    "mastodon_acct": "zopar.bsky.social@bsky.brid.gy",
+    "description": "🆒 レトロゲーム・映画実況・グッズ開封中心のバーチャルYouTuber 🆒 YouTubeのチャンネル登録とXのフォローをしてくれたら激・喜びます 🆒 YouTube→ youtube.com/@Zopar_Channel 🆒 X→ twitter.com/koo_fran_zopar 🌉 bridged from 🦋 zopar.bsky.social , follow @bsky.brid.gy to interact",
+    "followers": 4,
+    "reviewed": false,
+    "review_slug": "youtuber-8"
+  },
+  {
+    "id": "72",
+    "name": "メギド72",
+    "category": "gaming",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "ゲーム"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@megido72_official",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_megido72_official",
+    "mastodon_acct": "youtube_megido72_official@rss-mstdn.studiofreesia.com",
+    "description": "「メギド７２」チャンネルです。PV・ゲーム関連動画などをお届けします！ぜひチャンネル登録お願いします！ このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 28,
+    "reviewed": false,
+    "review_slug": "72"
+  },
+  {
+    "id": "creator",
+    "name": "モブ",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "ゲーム",
+      "ゲーム配信",
+      "配信"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UCAi7O_H4nOnKlNYMMf14o4g",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://misskey.io/@19xxmob",
+    "mastodon_acct": "19xxmob@misskey.io",
+    "description": "おじさんです。のんびりやっていこうと思います。 TLを遡ってリアクションすることがあります、そういうのが苦手な方はご注意ください。 ゲームをすること、漫画を読むことを趣味に生きています。たまにYouTubeでゲーム配信を垂れ流したりしています。 モブの玉ねぎ農園→ https://www.youtube.com/channel/UCAi7O_H4nOnKlNYMMf14o4g マシュマロ受け付け中です https://marshmallow-qa.com/f0egjwjgpi1j4s9?utm_medium=url_text&utm_source=promotion",
+    "followers": 453,
+    "reviewed": false,
+    "review_slug": "creator"
+  },
+  {
+    "id": "creator-14",
+    "name": "伊東ライフ",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "vtuber",
+      "ゲーム"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@itolife",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_itolife",
+    "mastodon_acct": "youtube_itolife@rss-mstdn.studiofreesia.com",
+    "description": "伊東ライフがゲームしたりトークしたりするところだよ。伊東ライフはVtuberとイラストレーターとマンガ家やってるおじさんだよ。 このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 89,
+    "reviewed": false,
+    "review_slug": "creator-14"
+  },
+  {
+    "id": "suo-sango",
+    "name": "周央 サンゴ / Suo Sango【にじさんじ",
+    "category": "gaming",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "バーチャル",
+      "配信"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@SuoSango",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_SuoSango",
+    "mastodon_acct": "youtube_SuoSango@rss-mstdn.studiofreesia.com",
+    "description": "世怜音女学院中等部1年生 演劇同好会の末っ子アイドル にじさんじ所属 バーチャルライバーの周央サンゴだよん💞💞定期💞毎週木曜日 17時～ 放課後演劇自主練習配信「それではみなさんごいっしょに！」毎週土曜日 23時～ ゆるっと雑談配信「おつかれさんご」ンゴといっしょにたのしいおもいしよ！💞メンバーシップ💞... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 54,
+    "reviewed": false,
+    "review_slug": "suo-sango"
+  },
+  {
+    "id": "creator-17",
+    "name": "桜井政博のゲーム作るには",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "ゲーム",
+      "任天堂"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@sora_sakurai_jp",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_sora_sakurai_jp",
+    "mastodon_acct": "youtube_sora_sakurai_jp@rss-mstdn.studiofreesia.com",
+    "description": "『星のカービィ』『大乱闘スマッシュブラザーズ』などのディレクターが､ゲーム制作にまつわる､あるいは役立つ話をします｡目的は､これから世に出るゲームの面白さを少しだけ底上げすること｡なるべくわかりやすくします!※このチャンネルで使用する任天堂ソフトの開発資料および開発ROM映像は、事前に任天堂の許諾を得ています。[... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 31,
+    "reviewed": false,
+    "review_slug": "creator-17"
+  },
+  {
+    "id": "creator-2",
+    "name": "熱田アメノ",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "vtuber",
+      "streamer",
+      "ゲーム",
+      "ゲーム配信",
+      "配信"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@AmenoAtsuta",
+    "youtube_evidence_source": "field:Youtube",
+    "mastodon_url": "https://misskey.io/@AmenoAtsuta",
+    "mastodon_acct": "AmenoAtsuta@misskey.io",
+    "description": "​:role_bisyouzyo:​​:dtmer:​​:role_streamer:​​:role_reaction_shooter:​ ギタリストとDTMerと名古屋バ美肉 #Vtuber と歌ってみたMIX師をやっていてオーディオ​:numa:​に沈んだ​:syounin_yokkyuu_monster:​ 熱田アメノです！ 名前の由来は名古屋にある熱田神宮とそこに祀られている天叢雲剣からです Youtube ​:youtube:​ で歌枠とゲーム配信とコラボ雑談配信をメインにやってます やるゲームはPCゲームならかなり雑食ですが最近は ​:genshin:​やゼンゼロなどのホヨゲーと​…",
+    "followers": 1865,
+    "reviewed": false,
+    "review_slug": "creator-2"
+  },
+  {
+    "id": "vtuber",
+    "name": "藻瑠もるい VTuber",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "vtuber",
+      "ゲーム",
+      "ゲーム配信",
+      "配信",
+      "ポケモン"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UCOI_Fq_mY6xzhG1FyD7Ilew",
+    "youtube_evidence_source": "field::youtube:（チャンネル登録してね）",
+    "mastodon_url": "https://misskey.io/@momomorui07",
+    "mastodon_acct": "momomorui07@misskey.io",
+    "description": "※Misskeyでは​:ecchi:​ イラストも投稿しているので、未成年のフォローはNGです いつもありがとうございます！ ​:youtube:​ でVTuberをしている猫です ・2025年2月から配信活動開始 ・2025年8月に収益化達成！ ・2025年12月にチャンネル登録者数2500人！ 2026/3/23、リンパ腫の猫(10歳)が永眠しました 納豆が好きです ​:syuilo_nattoopen_failed:​ ポケモンZAのカラスバさんが推し お絵描き配信をメインに、ゲーム配信もしてます チャンネル登録よろしくお願いします！ 藻瑠もるいのファンアートタグは #もるいあーと リッ…",
+    "followers": 1989,
+    "reviewed": false,
+    "review_slug": "vtuber"
+  },
+  {
+    "id": "creator-9",
+    "name": "速水漣",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "vtuber",
+      "ゲーム"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@ren-hayami",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://misskey.io/@ren_hayami",
+    "mastodon_acct": "ren_hayami@misskey.io",
+    "description": "​:eiti:​ ゲームシナリオライターです。 ゆっくりフォロバお返ししております。 【2026/02/11】 うちのこyoutubeチャンネルを開設しました。 ぜひお立ち寄りくださいませ。 https://www.youtube.com/@ren-hayami #一次創作 #うちの子 #代理ちゃん #vtuber",
+    "followers": 329,
+    "reviewed": false,
+    "review_slug": "creator-9"
+  },
+  {
+    "id": "creator-8",
+    "name": "𣜿音サクヤ🏇",
+    "category": "gaming",
+    "category_confidence": "high",
+    "category_evidence": [
+      "streamer",
+      "ゲーム",
+      "ゲーム実況",
+      "ゲーム配信",
+      "配信",
+      "実況",
+      "ポケモン"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UCS8ItsCaCDr6c92F9JnHKvA",
+    "youtube_evidence_source": "field:ゲーム実況",
+    "mastodon_url": "https://misskey.io/@peyangu485",
+    "mastodon_acct": "peyangu485@misskey.io",
+    "description": "​:role_streamer:​​:role_nsfw:​ 食品 ​:nsfw:​の​:note:​や​:rn:​ があるため、未成年の方はフォローしないでね。 読みはゆずりねです。AIで小説、楽曲、イラストを製作する 1型糖尿病ソフトウェアデベロッパー(SI系) CFT の中の人なんやで 会社員したり、経営者したりしてたんやで 抑うつの休職明けで四苦八苦しつつみすきーに降臨したんや( ​:igyo:​ ) よく使ってる言語は ​:c_sharp:​ ​:internet_roujinkai:​の会員でな、​:steam:​ の積みゲーを増やすんが趣味なんや。 ブログもたまに書いてるで ​:…",
+    "followers": 767,
+    "reviewed": false,
+    "review_slug": "creator-8"
+  },
+  {
+    "id": "thankyu315-clubsvyoutuber",
+    "name": "Thankyu315@🏓CLUB☆SV☆もの書き☆朗読youtuber",
+    "category": "lifestyle-hobbies",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "卓球"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@Thankuy315",
+    "youtube_evidence_source": "field:youtubeのチャンネル",
+    "mastodon_url": "https://misskey.io/@yuruk",
+    "mastodon_acct": "yuruk@misskey.io",
+    "description": "当事者として発信しています。 神社神道など生活に根ざした祈りを大切にしつつ、 卓球・創作・言葉を通して、回復とつながりを探しています。 誰かを変えるためではなく、選択肢を増やすために。 身体（卓球）／生活（祈り・習慣）／語り（創作・当事者研究） この三点から、無理のない回復を実践中。 即効性や支配的な支援より、 本人のペースと沈黙が尊重される関わりを大切にしています。 無理に前向きにならなくて大丈夫。 ASD・統合失調症の当事者 表現の自由を重視／AI活用派・AI差別反対 卓球療法士／カクヨムで執筆 Discord「卓球のよろ鯖」運営 成人済アラサー／札幌 しんどさを一人で抱え込まない場を、 …",
+    "followers": 117,
+    "reviewed": false,
+    "review_slug": "thankyu315-clubsvyoutuber"
+  },
+  {
+    "id": "youtuber-5",
+    "name": "ウマ王子【一口馬主YouTuber】",
+    "category": "lifestyle-hobbies",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "競馬"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@user-tr9df9wi9g",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://mastodon.social/@umapuri",
+    "mastodon_acct": "umapuri@mastodon.social",
+    "description": "『ウマ王子の一口馬主ブログ』 https:// uma-oz.hatenablog.com/ 『ウマ王子の競馬ちゃんねる』 https:// youtube.com/@user-tr9df9wi9g",
+    "followers": 0,
+    "reviewed": false,
+    "review_slug": "youtuber-5"
+  },
+  {
+    "id": "arte-concert",
+    "name": "ARTE Concert",
+    "category": "music",
+    "category_confidence": "high",
+    "category_evidence": [
+      "music",
+      "concert"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@arteconcert",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_arteconcert",
+    "mastodon_acct": "youtube_arteconcert@rss-mstdn.studiofreesia.com",
+    "description": "Electro, metal, pop, rock, hip-hop... ARTE Concert's Youtube channel provides you with a fine selection of concerts from various musical genres. Subscribe an... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 908,
+    "reviewed": false,
+    "review_slug": "arte-concert"
+  },
+  {
+    "id": "aqua-ch",
+    "name": "Aqua Ch. 湊あくあ",
+    "category": "music",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "singing",
+      "歌"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@MinatoAqua",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_MinatoAqua",
+    "mastodon_acct": "youtube_MinatoAqua@rss-mstdn.studiofreesia.com",
+    "description": "ζ*(・ヮ・)*ζ＜みなさんどうもこんあくあ～！ホロライブ所属すーぱーあいどるゲーマーメイドの湊あくあです！歌ったりゲームすることが大好きです！チャンネル登録してね～～～！ζ*(・ヮ・)*ζ＜konaqua~!!I'm Minato Aqua.I love the game & singing. Super Id... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 44,
+    "reviewed": false,
+    "review_slug": "aqua-ch"
+  },
+  {
+    "id": "blogotheque",
+    "name": "Blogothèque",
+    "category": "music",
+    "category_confidence": "high",
+    "category_evidence": [
+      "music",
+      "concert"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@blogotheque",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_blogotheque",
+    "mastodon_acct": "youtube_blogotheque@rss-mstdn.studiofreesia.com",
+    "description": "To create unique musical moments, dive into the intimacy of a song, testify to the strength of a concert and offer it to as many people as possible through o... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 72,
+    "reviewed": false,
+    "review_slug": "blogotheque"
+  },
+  {
+    "id": "kexp",
+    "name": "KEXP",
+    "category": "music",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "music"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@kexp",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_kexp",
+    "mastodon_acct": "youtube_kexp@rss-mstdn.studiofreesia.com",
+    "description": "KEXP is an international community of music lovers and music makers, and a nonprofit organization fostering relationship and community building through broad... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 573,
+    "reviewed": false,
+    "review_slug": "kexp"
+  },
+  {
+    "id": "npr-music",
+    "name": "NPR Music",
+    "category": "music",
+    "category_confidence": "high",
+    "category_evidence": [
+      "music",
+      "concert"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@nprmusic",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_nprmusic",
+    "mastodon_acct": "youtube_nprmusic@rss-mstdn.studiofreesia.com",
+    "description": "The YouTube channel for NPR Music featuring Tiny Desk Concerts, live shows, documentaries and more. Find more at www.npr.org/music このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 269,
+    "reviewed": false,
+    "review_slug": "npr-music"
+  },
+  {
+    "id": "nts",
+    "name": "NTS",
+    "category": "music",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "music"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@NTSLIVEUK",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_NTSLIVEUK",
+    "mastodon_acct": "youtube_NTSLIVEUK@rss-mstdn.studiofreesia.com",
+    "description": "WORLDWIDE MUSIC PLATFORM - BUILT BY MUSIC LOVERS, FOR MUSIC LOVERS このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 238,
+    "reviewed": false,
+    "review_slug": "nts"
+  },
+  {
+    "id": "rinse-fm",
+    "name": "Rinse FM",
+    "category": "music",
+    "category_confidence": "high",
+    "category_evidence": [
+      "music",
+      "radio"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@rinsefm",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_rinsefm",
+    "mastodon_acct": "youtube_rinsefm@rss-mstdn.studiofreesia.com",
+    "description": "Rinse has dominated London’s radio airwaves for over a decade as a hub of the capital’s thriving urban music community. From Dubstep to Grime to House and ev... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 57,
+    "reviewed": false,
+    "review_slug": "rinse-fm"
+  },
+  {
+    "id": "sub-pop",
+    "name": "Sub Pop",
+    "category": "music",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "record label"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@subpop",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_subpop",
+    "mastodon_acct": "youtube_subpop@rss-mstdn.studiofreesia.com",
+    "description": "Founded by Bruce Pavitt and Jonathan Poneman in 1988, Sub Pop Records is a medium-sized independent record label based in Seattle, WA. With early releases by... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 39,
+    "reviewed": false,
+    "review_slug": "sub-pop"
+  },
+  {
+    "id": "watame-ch",
+    "name": "Watame Ch. 角巻わため",
+    "category": "music",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "歌"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@TsunomakiWatame",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_TsunomakiWatame",
+    "mastodon_acct": "youtube_TsunomakiWatame@rss-mstdn.studiofreesia.com",
+    "description": "ホロライブ所属。吟遊詩人をしながらのんびり旅をしている羊。歌が大好き。もふもふ。とにかくもふもふ。草食系なのでポテチが好物。角巻わためのMember ship始まりました。『Member sheep』下のURLから飛べると思うので、是非応援よろしくお願い致します！ https://www. youtube.com/c ... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 57,
+    "reviewed": false,
+    "review_slug": "watame-ch"
+  },
+  {
+    "id": "youtuber",
+    "name": "愛花-あいか YouTuber",
+    "category": "music",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "歌"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UC7nDMtUFCplsIJQ-zod0TCw",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://wake.0am.jp/@Aika_YouTube",
+    "mastodon_acct": "Aika_YouTube@wake.0am.jp",
+    "description": "初めまして！ 愛花です！ YouTubeで活動していて、歌ってみたやガチャガチャを回したりしているので、よろしくお願いします！ チャンネル登録お願いします！！！ YouTube https://m.youtube.com/channel/UC7nDMtUFCplsIJQ-zod0TCw",
+    "followers": 3,
+    "reviewed": false,
+    "review_slug": "youtuber"
+  },
+  {
+    "id": "annnewsch",
+    "name": "ANNnewsCH",
+    "category": "news-society",
+    "category_confidence": "high",
+    "category_evidence": [
+      "news",
+      "ニュース"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@ANNnewsCH",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_ANNnewsCH",
+    "mastodon_acct": "youtube_ANNnewsCH@rss-mstdn.studiofreesia.com",
+    "description": "テレビ局ならではの正確なニュース・情報をスピーディーに高画質で!!テレビ朝日系列26局が総力を挙げ取材したニュースはもちろん、天気予報や注目の記者会見、ライブ配信など盛りだくさん！Note: The news script automatically converted to audio will be our ... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 156,
+    "reviewed": false,
+    "review_slug": "annnewsch"
+  },
+  {
+    "id": "bbc-news-japan",
+    "name": "BBC News Japan",
+    "category": "news-society",
+    "category_confidence": "high",
+    "category_evidence": [
+      "news",
+      "bbc news",
+      "ニュース"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@BBCNewsJapan",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_BBCNewsJapan",
+    "mastodon_acct": "youtube_BBCNewsJapan@rss-mstdn.studiofreesia.com",
+    "description": "BBCニュース日本語版のYouTubeチャンネルへようこそ！世界中のニュースを伝えるイギリス公共放送BBCから、選りすぐりの動画ニュースを日本語でお届けします。このほかにもさまざまなニュースをBBCニュース日本語版サイトでお届けしています。BBCニュースは公平・中立で正確な情報をお伝えする国際ニュースブランドです。 このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 217,
+    "reviewed": false,
+    "review_slug": "bbc-news-japan"
+  },
+  {
+    "id": "mbs-news",
+    "name": "MBS NEWS",
+    "category": "news-society",
+    "category_confidence": "high",
+    "category_evidence": [
+      "news",
+      "ニュース",
+      "報道"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@mbsnews",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_mbsnews",
+    "mastodon_acct": "youtube_mbsnews@rss-mstdn.studiofreesia.com",
+    "description": "毎日放送報道情報局が運営するチャンネルです。最新のニュース動画や、MBS報道番組の『憤マン！』『特命取材班 スクープ』といった特集動画などを配信！台風などの際には特別映像の『ライブ配信』も行います。▼チャンネル登録をどうぞよろしくお願いいたします！ https://www. youtube.com/c/MBSne ... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 107,
+    "reviewed": false,
+    "review_slug": "mbs-news"
+  },
+  {
+    "id": "nhk",
+    "name": "NHK",
+    "category": "news-society",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "nhk"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@NHK",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_NHK",
+    "mastodon_acct": "youtube_NHK@rss-mstdn.studiofreesia.com",
+    "description": "NHKが広報のために公開している動画のチャンネルです。 このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 101,
+    "reviewed": false,
+    "review_slug": "nhk"
+  },
+  {
+    "id": "nichibenren-tv",
+    "name": "NICHIBENREN TV-日弁連動画チャンネ",
+    "category": "news-society",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "弁護士"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@nichibenrentv",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_nichibenrentv",
+    "mastodon_acct": "youtube_nichibenrentv@rss-mstdn.studiofreesia.com",
+    "description": "日本弁護士連合会（日弁連）が運営する動画チャンネルです。日本弁護士連合会 https://www. nichibenren.or.jp/Twitter https:// twitter.com/JFBAsns このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 30,
+    "reviewed": false,
+    "review_slug": "nichibenren-tv"
+  },
+  {
+    "id": "tbs-news-dig-powered-by",
+    "name": "TBS NEWS DIG Powered by",
+    "category": "news-society",
+    "category_confidence": "high",
+    "category_evidence": [
+      "news",
+      "ニュース"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@tbsnewsdig",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_tbsnewsdig",
+    "mastodon_acct": "youtube_tbsnewsdig@rss-mstdn.studiofreesia.com",
+    "description": "TBS/JNNのニュースを配信する「TBS NEWS DIG Powered by JNN」YouTubeチャンネルです。緊急ニュースが発生した場合は「ライブ配信」で対応。テレビでは放送していないYouTubeオリジナルコンテンツも、盛りだくさんでお届けします。The news script automati... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 536,
+    "reviewed": false,
+    "review_slug": "tbs-news-dig-powered-by"
+  },
+  {
+    "id": "reuters-japan",
+    "name": "ロイター（Reuters Japan）",
+    "category": "news-society",
+    "category_confidence": "high",
+    "category_evidence": [
+      "reuters",
+      "ニュース"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@ReutersJapan",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_ReutersJapan",
+    "mastodon_acct": "youtube_ReutersJapan@rss-mstdn.studiofreesia.com",
+    "description": "ロイター日本語サイト編集部が最新の映像ニュースをお届けする、YouTubeチャンネルです。世界200カ所以上にある支局から、最新の映像ニュースをお届けします。扱う分野は国際情勢から経済、ビジネス、スポーツ、エンターテインメントまで幅広く、世界でいま起きている事象をタイムリーにお伝えします。チャンネル登録はこち... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 134,
+    "reviewed": false,
+    "review_slug": "reuters-japan"
+  },
+  {
+    "id": "creator-15",
+    "name": "日本共産党",
+    "category": "news-society",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "共産党"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@jcpmovie",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_jcpmovie",
+    "mastodon_acct": "youtube_jcpmovie@rss-mstdn.studiofreesia.com",
+    "description": "日本共産党のYouTubeチャンネルです このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 163,
+    "reviewed": false,
+    "review_slug": "creator-15"
+  },
+  {
+    "id": "creator-19",
+    "name": "毎日新聞",
+    "category": "news-society",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "新聞"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@videomainichi",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_videomainichi",
+    "mastodon_acct": "youtube_videomainichi@rss-mstdn.studiofreesia.com",
+    "description": "毎日新聞のYouTubeチャンネルです。よろしくお願いします。 このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 88,
+    "reviewed": false,
+    "review_slug": "creator-19"
+  },
+  {
+    "id": "creator-16",
+    "name": "立憲民主党",
+    "category": "news-society",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "民主党"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@rikkenminshu",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_rikkenminshu",
+    "mastodon_acct": "youtube_rikkenminshu@rss-mstdn.studiofreesia.com",
+    "description": "立憲民主党のチャンネルへようこそ。街宣中継や定例会見の様子、所属議員からのメッセージなど充実したコンテンツをお届けします。ご登録、どうぞよろしくお願いします！ このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 47,
+    "reviewed": false,
+    "review_slug": "creator-16"
+  },
+  {
+    "id": "creator-12",
+    "name": "電ファミチャンネル",
+    "category": "news-society",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "ニュース"
+    ],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@denfami",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_denfami",
+    "mastodon_acct": "youtube_denfami@rss-mstdn.studiofreesia.com",
+    "description": "ゲームニュースメディア「電ファミニコゲーマー」のチャンネルです。最新ゲームの先行プレイ映像や、注目のゲーム情報をお届けしていきます。ぜひフォローをお願いします！ほかにも、声優さんを起用した人気記事の朗読動画や、よりゲームが楽しめる企画動画なども随時更新中！提供元：電ファミニコゲーマー編集部 このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 37,
+    "reviewed": false,
+    "review_slug": "creator-12"
+  },
+  {
+    "id": "koyori-ch-holox",
+    "name": "Koyori ch. 博衣こより - holoX",
+    "category": "other",
+    "category_confidence": "low",
+    "category_evidence": [],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@HakuiKoyori",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_HakuiKoyori",
+    "mastodon_acct": "youtube_HakuiKoyori@rss-mstdn.studiofreesia.com",
+    "description": "こんこよ〜！ホロライブ所属、秘密結社holoXの頭脳🧪博衣こよりだよ〜(ᐡ •͈ ·̫ •͈ ᐡ)ﾉｼ💕初見古参関係なく、みんなで楽しめるチャンネルを作っていきたいです！「夢を全部叶えること」が夢！チャンネル登録、Twitterのフォローよろしくお願いします！✨Konkoyo~!! My name is Ha... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 91,
+    "reviewed": false,
+    "review_slug": "koyori-ch-holox"
+  },
+  {
+    "id": "lui-ch-holox",
+    "name": "Lui ch. 鷹嶺ルイ - holoX -",
+    "category": "other",
+    "category_confidence": "low",
+    "category_evidence": [],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@TakaneLui",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_TakaneLui",
+    "mastodon_acct": "youtube_TakaneLui@rss-mstdn.studiofreesia.com",
+    "description": "みなさ～ん、待ったかね？こんルイルイ！ホロライブ6期生『秘密結社holoX』の女幹部鷹嶺ルイ（Takane Lui）のチャンネルです🥀✦••┈┈┈••┈┈┈••✦••┈┈┈••┈┈┈••✦Kon LuiLui!!I am Lui Takane.Lui is the executive officer of Se... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 43,
+    "reviewed": false,
+    "review_slug": "lui-ch-holox"
+  },
+  {
+    "id": "miko-ch",
+    "name": "Miko Ch. さくらみこ",
+    "category": "other",
+    "category_confidence": "low",
+    "category_evidence": [],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@SakuraMiko",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_SakuraMiko",
+    "mastodon_acct": "youtube_SakuraMiko@rss-mstdn.studiofreesia.com",
+    "description": "にゃっはろ～！ホロライブ所属のエリート巫女アイドル さくらみこ (Sakura Miko)だにぇ🐱🌸❀┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈❀🌸 YouTube 🌸 https:// goo.gl/ZqJn7A 🌸 Twitter 🌸 https:// twitter.com/sakuram ... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 83,
+    "reviewed": false,
+    "review_slug": "miko-ch"
+  },
+  {
+    "id": "pekora-ch",
+    "name": "Pekora Ch. 兎田ぺこら",
+    "category": "other",
+    "category_confidence": "low",
+    "category_evidence": [],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@usadapekora",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_usadapekora",
+    "mastodon_acct": "youtube_usadapekora@rss-mstdn.studiofreesia.com",
+    "description": "こんぺこ！こんぺこ！こんぺこー！ホロライブ3期生の兎田ぺこら（Usada Pekora)ぺこ👯‍♀️⋈ ---------------------------------------------------------------------------- ⋈🥕 Twitter 🥕https://twitt... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 79,
+    "reviewed": false,
+    "review_slug": "pekora-ch"
+  },
+  {
+    "id": "youtuber-7",
+    "name": "YouTuber",
+    "category": "other",
+    "category_confidence": "low",
+    "category_evidence": [],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UC8XOX31MAHVCHKSMKCj8oDg",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://upvo.me/author/youtuber/",
+    "mastodon_acct": "youtuber@upvo.me",
+    "description": "SUBSCRIBE TO MY YOUTUBE CHANNEL",
+    "followers": 3,
+    "reviewed": false,
+    "review_slug": "youtuber-7"
+  },
+  {
+    "id": "atlustube",
+    "name": "atlustube",
+    "category": "other",
+    "category_confidence": "low",
+    "category_evidence": [],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@atlustube",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_atlustube",
+    "mastodon_acct": "youtube_atlustube@rss-mstdn.studiofreesia.com",
+    "description": "アトラスのチャンネル『ATLUS Tube』にようこそ！ このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 50,
+    "reviewed": false,
+    "review_slug": "atlustube"
+  },
+  {
+    "id": "creator-18",
+    "name": "スクウェア・エニックス",
+    "category": "other",
+    "category_confidence": "low",
+    "category_evidence": [],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@squareenix",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_squareenix",
+    "mastodon_acct": "youtube_squareenix@rss-mstdn.studiofreesia.com",
+    "description": "スクウェア・エニックス チャンネルは株式会社スクウェア・エニックスのYouTubeチャンネルです。 https://www. jp.square-enix.com/ このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 58,
+    "reviewed": false,
+    "review_slug": "creator-18"
+  },
+  {
+    "id": "hyakumantenba",
+    "name": "壱百満天原サロメ / Hyakumantenba",
+    "category": "other",
+    "category_confidence": "low",
+    "category_evidence": [],
+    "account_type": "rss-feed",
+    "youtube_url": "https://www.youtube.com/@HyakumantenbaraSalome",
+    "youtube_evidence_source": "field:Website",
+    "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_HyakumantenbaraSalome",
+    "mastodon_acct": "youtube_HyakumantenbaraSalome@rss-mstdn.studiofreesia.com",
+    "description": "いつか１００満点のお嬢様になりたい一般人ですわ。皆様方に１００満点の笑顔をお届けしたいですわ～～！💯🦂twitterですわ🦂💯 https:// twitter.com/1000000lomeぜひフォローし てほしいですわ！💯わたくしとのゴージャスなお約束💯✦わたくしとの楽しい時間は、わたくしと過ごしている ... このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
+    "followers": 48,
+    "reviewed": false,
+    "review_slug": "hyakumantenba"
+  },
+  {
+    "id": "creator-7",
+    "name": "村卯",
+    "category": "other",
+    "category_confidence": "low",
+    "category_evidence": [],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@murau-dh4ku",
+    "youtube_evidence_source": "field:profile field",
+    "mastodon_url": "https://misskey.io/@murau",
+    "mastodon_acct": "murau@misskey.io",
+    "description": "にじりよるドーナツ #サイゼリヤ略 All rights reserved reproduction prohibited",
+    "followers": 3607,
+    "reviewed": false,
+    "review_slug": "creator-7"
+  },
+  {
+    "id": "insiderphd",
+    "name": "InsiderPhD",
+    "category": "science-education",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "research",
+      "lecturer"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@InsiderPhD",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://infosec.exchange/@insiderphd",
+    "mastodon_acct": "insiderphd@infosec.exchange",
+    "description": "Application security, API security, bug bounty hunting, and practical security research education.",
+    "followers": 2308,
+    "reviewed": false,
+    "review_slug": "insiderphd"
+  },
+  {
+    "id": "kureha-project-youtuber",
+    "name": "Kureha_Project(メンサ会員Youtuber)",
+    "category": "science-education",
+    "category_confidence": "low",
+    "category_evidence": [
+      "研究"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UCqYoe-LE1MdPSD1ApKI7oBQ",
+    "youtube_evidence_source": "field:Youtube",
+    "mastodon_url": "https://mstdn.jp/@Kureha_Project",
+    "mastodon_acct": "Kureha_Project@mstdn.jp",
+    "description": "Youtuber / 高IQ団体：METIQ(入会基準：IQ156↑)＆MENSA(入会基準：IQ131↑)所属. / 研究者 / Youtubeチャンネル名：KurehaProject (クレハプロジェクト).",
+    "followers": 6,
+    "reviewed": false,
+    "review_slug": "kureha-project-youtuber"
+  },
+  {
+    "id": "open-latin",
+    "name": "Open Latin",
+    "category": "science-education",
+    "category_confidence": "high",
+    "category_evidence": [
+      "latin",
+      "classics"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UC90iyXKrUsJBCYbtdbgrmkg",
+    "youtube_evidence_source": "field:Tutubulus",
+    "mastodon_url": "https://colloquium.social/@lingualatina",
+    "mastodon_acct": "lingualatina@colloquium.social",
+    "description": "Help us create Open Latin resources # Classics # LinguaLatina # latin ? # latineloquor # salvete",
+    "followers": 175,
+    "reviewed": false,
+    "review_slug": "open-latin"
+  },
+  {
+    "id": "blacks-in-cybersecurity-hq",
+    "name": "Blacks In Cybersecurity HQ",
+    "category": "technology",
+    "category_confidence": "high",
+    "category_evidence": [
+      "cyber",
+      "infosec",
+      "security"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/c/BlacksInCybersecurity",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://infosec.exchange/@blacksincyber",
+    "mastodon_acct": "blacksincyber@infosec.exchange",
+    "description": "Blacks In # Cybersecurity ™️ Official HQ 🏠 | # LitLikeBIC |#BlacksInCyber | 34ch-0n3-734ch-M4ny | 2x DC Black Badge CTF 🏆💻🏴‍☠️ blacksincyber@infosec.exchange/defconsocial # ShareTheMicInCyber",
+    "followers": 955,
+    "reviewed": false,
+    "review_slug": "blacks-in-cybersecurity-hq"
+  },
+  {
+    "id": "brodie-robertson",
+    "name": "Brodie Robertson",
+    "category": "technology",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "linux"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UCld68syR8Wi-GY_n4CaoJGA",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://mstdn.social/@BrodieOnLinux",
+    "mastodon_acct": "BrodieOnLinux@mstdn.social",
+    "description": "Linux, Wayland, and FOSS commentary. Creator of Tech Over Tea and advocate for open-source software.",
+    "followers": 8487,
+    "reviewed": false,
+    "review_slug": "brodie-robertson"
+  },
+  {
+    "id": "coding-grace",
+    "name": "Coding Grace",
+    "category": "technology",
+    "category_confidence": "high",
+    "category_evidence": [
+      "coding",
+      "tech"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@codinggrace",
+    "youtube_evidence_source": "field:Youtube",
+    "mastodon_url": "https://mastodon.ie/@codinggrace",
+    "mastodon_acct": "codinggrace@mastodon.ie",
+    "description": "🇮🇪 An Irish not-for-profit advocating # DiversityInTech through events, collaboration, and curating # NorthernIrish & # Irish events. @ whykay / @ micktwomey / @ roundcrisis",
+    "followers": 91,
+    "reviewed": false,
+    "review_slug": "coding-grace"
+  },
+  {
+    "id": "codingkurzgeschichten",
+    "name": "CodingKurzgeschichten",
+    "category": "technology",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "software",
+      "programming",
+      "coding",
+      "informatik"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@CodingKurzgeschichten",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://mastodontech.de/@CodingKurzgeschichten",
+    "mastodon_acct": "CodingKurzgeschichten@mastodontech.de",
+    "description": "My name is Thomas Schlögl and I love coding 👨‍💻, maths and physics. I am teaching # Programming and # Softwaredevelopment in Vienna at # htldonaustadt in the # Informatik department. Other accounts: 🇦🇹 @ CodingShortStories mostly Vienna related stuff 📱 @hachyderm.io@7h0m45 coding stuff",
+    "followers": 141,
+    "reviewed": false,
+    "review_slug": "codingkurzgeschichten"
+  },
+  {
+    "id": "emily-bache",
+    "name": "Emily Bache",
+    "category": "technology",
+    "category_confidence": "low",
+    "category_evidence": [
+      "tech"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@EmilyBache-tech-coach",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://sw-development-is.social/@emilybache",
+    "mastodon_acct": "emilybache@sw-development-is.social",
+    "description": "Technical Coach, creator of Samman Coaching, Youtuber, Author. she/her.",
+    "followers": 1648,
+    "reviewed": false,
+    "review_slug": "emily-bache"
+  },
+  {
+    "id": "future-coding",
+    "name": "Future Coding",
+    "category": "technology",
+    "category_confidence": "high",
+    "category_evidence": [
+      "software",
+      "coding"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@shaharyarranjah1",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://mastodon.social/@shaharyarranjah1",
+    "mastodon_acct": "shaharyarranjah1@mastodon.social",
+    "description": "It's shaharyarranjah1 content creator and software engineer and and data scientist Currently teaching on YouTube. # shaharyarranjah1 # softwareengineer # aiengineer https://www. youtube.com/@shaharyarranjah1",
+    "followers": 283,
+    "reviewed": false,
+    "review_slug": "future-coding"
+  },
+  {
+    "id": "graphics-programming-meetup",
+    "name": "Graphics Programming Meetup",
+    "category": "technology",
+    "category_confidence": "high",
+    "category_evidence": [
+      "programming",
+      "server",
+      "graphics programming"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/c/GraphicsProgrammingVirtualMeetup",
+    "youtube_evidence_source": "field:Youtube Channel",
+    "mastodon_url": "https://mastodon.gamedev.place/@graphicsmeetup",
+    "mastodon_acct": "graphicsmeetup@mastodon.gamedev.place",
+    "description": "A virtual meetup dedicated to graphics programming. We meet online every week. Organized by @ lesley , @ Cdgiessen , and Jonathan Baker",
+    "followers": 222,
+    "reviewed": false,
+    "review_slug": "graphics-programming-meetup"
+  },
+  {
+    "id": "linux-on-mobile",
+    "name": "LINux on MOBile",
+    "category": "technology",
+    "category_confidence": "high",
+    "category_evidence": [
+      "linux",
+      "hardware",
+      "mobile"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/c/LINMOBnet",
+    "youtube_evidence_source": "field:youtube",
+    "mastodon_url": "https://linuxmobile.social/@linmob",
+    "mastodon_acct": "linmob@linuxmobile.social",
+    "description": "Hi! This is the main Fediverse account of a blog about LINux on MOBile devices – linmob.net. It's has been restarted in 2020 because of the PinePhone and continues to report the news on Mobian, postmarketOS, Sailfish OS, Ubuntu Touch and the hardware these alternative operating systems run on. Used …",
+    "followers": 6465,
+    "reviewed": false,
+    "review_slug": "linux-on-mobile"
+  },
+  {
+    "id": "linux-for-all",
+    "name": "Linux For All",
+    "category": "technology",
+    "category_confidence": "high",
+    "category_evidence": [
+      "linux",
+      "security"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UCLi7utjkBxAYPtVQhTuiZ2Q",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://infosec.exchange/@llp",
+    "mastodon_acct": "llp@infosec.exchange",
+    "description": "GNU/Linux lover, so its content creator. Making people aware of GNU/Linux🐂🐧.  Daily tweets on GNU/Linux🐂🐧, Networking🌐, Shell Scripting✍️ and Security🥷",
+    "followers": 289,
+    "reviewed": false,
+    "review_slug": "linux-for-all"
+  },
+  {
+    "id": "linux-lads-podcast",
+    "name": "Linux Lads Podcast",
+    "category": "technology",
+    "category_confidence": "high",
+    "category_evidence": [
+      "linux",
+      "tech",
+      "open source"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@linuxlads",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://mastodon.ie/@linuxlads",
+    "mastodon_acct": "linuxlads@mastodon.ie",
+    "description": "A podcast about Linux and Open Source from a bunch of lads. Co-hosted by Amolith ( @ amolith ), Conor ( @ techcelt ), Mike ( @ mikee ), and Shane ( @ stranded_output ). Edited by Jake ( @ jbauer ).",
+    "followers": 762,
+    "reviewed": false,
+    "review_slug": "linux-lads-podcast"
+  },
+  {
+    "id": "linux-trend",
+    "name": "Linux Trend",
+    "category": "technology",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "linux"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UCqif17xcnejoBb43IQTvBZw",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://mastodon.social/@linuxtrend",
+    "mastodon_acct": "linuxtrend@mastodon.social",
+    "description": "!!! MOVED to @ neoncipher account !!! https:// mastodon.social/@neoncipher https://www. youtube.com/channel/UCqif17xcn ejoBb43IQTvBZw",
+    "followers": 77,
+    "reviewed": false,
+    "review_slug": "linux-trend"
+  },
+  {
+    "id": "molten-software",
+    "name": "Molten Software",
+    "category": "technology",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "software"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@molten_software",
+    "youtube_evidence_source": "field:Youtube!",
+    "mastodon_url": "https://bitbang.social/@vileboss",
+    "mastodon_acct": "vileboss@bitbang.social",
+    "description": "Molten Software - 🌱🇵🇷 T I N K E R E R - Crohn's disease victim",
+    "followers": 227,
+    "reviewed": false,
+    "review_slug": "molten-software"
+  },
+  {
+    "id": "low-level-learning",
+    "name": "Nir Lichtman / Low Level Learning",
+    "category": "technology",
+    "category_confidence": "high",
+    "category_evidence": [
+      "programming",
+      "cyber",
+      "security",
+      "tech"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/c/LowLevelLearning",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://infosec.exchange/@lowlevellearning",
+    "mastodon_acct": "lowlevellearning@infosec.exchange",
+    "description": "Low-level programming, operating systems, C, assembly, reverse engineering, and computer internals.",
+    "followers": 11,
+    "reviewed": false,
+    "review_slug": "low-level-learning"
+  },
+  {
+    "id": "open-titus",
+    "name": "Open Titus",
+    "category": "technology",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "opensource"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@open_titus",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://mastodon.uno/@opentitus",
+    "mastodon_acct": "opentitus@mastodon.uno",
+    "description": "Youtuber e blogger dal mondo del Pinguino🐧 ❤️ Per sostenere il canale: https:// paypal.me/opentitus",
+    "followers": 1577,
+    "reviewed": false,
+    "review_slug": "open-titus"
+  },
+  {
+    "id": "paul-s-hardware",
+    "name": "Paul's Hardware",
+    "category": "technology",
+    "category_confidence": "high",
+    "category_evidence": [
+      "tech",
+      "hardware"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@paulshardware",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://techhub.social/@paulshardware",
+    "mastodon_acct": "paulshardware@techhub.social",
+    "description": "I make tech videos on YouTube: https:// youtube.com/@paulshardware",
+    "followers": 250,
+    "reviewed": false,
+    "review_slug": "paul-s-hardware"
+  },
+  {
+    "id": "raul-craveiro",
+    "name": "Raul Craveiro / Diolinux",
+    "category": "technology",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "linux"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@raulcraveiro",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://mastodon.online/@raulcraveiro",
+    "mastodon_acct": "raulcraveiro@mastodon.online",
+    "description": "Portuguese-language Linux, open-source software, internet, and productivity content from the Diolinux team.",
+    "followers": 105,
+    "reviewed": false,
+    "review_slug": "raul-craveiro"
+  },
+  {
+    "id": "software-craft-strasbourg",
+    "name": "Software Craft Strasbourg",
+    "category": "technology",
+    "category_confidence": "high",
+    "category_evidence": [
+      "software",
+      "tech"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@swcraftstras",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://mobilizon.fr/@swcraftstras",
+    "mastodon_acct": "swcraftstras@mobilizon.fr",
+    "description": "@swcraftstras | #swcraftstras La communauté Software Craft Strasbourg réunit les développeu(r|se)s, sans sexisme ni élitisme, quelque soit le langage ou la techno. Venez prolonger les discussions sur le Discord du meetup ! Inscriptions ici . swcraftstras.github.io — Discord — Youtube",
+    "followers": 19,
+    "reviewed": false,
+    "review_slug": "software-craft-strasbourg"
+  },
+  {
+    "id": "software-defined-talk",
+    "name": "Software Defined Talk",
+    "category": "technology",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "software",
+      "cloud"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@softwaredefinedtalk/live",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://hachyderm.io/@softwaredefinedtalk",
+    "mastodon_acct": "softwaredefinedtalk@hachyderm.io",
+    "description": "A weekly podcast covering all the news and events in Enterprise Software and Cloud Computing. Threads: @ softwaredefinedtalk",
+    "followers": 99,
+    "reviewed": false,
+    "review_slug": "software-defined-talk"
+  },
+  {
+    "id": "tech-interceptor",
+    "name": "Tech Interceptor",
+    "category": "technology",
+    "category_confidence": "high",
+    "category_evidence": [
+      "tech",
+      "gadget",
+      "keyboard",
+      "pc"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@TechInterceptor",
+    "youtube_evidence_source": "field:YOUTUBE",
+    "mastodon_url": "https://mastodon.online/@TechInterceptor",
+    "mastodon_acct": "TechInterceptor@mastodon.online",
+    "description": "Keyboard | Mice | EDC | PC & Gear Loving tech, one gadget at a time! ⚡",
+    "followers": 96,
+    "reviewed": false,
+    "review_slug": "tech-interceptor"
+  },
+  {
+    "id": "tech-over-tea",
+    "name": "Tech Over Tea",
+    "category": "technology",
+    "category_confidence": "high",
+    "category_evidence": [
+      "linux",
+      "tech"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UCBq5p-xOla8xhnrbhu8AIAg",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://mastodon.social/@TechOverTeaShow",
+    "mastodon_acct": "TechOverTeaShow@mastodon.social",
+    "description": "Sometimes there will be tech, maybe even some tea, but it'll always be an interesting ride. Hosted by @ BrodieOnLinux",
+    "followers": 417,
+    "reviewed": false,
+    "review_slug": "tech-over-tea"
+  },
+  {
+    "id": "tech-tales-podcast",
+    "name": "Tech Tales Podcast",
+    "category": "technology",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "technology",
+      "tech"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UCoJhtqauQgAykvSLQSyu7UQ",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://mas.to/@techtales",
+    "mastodon_acct": "techtales@mas.to",
+    "description": "Tech Tales is a podcast exploring the technology world's epic failures, forgotten successes, and everything in between. Hosted by @ corbin . Made without generative AI.",
+    "followers": 923,
+    "reviewed": false,
+    "review_slug": "tech-tales-podcast"
+  },
+  {
+    "id": "tech-tangents",
+    "name": "Tech Tangents",
+    "category": "technology",
+    "category_confidence": "low",
+    "category_evidence": [
+      "tech"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/channel/UCerEIdrEW-IqwvlH8lTQUJQ",
+    "youtube_evidence_source": "field:Youtube",
+    "mastodon_url": "https://dialup.space/@TechTangents",
+    "mastodon_acct": "TechTangents@dialup.space",
+    "description": "",
+    "followers": 3202,
+    "reviewed": false,
+    "review_slug": "tech-tangents"
+  },
+  {
+    "id": "techhut",
+    "name": "TechHut",
+    "category": "technology",
+    "category_confidence": "high",
+    "category_evidence": [
+      "linux",
+      "tech",
+      "open source"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/c/techhuthd",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://distrotoot.com/@tech",
+    "mastodon_acct": "tech@distrotoot.com",
+    "description": "Youtube content creator, Linux and open source enthusiast, overall geek.",
+    "followers": 127,
+    "reviewed": false,
+    "review_slug": "techhut"
+  },
+  {
+    "id": "techlore",
+    "name": "Techlore",
+    "category": "technology",
+    "category_confidence": "high",
+    "category_evidence": [
+      "security",
+      "technology",
+      "tech"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@techlore",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://social.lol/@techlore",
+    "mastodon_acct": "techlore@social.lol",
+    "description": "Digital rights, privacy, security, anonymity tools, and practical guidance for safer technology use.",
+    "followers": 11050,
+    "reviewed": false,
+    "review_slug": "techlore"
+  },
+  {
+    "id": "technology-connections",
+    "name": "Technology Connections",
+    "category": "technology",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "technology",
+      "tech"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@TechnologyConnections",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://mas.to/@TechConnectify",
+    "mastodon_acct": "TechConnectify@mas.to",
+    "description": "I'm that snarky, sometimes cranky YouTube person who told you about how dishwashers work. I post many things which should not be taken too seriously (on account of the cranky snark thing). If you think I'm mad at you, I'm almost certainly not! Friendly and helpful, if strongly opinionated.",
+    "followers": 53415,
+    "reviewed": false,
+    "review_slug": "technology-connections"
+  },
+  {
+    "id": "technology-connections-2",
+    "name": "Technology Connections",
+    "category": "technology",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "technology",
+      "tech"
+    ],
+    "account_type": "channel-feed",
+    "youtube_url": "https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q",
+    "youtube_evidence_source": "field:Homepage",
+    "mastodon_url": "https://feedsin.space/feed/youtube-TechnologyConnections",
+    "mastodon_acct": "youtube-TechnologyConnections@feedsin.space",
+    "description": "youtube-TechnologyConnections",
+    "followers": 21,
+    "reviewed": false,
+    "review_slug": "technology-connections-2"
+  },
+  {
+    "id": "the-cybersecurity-librarian",
+    "name": "The Cybersecurity Librarian",
+    "category": "technology",
+    "category_confidence": "high",
+    "category_evidence": [
+      "cyber",
+      "infosec",
+      "security",
+      "engineering"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/c/cyberlibrarian",
+    "youtube_evidence_source": "field:Youtube",
+    "mastodon_url": "https://infosec.exchange/@cyberlibrarian",
+    "mastodon_acct": "cyberlibrarian@infosec.exchange",
+    "description": "Cyber Threat Manager, Detection Engineer, Threat Hunter, and CTI analyst... also a professional librarian! CISM, MLIS, CTIA, GCIA, GCWN \"Cataloguing threats, curating intel, and teaching cyber literacy.\" # ThreatHunting # DetectionEngineering # CTI # CyberThreatIntelligence # Librarian # InfoSec # C…",
+    "followers": 973,
+    "reviewed": false,
+    "review_slug": "the-cybersecurity-librarian"
+  },
+  {
+    "id": "tom-lawrence",
+    "name": "Tom Lawrence / Lawrence Systems",
+    "category": "technology",
+    "category_confidence": "high",
+    "category_evidence": [
+      "tech",
+      "open source"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/@lawrencesystems",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://infosec.exchange/@tomlawrence",
+    "mastodon_acct": "tomlawrence@infosec.exchange",
+    "description": "Networking, pfSense/OPNsense, MSP business, and homelab. Practical deep-dives for IT professionals and self-hosters.",
+    "followers": 2193,
+    "reviewed": false,
+    "review_slug": "tom-lawrence"
   },
   {
     "id": "wolfgangs-channel",
     "name": "Wolfgang's Channel",
-    "tech_stack": "general",
-    "youtube_url": "https://www.youtube.com/@WolfgangsChannel",
+    "category": "technology",
+    "category_confidence": "high",
+    "category_evidence": [
+      "technology",
+      "tech",
+      "self-host",
+      "server"
+    ],
+    "account_type": "native",
+    "youtube_url": "https://www.youtube.com/c/WolfgangsChannel",
+    "youtube_evidence_source": "field:YouTube",
     "mastodon_url": "https://tilde.zone/@notthebee",
-    "bluesky_url": null,
+    "mastodon_acct": "notthebee@tilde.zone",
     "description": "Linux, NixOS, self-hosting, and efficient computing. Opinionated takes on minimalist but powerful setups.",
-    "subscribers": "160K",
+    "followers": 4949,
     "reviewed": false,
     "review_slug": "wolfgangs-channel"
-  },
-  {
-    "id": "tj-devries",
-    "name": "TJ DeVries",
-    "tech_stack": "go",
-    "youtube_url": "https://www.youtube.com/@tjdevries",
-    "mastodon_url": null,
-    "bluesky_url": "https://bsky.app/profile/tjdevries.bsky.social",
-    "description": "Neovim core maintainer, Sourcegraph engineer, and Go/Lua developer. Focuses on editor customization and tools.",
-    "subscribers": "75K",
-    "reviewed": true,
-    "review_slug": "tj-devries"
-  },
-  {
-    "id": "fireship",
-    "name": "Fireship",
-    "tech_stack": "javascript",
-    "youtube_url": "https://www.youtube.com/@Fireship",
-    "mastodon_url": "https://mastodon.social/@fireship",
-    "bluesky_url": "https://bsky.app/profile/fireship.dev",
-    "description": "High-intensity code tutorials and tech news. Famous for 'Code in 100 Seconds' videos, covering frameworks, tools, and developer trends.",
-    "subscribers": "3.2M",
-    "reviewed": true,
-    "review_slug": "fireship"
-  },
-  {
-    "id": "theo-t3",
-    "name": "Theo - t3.gg",
-    "tech_stack": "javascript",
-    "youtube_url": "https://www.youtube.com/@t3dotgg",
-    "mastodon_url": null,
-    "bluesky_url": "https://bsky.app/profile/t3.gg",
-    "description": "Talks about web development ecosystems, React, Next.js, TypeScript, and the business/career side of software engineering.",
-    "subscribers": "280K",
-    "reviewed": true,
-    "review_slug": "theo-t3-gg"
-  },
-  {
-    "id": "devaslife",
-    "name": "Takuya Matsuyama (devaslife)",
-    "tech_stack": "mobile",
-    "youtube_url": "https://www.youtube.com/@devaslife",
-    "mastodon_url": "https://mastodon.social/@craftzdog",
-    "bluesky_url": "https://bsky.app/profile/craftz.dog",
-    "description": "Weekly videos on React Native, macOS setup, Vim configurations, design, and coding logs with beautiful lo-fi background music.",
-    "subscribers": "210K",
-    "reviewed": true,
-    "review_slug": "takuya-matsuyama-devaslife"
-  },
-  {
-    "id": "corey-schafer",
-    "name": "Corey Schafer",
-    "tech_stack": "python",
-    "youtube_url": "https://www.youtube.com/@coreyms",
-    "mastodon_url": "https://mastodon.social/@coreyschafer",
-    "bluesky_url": null,
-    "description": "Detailed tutorials for Python developers, ranging from beginners to advanced topics like Django, Flask, Pandas, and environment setup.",
-    "subscribers": "1.2M",
-    "reviewed": true,
-    "review_slug": "corey-schafer"
-  },
-  {
-    "id": "the-primeagen",
-    "name": "The Primeagen",
-    "tech_stack": "rust",
-    "youtube_url": "https://www.youtube.com/@ThePrimeagen",
-    "mastodon_url": null,
-    "bluesky_url": "https://bsky.app/profile/theprimeagen.bsky.social",
-    "description": "Vim/Neovim wizard, Rust and Go developer, and ex-Netflix engineer. Focuses on software architecture, algorithms, and developer productivity.",
-    "subscribers": "450K",
-    "reviewed": true,
-    "review_slug": "the-primeagen"
   }
 ]

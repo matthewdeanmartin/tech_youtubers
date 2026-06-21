@@ -2,62 +2,144 @@ Title: Bulk Follow Guide
 Date: 2026-06-20
 Slug: bulk-follow
 sortorder: 3
-Summary: How to bulk follow all these tech YouTubers on Mastodon and Bluesky.
+Summary: How to bulk follow native YouTuber accounts on Mastodon.
 
-## Bulk Follow on Social Media
+## Bulk Follow on Mastodon
 
-Instead of clicking follow one-by-one, you can use these lists to bulk follow creators on Mastodon or Bluesky.
-
----
-
-### Bluesky Bulk Follow
-
-On Bluesky, you can follow lists of users. Copy this list of handles to search and follow, or look out for a starter pack!
+This list contains native Mastodon accounts only. Automated RSS feeds and bridges are excluded so
+the follow pack stays focused on profiles where interaction is possible.
 
 ```text
-
+@mattferrell@mastodon.social
+@tororo_family@fedibird.com
+@aki_photo@misskey.io
+@TinaZaenon@misskey.io
+@morechand@misskey.io
+@Daikirinn@misskey.io
+@tarantinotoriyama@mastodon.social
+@techhut@fosstodon.org
+@dadadaTV@mstdn.jp
+@ArchetypicalTV@mastodon.social
+@FG_Yue@g0v.social
+@pitman@misskey.io
+@umi38@misskey.io
+@leycia@misskey.io
+@KusozakoNemuiyo@misskey.io
+@GOLDVINE@misskey.io
+@jamjet180414@mstdn.vtube.media
+@virtual_mao@misskey.io
+@19xxmob@misskey.io
+@AmenoAtsuta@misskey.io
+@momomorui07@misskey.io
+@ren_hayami@misskey.io
+@peyangu485@misskey.io
+@yuruk@misskey.io
+@umapuri@mastodon.social
+@Aika_YouTube@wake.0am.jp
+@author/youtuber@upvo.me
+@murau@misskey.io
+@insiderphd@infosec.exchange
+@Kureha_Project@mstdn.jp
+@lingualatina@colloquium.social
+@blacksincyber@infosec.exchange
+@BrodieOnLinux@mstdn.social
+@codinggrace@mastodon.ie
+@CodingKurzgeschichten@mastodontech.de
+@emilybache@sw-development-is.social
+@shaharyarranjah1@mastodon.social
+@graphicsmeetup@mastodon.gamedev.place
+@linmob@linuxmobile.social
+@llp@infosec.exchange
+@linuxlads@mastodon.ie
+@linuxtrend@mastodon.social
+@vileboss@bitbang.social
+@lowlevellearning@infosec.exchange
+@opentitus@mastodon.uno
+@paulshardware@techhub.social
+@raulcraveiro@mastodon.online
+@swcraftstras@mobilizon.fr
+@softwaredefinedtalk@hachyderm.io
+@TechInterceptor@mastodon.online
+@TechOverTeaShow@mastodon.social
+@techtales@mas.to
+@TechTangents@dialup.space
+@tech@distrotoot.com
+@techlore@social.lol
+@TechConnectify@mas.to
+@cyberlibrarian@infosec.exchange
+@tomlawrence@infosec.exchange
+@notthebee@tilde.zone
 ```
 
----
+### Import a following list
 
-### Mastodon Bulk Follow
-
-Mastodon allows you to import CSV files containing lists of people to follow.
-
-#### Step 1: Copy CSV Content
-Copy the CSV content below and save it as `follows.csv` on your computer:
+Save the following as `follows.csv`, then import it from your Mastodon server's
+**Preferences → Import and export → Import → Following list** screen.
 
 ```csv
 Account address,Show boosts
-@davidbombal@infosec.exchange,true
-@geerlingguy@mastodon.social,true
-@technotim@mastodon.social,true
-@tomlawrence@infosec.exchange,true
-@zollotech@mastodon.social,true
-@BrodieOnLinux@mstdn.social,true
-@EposVox@glitch.lgbt,true
 @mattferrell@mastodon.social,true
-@thelinuxEXP@mastodon.social,true
+@tororo_family@fedibird.com,true
+@aki_photo@misskey.io,true
+@TinaZaenon@misskey.io,true
+@morechand@misskey.io,true
+@Daikirinn@misskey.io,true
+@tarantinotoriyama@mastodon.social,true
+@techhut@fosstodon.org,true
+@dadadaTV@mstdn.jp,true
+@ArchetypicalTV@mastodon.social,true
+@FG_Yue@g0v.social,true
+@pitman@misskey.io,true
+@umi38@misskey.io,true
+@leycia@misskey.io,true
+@KusozakoNemuiyo@misskey.io,true
+@GOLDVINE@misskey.io,true
+@jamjet180414@mstdn.vtube.media,true
+@virtual_mao@misskey.io,true
+@19xxmob@misskey.io,true
+@AmenoAtsuta@misskey.io,true
+@momomorui07@misskey.io,true
+@ren_hayami@misskey.io,true
+@peyangu485@misskey.io,true
+@yuruk@misskey.io,true
+@umapuri@mastodon.social,true
+@Aika_YouTube@wake.0am.jp,true
+@author/youtuber@upvo.me,true
+@murau@misskey.io,true
+@insiderphd@infosec.exchange,true
+@Kureha_Project@mstdn.jp,true
+@lingualatina@colloquium.social,true
+@blacksincyber@infosec.exchange,true
+@BrodieOnLinux@mstdn.social,true
+@codinggrace@mastodon.ie,true
+@CodingKurzgeschichten@mastodontech.de,true
+@emilybache@sw-development-is.social,true
+@shaharyarranjah1@mastodon.social,true
+@graphicsmeetup@mastodon.gamedev.place,true
+@linmob@linuxmobile.social,true
+@llp@infosec.exchange,true
+@linuxlads@mastodon.ie,true
+@linuxtrend@mastodon.social,true
+@vileboss@bitbang.social,true
+@lowlevellearning@infosec.exchange,true
+@opentitus@mastodon.uno,true
+@paulshardware@techhub.social,true
+@raulcraveiro@mastodon.online,true
+@swcraftstras@mobilizon.fr,true
+@softwaredefinedtalk@hachyderm.io,true
+@TechInterceptor@mastodon.online,true
+@TechOverTeaShow@mastodon.social,true
+@techtales@mas.to,true
+@TechTangents@dialup.space,true
+@tech@distrotoot.com,true
+@techlore@social.lol,true
+@TechConnectify@mas.to,true
+@cyberlibrarian@infosec.exchange,true
+@tomlawrence@infosec.exchange,true
 @notthebee@tilde.zone,true
-@fireship@mastodon.social,true
-@craftzdog@mastodon.social,true
-@coreyschafer@mastodon.social,true
 ```
 
-#### Step 2: Import into Mastodon
-1. Open your Mastodon Web UI.
-2. Go to **Preferences** (or **Settings**).
-3. Click on **Import and export** (or **Import**).
-4. Under **Import**, select **Following list** as the import type.
-5. Choose the `follows.csv` file you created and click **Upload**.
+### Interactive follow tool
 
-It may take a few minutes for your server to process all the accounts!
-
----
-
-### Interactive Mastodon Follow Tool
-
-Want a more interactive experience? Use the **[Follow on Mastodon](/mastodon-follow/)** page to:
-- Browse all tech YouTubers with Mastodon accounts
-- Authorize your instance using secure **PKCE OAuth** (no password or secret is ever stored)
-- Follow creators one-by-one or all at once — like a Bluesky starter pack, but for Mastodon!
+Use the **[Follow on Mastodon](/mastodon-follow/)** page to browse and follow native accounts
+one-by-one or all at once using PKCE OAuth.

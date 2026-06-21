@@ -4,40 +4,32 @@ url:
 Date: 2026-06-20
 Slug: home
 sortorder: 1
-Summary: Find and bulk follow tech celebrities on Mastodon or Bluesky.
+Summary: Find YouTubers and YouTube channel feeds on Mastodon.
 
-## Welcome to the Tech YouTubers Social Directory!
+## Find YouTubers on Mastodon
 
-Are you new to **Mastodon** or **Bluesky**? Or perhaps you just want to find where your favorite tech YouTubers and programming teachers hang out in the decentralized web?
+This is a community-run directory of Mastodon profiles that link directly to YouTube channels.
+It starts with 118 evidence-backed profiles covering technology, gaming, science, music, art,
+news, culture, and hobbies.
 
-This is a community-run index of popular tech YouTubers who have a verified social presence on Mastodon and Bluesky. 
+We distinguish between:
 
-Our goal is to make it easy for you to:
-1. Find creators by their primary **Tech Stack** (JavaScript, Python, Rust, Go, etc.).
-2. Read short bios of their channels and what they post.
-3. **Bulk follow** them using our export lists so you don't have to follow them one-by-one!
+1. **Native Mastodon accounts**, where you can follow and interact with creators or their teams.
+2. **Automated channel feeds and bridges**, which are useful for new-video notifications but are
+   not necessarily operated by the creator.
 
----
+## Browse by topic
 
-## Stacks Covered
+- [Technology & Computing]({filename}technology.md)
+- [Gaming & VTubers]({filename}gaming.md)
+- [Science & Education]({filename}science-education.md)
+- [Music]({filename}music.md)
+- [Art, Design & Making]({filename}art-making.md)
+- [News, Politics & Society]({filename}news-society.md)
+- [Culture & Entertainment]({filename}culture-entertainment.md)
+- [Lifestyle, Travel & Hobbies]({filename}lifestyle-hobbies.md)
 
-Select a category from the sidebar or click below to browse creators:
+## Follow people, not feed bots
 
-- [JavaScript / TypeScript Creators]({filename}javascript.md)
-- [Rust Creators]({filename}rust.md)
-- [Go Creators]({filename}go.md)
-- [Python Creators]({filename}python.md)
-- [Mobile Development Creators]({filename}mobile.md)
-- [Databases & Systems Creators]({filename}databases.md)
-
----
-
-## Bulk Follow Guide
-
-New accounts can get a headstart! Visit the [Bulk Follow Guide]({filename}bulk-follow.md) to copy lists of user handles or download follow CSVs that can be imported directly into Mastodon.
-
----
-
-## Full Directory
-
-See the [All Tech YouTubers]({filename}youtubers.md) page for the full inventory of all tracked creators.
+The [Bulk Follow Guide]({filename}bulk-follow.md) and interactive follow tool include only native
+Mastodon accounts. See the [full directory]({filename}youtubers.md) for every discovered profile.

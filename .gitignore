@@ -149,6 +149,8 @@ activemq-data/
 
 # Environments
 .env
+.env.*
+!.env.example
 .envrc
 .venv
 env/
@@ -222,4 +224,7 @@ __marimo__/
 /node_modules/
 /.cache/
 /.uv-cache/
+/data/*.sqlite
+/data/*.sqlite-shm
+/data/*.sqlite-wal
 .idea

@@ -13,16 +13,15 @@
             <div class="site-header__inner">
                 <div class="site-branding">
                     <a class="site-title" href="{{ SITEURL }}/">{{ SITENAME | e }}</a>
-                    <p class="site-tagline">{{ SITESUBTITLE | default("Find and bulk follow tech celebrities with a Mastodon or Bluesky presence.") | e }}</p>
+                    <p class="site-tagline">{{ SITESUBTITLE | default("Find YouTube creators and channel feeds on Mastodon.") | e }}</p>
                 </div>
                 <nav class="top-nav" aria-label="Primary">
                     <a{% if page is defined and (page.slug == "home" or not page.url) %} class="active"{% endif %} href="{{ SITEURL }}/">Home</a>
-                    <a{% if current_slug == "javascript" %} class="active"{% endif %} href="{{ SITEURL }}/javascript/">JavaScript</a>
-                    <a{% if current_slug == "rust" %} class="active"{% endif %} href="{{ SITEURL }}/rust/">Rust</a>
-                    <a{% if current_slug == "go" %} class="active"{% endif %} href="{{ SITEURL }}/go/">Go</a>
-                    <a{% if current_slug == "python" %} class="active"{% endif %} href="{{ SITEURL }}/python/">Python</a>
-                    <a{% if current_slug == "mobile" %} class="active"{% endif %} href="{{ SITEURL }}/mobile/">Mobile</a>
-                    <a{% if current_slug == "databases" %} class="active"{% endif %} href="{{ SITEURL }}/databases/">Databases</a>
+                    <a{% if current_slug == "technology" %} class="active"{% endif %} href="{{ SITEURL }}/technology/">Technology</a>
+                    <a{% if current_slug == "gaming" %} class="active"{% endif %} href="{{ SITEURL }}/gaming/">Gaming</a>
+                    <a{% if current_slug == "science-education" %} class="active"{% endif %} href="{{ SITEURL }}/science-education/">Education</a>
+                    <a{% if current_slug == "music" %} class="active"{% endif %} href="{{ SITEURL }}/music/">Music</a>
+                    <a{% if current_slug == "news-society" %} class="active"{% endif %} href="{{ SITEURL }}/news-society/">News</a>
                     <a{% if page is defined and page.slug == "youtubers" %} class="active"{% endif %} href="{{ SITEURL }}/youtubers/">All YouTubers</a>
                     <a{% if page is defined and page.slug == "bulk-follow" %} class="active"{% endif %} href="{{ SITEURL }}/bulk-follow/">Bulk Follow</a>
                     <a{% if page is defined and page.slug == "mastodon-follow" %} class="active"{% endif %} href="{{ SITEURL }}/mastodon-follow/">Follow on Mastodon</a>
@@ -33,16 +32,17 @@
         <div class="site-content">
             <aside class="site-sidebar">
                 <nav class="section-nav" aria-label="Section">
-                    <p class="section-nav__title">Tech Stacks</p>
+                    <p class="section-nav__title">Topics</p>
                     <ul>
-                        <li{% if current_slug == "javascript" %} class="active"{% endif %}><a href="{{ SITEURL }}/javascript/">JavaScript / TypeScript</a></li>
-                        <li{% if current_slug == "rust" %} class="active"{% endif %}><a href="{{ SITEURL }}/rust/">Rust</a></li>
-                        <li{% if current_slug == "go" %} class="active"{% endif %}><a href="{{ SITEURL }}/go/">Go</a></li>
-                        <li{% if current_slug == "python" %} class="active"{% endif %}><a href="{{ SITEURL }}/python/">Python</a></li>
-                        <li{% if current_slug == "mobile" %} class="active"{% endif %}><a href="{{ SITEURL }}/mobile/">Mobile Dev</a></li>
-                        <li{% if current_slug == "databases" %} class="active"{% endif %}><a href="{{ SITEURL }}/databases/">Databases &amp; Systems</a></li>
-                        <li{% if current_slug == "devops" %} class="active"{% endif %}><a href="{{ SITEURL }}/devops/">DevOps &amp; Cloud</a></li>
-                        <li{% if current_slug == "general" %} class="active"{% endif %}><a href="{{ SITEURL }}/general/">General Tech</a></li>
+                        <li{% if current_slug == "technology" %} class="active"{% endif %}><a href="{{ SITEURL }}/technology/">Technology &amp; Computing</a></li>
+                        <li{% if current_slug == "gaming" %} class="active"{% endif %}><a href="{{ SITEURL }}/gaming/">Gaming &amp; VTubers</a></li>
+                        <li{% if current_slug == "science-education" %} class="active"{% endif %}><a href="{{ SITEURL }}/science-education/">Science &amp; Education</a></li>
+                        <li{% if current_slug == "music" %} class="active"{% endif %}><a href="{{ SITEURL }}/music/">Music</a></li>
+                        <li{% if current_slug == "art-making" %} class="active"{% endif %}><a href="{{ SITEURL }}/art-making/">Art, Design &amp; Making</a></li>
+                        <li{% if current_slug == "news-society" %} class="active"{% endif %}><a href="{{ SITEURL }}/news-society/">News, Politics &amp; Society</a></li>
+                        <li{% if current_slug == "culture-entertainment" %} class="active"{% endif %}><a href="{{ SITEURL }}/culture-entertainment/">Culture &amp; Entertainment</a></li>
+                        <li{% if current_slug == "lifestyle-hobbies" %} class="active"{% endif %}><a href="{{ SITEURL }}/lifestyle-hobbies/">Lifestyle, Travel &amp; Hobbies</a></li>
+                        <li{% if current_slug == "other" %} class="active"{% endif %}><a href="{{ SITEURL }}/other/">Other</a></li>
                     </ul>
 
                     <p class="section-nav__title">Browse</p>

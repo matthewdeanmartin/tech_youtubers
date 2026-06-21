@@ -14,11 +14,21 @@ PROTECTED = {"reviewed", "review_slug", "description"}
 def load() -> list[dict]:
     if not YOUTUBERS_PATH.exists():
         return []
-    return json.loads(YOUTUBERS_PATH.read_text(encoding="utf-8"))
+    youtubers = json.loads(YOUTUBERS_PATH.read_text(encoding="utf-8"))
+    errors = []
+    for y in youtubers:
+        label = y.get("id") or y.get("name") or "<unknown>"
+        if not y.get("mastodon_url"):
+            errors.append(f"{label}: mastodon_url is required")
+        if not y.get("youtube_url"):
+            errors.append(f"{label}: youtube_url is required")
+    if errors:
+        raise ValueError("Invalid YouTuber data:\n  - " + "\n  - ".join(errors))
+    return youtubers
 
 
 def save(youtubers: list[dict]) -> None:
-    youtubers_sorted = sorted(youtubers, key=lambda y: (y.get("tech_stack", ""), y.get("name", "")))
+    youtubers_sorted = sorted(youtubers, key=lambda y: (y.get("category", ""), y.get("name", "")))
     YOUTUBERS_PATH.write_text(
         json.dumps(youtubers_sorted, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
