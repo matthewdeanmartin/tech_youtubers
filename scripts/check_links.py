@@ -51,12 +51,17 @@ def parse_site(site_dir: Path) -> tuple[dict[Path, LinkParser], list[Link]]:
     return documents, links
 
 
-def local_target(site_dir: Path, source: Path, url: str) -> tuple[Path, str]:
+def local_target(site_dir: Path, source: Path, url: str, siteurl_prefix: str = "") -> tuple[Path, str]:
     path_part, fragment = urldefrag(url)
     parsed = urlparse(path_part)
 
     if parsed.path.startswith("/"):
-        target = site_dir / unquote(parsed.path.lstrip("/"))
+        path = unquote(parsed.path)
+        # Strip the sub-path prefix (e.g. /tech_youtubers) so that
+        # /tech_youtubers/theme/css/style.css resolves under site_dir directly.
+        if siteurl_prefix and path.startswith(siteurl_prefix):
+            path = path[len(siteurl_prefix):] or "/"
+        target = site_dir / path.lstrip("/")
     elif parsed.path:
         target = source.parent / unquote(parsed.path)
     else:
@@ -68,8 +73,8 @@ def local_target(site_dir: Path, source: Path, url: str) -> tuple[Path, str]:
     return target.resolve(), fragment
 
 
-def check_local_link(site_dir: Path, documents: dict[Path, LinkParser], link: Link) -> str | None:
-    target, fragment = local_target(site_dir, link.source, link.url)
+def check_local_link(site_dir: Path, documents: dict[Path, LinkParser], link: Link, siteurl_prefix: str = "") -> str | None:
+    target, fragment = local_target(site_dir, link.source, link.url, siteurl_prefix)
     rel_source = link.source.relative_to(site_dir)
 
     if not target.exists():
@@ -131,7 +136,16 @@ def main() -> int:
         default=[403],
         help="HTTP status to treat as inconclusive rather than broken; repeatable",
     )
+    parser.add_argument(
+        "--siteurl",
+        default="",
+        help="Sub-path prefix used in production (e.g. /tech_youtubers). "
+             "Must match the value passed to copy_static.py.",
+    )
     args = parser.parse_args()
+
+    # Normalise: strip trailing slash, keep leading slash (or empty string).
+    siteurl_prefix = args.siteurl.rstrip("/")
 
     site_dir = args.site_dir.resolve()
     if not site_dir.exists():
@@ -165,7 +179,7 @@ def main() -> int:
 
         if not parsed.scheme:
             # Local link
-            error = check_local_link(site_dir, documents, link)
+            error = check_local_link(site_dir, documents, link, siteurl_prefix)
             if error:
                 local_failures.append(error)
         elif not args.internal_only:

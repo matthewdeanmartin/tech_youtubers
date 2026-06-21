@@ -76,7 +76,7 @@ jobs:
       - name: Run Python quality gates
         run: |
           uv run python scripts/check_pelican_artifacts.py --site-dir output --siteurl /tech_youtubers
-          uv run python scripts/check_links.py --site-dir output --internal-only
+          uv run python scripts/check_links.py --site-dir output --internal-only --siteurl /tech_youtubers
 
       - name: Run Node quality gates
         run: npm run quality
