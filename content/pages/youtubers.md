@@ -80,9 +80,115 @@ the profiles where interaction is most likely.
     </tbody>
 </table>
 
-Want to follow the native accounts in bulk? Head to the [Bulk Follow Page]({filename}bulk-follow.md).
-
 ## Inclusion rule
 
 - The Mastodon profile must contain a direct link to a YouTube channel.
 - Automated channel feeds and bridges are labeled separately from native Mastodon accounts.
+
+
+<section class="bulk-follow" data-bulk-scope="all" data-bulk-handles="[&quot;@blacksincyber@infosec.exchange&quot;, &quot;@BrodieOnLinux@mstdn.social&quot;, &quot;@codinggrace@mastodon.ie&quot;, &quot;@CodingKurzgeschichten@mastodontech.de&quot;, &quot;@emilybache@sw-development-is.social&quot;, &quot;@ArchetypicalTV@mastodon.social&quot;, &quot;@shaharyarranjah1@mastodon.social&quot;, &quot;@graphicsmeetup@mastodon.gamedev.place&quot;, &quot;@insiderphd@infosec.exchange&quot;, &quot;@llp@infosec.exchange&quot;, &quot;@linuxlads@mastodon.ie&quot;, &quot;@linmob@linuxmobile.social&quot;, &quot;@linuxtrend@mastodon.social&quot;, &quot;@mattferrell@mastodon.social&quot;, &quot;@vileboss@bitbang.social&quot;, &quot;@lowlevellearning@infosec.exchange&quot;, &quot;@lingualatina@colloquium.social&quot;, &quot;@opentitus@mastodon.uno&quot;, &quot;@paulshardware@techhub.social&quot;, &quot;@raulcraveiro@mastodon.online&quot;, &quot;@swcraftstras@mobilizon.fr&quot;, &quot;@softwaredefinedtalk@hachyderm.io&quot;, &quot;@tarantinotoriyama@mastodon.social&quot;, &quot;@TechInterceptor@mastodon.online&quot;, &quot;@TechOverTeaShow@mastodon.social&quot;, &quot;@techtales@mas.to&quot;, &quot;@TechTangents@dialup.space&quot;, &quot;@techhut@fosstodon.org&quot;, &quot;@tech@distrotoot.com&quot;, &quot;@techlore@social.lol&quot;, &quot;@TechConnectify@mas.to&quot;, &quot;@cyberlibrarian@infosec.exchange&quot;, &quot;@tomlawrence@infosec.exchange&quot;, &quot;@notthebee@tilde.zone&quot;, &quot;@author/youtuber@upvo.me&quot;]">
+<h2>Follow these 35 accounts</h2>
+<p>Copy the handles below, or download a CSV to import via your Mastodon server's
+<strong>Preferences &rarr; Import and export &rarr; Import &rarr; Following list</strong>.
+Prefer one click? Use the <a href="../mastodon-follow/">Follow on Mastodon</a> tool.</p>
+<label class="bulk-follow__label" for="bulk-follow-all">Native accounts in All YouTubers</label>
+<textarea id="bulk-follow-all" class="bulk-follow__text" rows="6" readonly spellcheck="false">@blacksincyber@infosec.exchange
+@BrodieOnLinux@mstdn.social
+@codinggrace@mastodon.ie
+@CodingKurzgeschichten@mastodontech.de
+@emilybache@sw-development-is.social
+@ArchetypicalTV@mastodon.social
+@shaharyarranjah1@mastodon.social
+@graphicsmeetup@mastodon.gamedev.place
+@insiderphd@infosec.exchange
+@llp@infosec.exchange
+@linuxlads@mastodon.ie
+@linmob@linuxmobile.social
+@linuxtrend@mastodon.social
+@mattferrell@mastodon.social
+@vileboss@bitbang.social
+@lowlevellearning@infosec.exchange
+@lingualatina@colloquium.social
+@opentitus@mastodon.uno
+@paulshardware@techhub.social
+@raulcraveiro@mastodon.online
+@swcraftstras@mobilizon.fr
+@softwaredefinedtalk@hachyderm.io
+@tarantinotoriyama@mastodon.social
+@TechInterceptor@mastodon.online
+@TechOverTeaShow@mastodon.social
+@techtales@mas.to
+@TechTangents@dialup.space
+@techhut@fosstodon.org
+@tech@distrotoot.com
+@techlore@social.lol
+@TechConnectify@mas.to
+@cyberlibrarian@infosec.exchange
+@tomlawrence@infosec.exchange
+@notthebee@tilde.zone
+@author/youtuber@upvo.me</textarea>
+<div class="bulk-follow__actions">
+<button type="button" class="bulk-follow__copy" data-bulk-copy>Copy handles</button>
+<a class="bulk-follow__download" data-bulk-download href="#" download>Download CSV</a>
+</div>
+</section>
+
+<script>
+(function () {
+  function csvFor(handles) {
+    var rows = ["Account address,Show boosts,Notify on new posts,Languages"];
+    handles.forEach(function (h) { rows.push(h.replace(/^@/, "") + ",true,false,"); });
+    return rows.join("\n") + "\n";
+  }
+  function stamp() {
+    var d = new Date();
+    function p(n) { return String(n).padStart(2, "0"); }
+    return d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + "-" +
+           p(d.getHours()) + p(d.getMinutes()) + p(d.getSeconds());
+  }
+  document.querySelectorAll(".bulk-follow").forEach(function (section) {
+    var handles;
+    try { handles = JSON.parse(section.getAttribute("data-bulk-handles")) || []; }
+    catch (e) { handles = []; }
+    var scope = section.getAttribute("data-bulk-scope") || "accounts";
+
+    var copyBtn = section.querySelector("[data-bulk-copy]");
+    var textarea = section.querySelector(".bulk-follow__text");
+    if (copyBtn && textarea) {
+      copyBtn.addEventListener("click", function () {
+        var text = handles.join("\n");
+        function done() {
+          var original = copyBtn.textContent;
+          copyBtn.textContent = "Copied!";
+          setTimeout(function () { copyBtn.textContent = original; }, 1500);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, function () {
+            textarea.select(); document.execCommand("copy"); done();
+          });
+        } else {
+          textarea.select(); document.execCommand("copy"); done();
+        }
+      });
+    }
+
+    var dl = section.querySelector("[data-bulk-download]");
+    if (dl) {
+      dl.addEventListener("click", function (e) {
+        e.preventDefault();
+        var blob = new Blob([csvFor(handles)], { type: "text/csv;charset=utf-8" });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url;
+        // Unique per scope and per download so saved files never collide.
+        a.download = "mastodon-follows-" + scope + "-" + stamp() + ".csv";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 0);
+      });
+    }
+  });
+})();
+</script>
+

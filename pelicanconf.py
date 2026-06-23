@@ -1,4 +1,10 @@
+import json
+import sys
 from datetime import datetime
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent))
+from pipeline import categorize
 
 AUTHOR = 'YouTubers on Mastodon'
 SITENAME = 'YouTubers on Mastodon'
@@ -24,6 +30,45 @@ LINKS = ()
 SOCIAL = ()
 
 DEFAULT_PAGINATION = 20
+
+# ── Sidebar categories ──────────────────────────────────────────────────────
+# The sidebar should only list category pages that actually have content.
+# A category page (see generate_pages.generate_category_page) shows native and
+# bridged accounts but NOT unattended bot/feed accounts, so a category is
+# "empty" — and suppressed from the menu — when all of its entries are bots.
+# Exposed to templates as SIDEBAR_CATEGORIES (list of {slug, label}).
+_BOT_ACCOUNT_TYPES = {"rss-feed", "channel-feed", "bot"}
+
+
+def _nonempty_categories():
+    data_path = Path(__file__).parent / "data" / "youtubers.json"
+    try:
+        creators = json.loads(data_path.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        creators = []
+    present = {
+        c.get("category", "other")
+        for c in creators
+        if c.get("account_type") not in _BOT_ACCOUNT_TYPES
+    }
+    return [
+        {"slug": slug, "label": categorize.CATEGORY_LABELS[slug]}
+        for slug in categorize.CATEGORY_SORTORDER
+        if slug in present
+    ]
+
+
+SIDEBAR_CATEGORIES = _nonempty_categories()
+
+# Curated short labels for the horizontal top nav. Only those that are also in
+# SIDEBAR_CATEGORIES (i.e. non-empty) are rendered.
+TOP_NAV_CATEGORIES = {
+    "technology": "Technology",
+    "gaming": "Gaming",
+    "science-education": "Education",
+    "music": "Music",
+    "news-society": "News",
+}
 
 def _sort_by_sortorder(pages):
     return sorted(pages, key=lambda p: int(getattr(p, 'sortorder', 99)))

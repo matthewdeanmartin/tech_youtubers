@@ -282,16 +282,14 @@
       <aside class="site-sidebar">
         <nav class="section-nav" aria-label="Section">
           <p class="section-nav__title">Topics</p>
-          <ul>
+          <!-- TOPICS:START --><ul>
             <li><a href="{{SITEURL}}/technology/">Technology &amp; Computing</a></li>
             <li><a href="{{SITEURL}}/gaming/">Gaming &amp; VTubers</a></li>
             <li><a href="{{SITEURL}}/science-education/">Science &amp; Education</a></li>
-            <li><a href="{{SITEURL}}/music/">Music</a></li>
             <li><a href="{{SITEURL}}/art-making/">Art, Design &amp; Making</a></li>
-            <li><a href="{{SITEURL}}/news-society/">News, Politics &amp; Society</a></li>
             <li><a href="{{SITEURL}}/culture-entertainment/">Culture &amp; Entertainment</a></li>
-            <li><a href="{{SITEURL}}/lifestyle-hobbies/">Lifestyle, Travel &amp; Hobbies</a></li>
-          </ul>
+            <li><a href="{{SITEURL}}/other/">Other</a></li>
+          </ul><!-- TOPICS:END -->
           <p class="section-nav__title">Browse</p>
           <ul>
             <li><a href="{{SITEURL}}/youtubers/">All YouTubers</a></li>
@@ -381,18 +379,25 @@
    YouTubers on Mastodon – Follow Pack
    Security model
    ─────────────────────────────────────────────────────────────────
-   • PKCE flow: no client_secret is ever requested, sent or stored.
-     A random code_verifier is hashed (SHA-256) to a code_challenge
-     sent to the Mastodon auth endpoint. The code_verifier is only
-     kept in sessionStorage during the auth handshake, then deleted.
+   • PKCE flow: a random code_verifier is hashed (SHA-256) to a
+     code_challenge sent to the Mastodon auth endpoint. The
+     code_verifier is only kept in sessionStorage during the auth
+     handshake, then deleted. PKCE protects the authorization code
+     against interception.
+   • Mastodon's /oauth/token endpoint authenticates the *app* with
+     client_id + client_secret even when PKCE is used (it does not
+     support secret-less public clients), so we must keep and send
+     the client_secret. Without it the token call returns
+     401 invalid_client.
    • Access tokens live in sessionStorage (per-tab).
      sessionStorage is NOT accessible from other pages/tabs on the
      same origin, so XSS on a sibling GitHub Pages path cannot
      steal it — unlike localStorage which would be shared.
-   • client_id (public, non-secret) is cached in localStorage so
-     users don't have to re-register the app on every page load.
-   • The only thing in localStorage: instance name + client_id.
-     Neither of these are sensitive credentials.
+   • client_id + client_secret are cached in localStorage so users
+     don't have to re-register the app on every page load. This is a
+     per-instance app credential, not the user's password; the worst
+     case is that someone could register/identify this app. The
+     user's access token never touches localStorage.
 ================================================================ */
 (() => {
   "use strict";
@@ -507,7 +512,16 @@
   /* ── Storage (sessionStorage for secrets, localStorage for public) */
   const LS_INSTANCE_KEY = "mf-pack:lastInstance";
 
-  function lsClientIdKey(inst) { return `mf-pack:${inst}:client_id`; }
+  function lsAppKey(inst) { return `mf-pack:${inst}:app`; }
+
+  // App credentials (client_id + client_secret) for this instance.
+  function getApp(inst) {
+    const raw = localStorage.getItem(lsAppKey(inst));
+    return raw ? JSON.parse(raw) : null;
+  }
+  function setApp(inst, app) {
+    localStorage.setItem(lsAppKey(inst), JSON.stringify(app));
+  }
 
   // Token ONLY in sessionStorage (per-tab, XSS-isolated from other pages)
   function getToken() {
@@ -546,9 +560,12 @@
 
   /* ── App registration (fetches/caches client_id, PKCE = no secret) */
   async function ensureAppRegistered(inst) {
-    const cacheKey = lsClientIdKey(inst);
-    const cached   = localStorage.getItem(cacheKey);
-    if (cached) return cached;  // client_id is public; safe in localStorage
+    const cached = getApp(inst);
+    // Re-register if the cached app predates client_secret storage or used a
+    // different redirect URI (e.g. the user moved instances/paths).
+    if (cached && cached.client_id && cached.client_secret && cached.redirect_uri === redirectUri()) {
+      return cached;
+    }
 
     const body = new FormData();
     body.set("client_name",    APP_NAME);
@@ -556,12 +573,16 @@
     body.set("scopes",         DEFAULT_SCOPES);
     body.set("website",        APP_WEBSITE);
 
-    // Note: we do NOT use the returned client_secret at all.
-    // With PKCE the server authenticates using the code_verifier instead.
     const app = await apiFetch("/api/v1/apps", { method: "POST", body });
-    localStorage.setItem(cacheKey, app.client_id);
-    log(`App registered on ${inst} (client_id cached, no secret stored).`);
-    return app.client_id;
+    const record = {
+      client_id:     app.client_id,
+      client_secret: app.client_secret,
+      redirect_uri:  redirectUri(),
+      scopes:        DEFAULT_SCOPES,
+    };
+    setApp(inst, record);
+    log(`App registered on ${inst} (client credentials cached).`);
+    return record;
   }
 
   /* ── Connect / authorize flow ────────────────────────────────── */
@@ -570,7 +591,8 @@
     if (!inst) throw new Error("Enter an instance first.");
     localStorage.setItem(LS_INSTANCE_KEY, inst);
 
-    const clientId   = await ensureAppRegistered(inst);
+    const app        = await ensureAppRegistered(inst);
+    const clientId   = app.client_id;
     const verifier   = generateVerifier();
     const challenge  = await sha256Base64Url(verifier);
     const state      = crypto.randomUUID();
@@ -613,14 +635,20 @@
     const verifier = getVerifier();
     if (!verifier) throw new Error("PKCE verifier missing from session. Please try connecting again.");
 
-    const clientId = localStorage.getItem(lsClientIdKey(inst));
-    if (!clientId) throw new Error("No app registration found. Please try connecting again.");
+    const app = getApp(inst);
+    if (!app || !app.client_id || !app.client_secret) {
+      throw new Error("No app registration found. Please try connecting again.");
+    }
 
-    // Exchange code for token using verifier (PKCE – no client_secret)
+    // Exchange the code for a token. Mastodon requires the app's
+    // client_secret here in addition to the PKCE code_verifier — it does not
+    // accept secret-less public clients, and omitting it returns
+    // 401 invalid_client.
     const body = new URLSearchParams({
       grant_type:    "authorization_code",
       code,
-      client_id:     clientId,
+      client_id:     app.client_id,
+      client_secret: app.client_secret,
       redirect_uri:  redirectUri(),
       scope:         DEFAULT_SCOPES,
       code_verifier: verifier,
@@ -667,15 +695,16 @@
     if (!inst) return;
     clearToken(inst);
     clearVerifier(); clearOAuthState();
+    localStorage.removeItem(lsAppKey(inst));
     updateAuthStatus();
-    log(`Session cleared for ${inst}. (App registration remains; revoke on Mastodon if desired.)`);
+    log(`Session and cached app credentials cleared for ${inst}. (The app may still exist on your Mastodon account; revoke it there if desired.)`);
   }
 
   /* ── Auth status UI ──────────────────────────────────────────── */
   function updateAuthStatus() {
     const inst  = normalizeInstance(els.instance.value);
     const token = inst ? getToken() : null;
-    const cid   = inst ? localStorage.getItem(lsClientIdKey(inst)) : null;
+    const cid   = inst ? (getApp(inst) || {}).client_id : null;
 
     const parts = [];
     if (inst)  parts.push(`Instance: <code>${esc(inst)}</code>`);

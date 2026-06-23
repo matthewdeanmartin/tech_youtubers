@@ -10,7 +10,13 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 sys.path.insert(0, str(Path(__file__).parent))
-from pipeline import categorize, youtuber_store
+from pipeline import categorize, youtuber_store, youtube_feed
+
+# Toggled off by --no-feeds (and during --dry-run) so page generation can run
+# fully offline. Populated as creators are fetched so a creator appearing on
+# multiple pages is only fetched once per build.
+FETCH_FEEDS = True
+_FEED_CACHE: dict[str, list] = {}
 
 CONTENT_DIR = Path(__file__).parent / "content"
 PAGES_DIR = CONTENT_DIR / "pages"
@@ -52,8 +58,40 @@ def _mastodon_account(url: str) -> str:
     return f"{username}@{parsed.netloc}"
 
 
+def nonempty_categories(youtubers: list[dict]) -> list[str]:
+    """Categories whose page has at least one non-bot (interactive) account.
+
+    Mirrors the visibility rule in generate_category_page: bot/feed accounts
+    live on the Bots page, so a category with only bots renders an empty page
+    and is hidden from the sidebar.
+    """
+    present = {
+        creator.get("category", "other")
+        for creator in youtubers
+        if creator.get("account_type") not in BOT_ACCOUNT_TYPES
+    }
+    return [slug for slug in CATEGORY_SORTORDER if slug in present]
+
+
 def sync_follow_tool(youtubers: list[dict]) -> None:
     text = FOLLOW_TOOL_PATH.read_text(encoding="utf-8")
+
+    # Keep the static follow tool's hand-maintained sidebar in step with the
+    # data-driven sidebar in base.html: only list non-empty category pages.
+    topics = "\n".join(
+        f'            <li><a href="{{{{SITEURL}}}}/{slug}/">{html.escape(CATEGORY_LABELS[slug])}</a></li>'
+        for slug in nonempty_categories(youtubers)
+    )
+    topics_block = "<!-- TOPICS:START --><ul>\n" + topics + "\n          </ul><!-- TOPICS:END -->"
+    text, topic_count = re.subn(
+        r"<!-- TOPICS:START -->.*?<!-- TOPICS:END -->",
+        topics_block,
+        text,
+        flags=re.DOTALL,
+    )
+    if topic_count != 1:
+        raise ValueError(f"{FOLLOW_TOOL_PATH}: expected exactly one TOPICS sidebar block")
+
     rows = []
     for creator in youtubers:
         if creator.get("account_type") != "native":
@@ -154,6 +192,8 @@ def generate_youtubers_page(youtubers: list[dict]) -> str:
     )
     native_count = sum(item.get("account_type") == "native" for item in youtubers)
     feed_count = len(youtubers) - native_count
+    native_only = [item for item in youtubers if item.get("account_type") == "native"]
+    bulk_block = _bulk_follow_block(native_only, "all", "All YouTubers")
     return f"""Title: All YouTubers
 Date: 2026-06-20
 Slug: youtubers
@@ -168,12 +208,12 @@ the profiles where interaction is most likely.
 
 {table}
 
-Want to follow the native accounts in bulk? Head to the [Bulk Follow Page]({{filename}}bulk-follow.md).
-
 ## Inclusion rule
 
 - The Mastodon profile must contain a direct link to a YouTube channel.
 - Automated channel feeds and bridges are labeled separately from native Mastodon accounts.
+
+{bulk_block}{BULK_FOLLOW_SCRIPT if bulk_block else ""}
 """
 
 
@@ -183,7 +223,51 @@ def _lang_attr(creator: dict) -> str:
     return f' data-lang="{lang}"'
 
 
-def _creator_li(creator: dict, mastodon_label: str) -> str:
+def creator_videos(creator: dict, limit: int = 5) -> list:
+    """Fetch (and memoize) recent uploads for a creator's YouTube channel.
+
+    Returns [] when feeds are disabled or the feed can't be fetched, so callers
+    never have to special-case failure.
+    """
+    if not FETCH_FEEDS:
+        return []
+    url = creator.get("primary_url") or creator.get("youtube_url")
+    if not url:
+        return []
+    if url not in _FEED_CACHE:
+        _FEED_CACHE[url] = youtube_feed.recent_videos(url, limit=limit)
+    return _FEED_CACHE[url]
+
+
+def _recent_videos_html(videos: list) -> str:
+    """Render a creator's recent uploads as a collapsible <details> block.
+
+    ``videos`` is a list of pipeline.youtube_feed.Video. Returns "" when empty
+    so creators whose feed could not be fetched simply show no widget.
+    """
+    if not videos:
+        return ""
+    items = []
+    for video in videos:
+        title = html.escape(video.title)
+        url = html.escape(video.url, quote=True)
+        date = html.escape(video.published)
+        date_html = f'<time datetime="{date}">{date}</time> · ' if date else ""
+        link = (
+            f'<a href="{url}" target="_blank" rel="noopener noreferrer">{title}</a>'
+            if url
+            else title
+        )
+        items.append(f"<li>{date_html}{link}</li>")
+    return (
+        '<details class="recent-videos">'
+        f"<summary>Recent uploads ({len(videos)})</summary>"
+        "<ul>" + "".join(items) + "</ul>"
+        "</details>"
+    )
+
+
+def _creator_li(creator: dict, mastodon_label: str, recent_videos: list | None = None) -> str:
     """Render one directory entry as a self-contained HTML list item.
 
     We emit real HTML rather than Markdown because these `<li>` elements live
@@ -195,11 +279,13 @@ def _creator_li(creator: dict, mastodon_label: str) -> str:
     primary_url = html.escape(creator.get("primary_url") or creator["youtube_url"], quote=True)
     mastodon_url = html.escape(creator["mastodon_url"], quote=True)
     description = html.escape(creator.get("description") or "")
+    videos_html = _recent_videos_html(recent_videos or [])
     return (
         f'<li data-lang="{lang}">'
         f'<strong><a href="{primary_url}" target="_blank" rel="noopener noreferrer">{name}</a></strong>'
         f' · <a href="{mastodon_url}" target="_blank" rel="noopener noreferrer">{mastodon_label}</a>'
         f" — {description}"
+        f"{videos_html}"
         "</li>"
     )
 
@@ -218,6 +304,105 @@ def _section(section_key: str, heading: str, list_items: list[str]) -> str:
     )
 
 
+def _bulk_follow_block(youtubers: list[dict], scope_slug: str, scope_label: str) -> str:
+    """Render an inline bulk-follow widget for the native accounts in scope.
+
+    Provides both a copy-paste textarea and a client-side CSV download (Mastodon
+    "Following list" import format). The download filename is made unique per
+    scope and per download (timestamp) so saved files don't all collide on a
+    generic name like ``accts.csv``.
+    """
+    handles = [
+        f"@{_mastodon_account(item['mastodon_url'])}"
+        for item in sorted(youtubers, key=lambda item: item.get("name", "").casefold())
+        if item.get("account_type") == "native"
+    ]
+    if not handles:
+        return ""
+
+    textarea_value = html.escape("\n".join(handles))
+    # Embed the handles as a JSON array for the download script.
+    handles_json = html.escape(json.dumps(handles, ensure_ascii=False), quote=True)
+    scope_attr = html.escape(scope_slug, quote=True)
+
+    return f"""
+<section class="bulk-follow" data-bulk-scope="{scope_attr}" data-bulk-handles="{handles_json}">
+<h2>Follow {"this account" if len(handles) == 1 else f"these {len(handles)} accounts"}</h2>
+<p>Copy the handles below, or download a CSV to import via your Mastodon server's
+<strong>Preferences &rarr; Import and export &rarr; Import &rarr; Following list</strong>.
+Prefer one click? Use the <a href="../mastodon-follow/">Follow on Mastodon</a> tool.</p>
+<label class="bulk-follow__label" for="bulk-follow-{scope_attr}">Native accounts in {html.escape(scope_label)}</label>
+<textarea id="bulk-follow-{scope_attr}" class="bulk-follow__text" rows="6" readonly spellcheck="false">{textarea_value}</textarea>
+<div class="bulk-follow__actions">
+<button type="button" class="bulk-follow__copy" data-bulk-copy>Copy handles</button>
+<a class="bulk-follow__download" data-bulk-download href="#" download>Download CSV</a>
+</div>
+</section>
+"""
+
+
+BULK_FOLLOW_SCRIPT = """
+<script>
+(function () {
+  function csvFor(handles) {
+    var rows = ["Account address,Show boosts,Notify on new posts,Languages"];
+    handles.forEach(function (h) { rows.push(h.replace(/^@/, "") + ",true,false,"); });
+    return rows.join("\\n") + "\\n";
+  }
+  function stamp() {
+    var d = new Date();
+    function p(n) { return String(n).padStart(2, "0"); }
+    return d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + "-" +
+           p(d.getHours()) + p(d.getMinutes()) + p(d.getSeconds());
+  }
+  document.querySelectorAll(".bulk-follow").forEach(function (section) {
+    var handles;
+    try { handles = JSON.parse(section.getAttribute("data-bulk-handles")) || []; }
+    catch (e) { handles = []; }
+    var scope = section.getAttribute("data-bulk-scope") || "accounts";
+
+    var copyBtn = section.querySelector("[data-bulk-copy]");
+    var textarea = section.querySelector(".bulk-follow__text");
+    if (copyBtn && textarea) {
+      copyBtn.addEventListener("click", function () {
+        var text = handles.join("\\n");
+        function done() {
+          var original = copyBtn.textContent;
+          copyBtn.textContent = "Copied!";
+          setTimeout(function () { copyBtn.textContent = original; }, 1500);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, function () {
+            textarea.select(); document.execCommand("copy"); done();
+          });
+        } else {
+          textarea.select(); document.execCommand("copy"); done();
+        }
+      });
+    }
+
+    var dl = section.querySelector("[data-bulk-download]");
+    if (dl) {
+      dl.addEventListener("click", function (e) {
+        e.preventDefault();
+        var blob = new Blob([csvFor(handles)], { type: "text/csv;charset=utf-8" });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url;
+        // Unique per scope and per download so saved files never collide.
+        a.download = "mastodon-follows-" + scope + "-" + stamp() + ".csv";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 0);
+      });
+    }
+  });
+})();
+</script>
+"""
+
+
 def generate_category_page(category: str, youtubers: list[dict]) -> str:
     label = CATEGORY_LABELS[category]
     items = [item for item in youtubers if item.get("category") == category]
@@ -230,7 +415,7 @@ def generate_category_page(category: str, youtubers: list[dict]) -> str:
     # Native section — wrapped in a data-lang-section div so JS can collapse
     # the whole block when all items are filtered out.
     native_items = [
-        _creator_li(creator, "Mastodon")
+        _creator_li(creator, "Mastodon", creator_videos(creator))
         for creator in sorted(native, key=lambda item: item.get("name", "").casefold())
     ]
 
@@ -244,10 +429,12 @@ def generate_category_page(category: str, youtubers: list[dict]) -> str:
     feeds_block = ""
     if feeds:
         feed_items = [
-            _creator_li(creator, "Bridge")
+            _creator_li(creator, "Bridge", creator_videos(creator))
             for creator in sorted(feeds, key=lambda item: item.get("name", "").casefold())
         ]
         feeds_block = "\n" + _section("feeds", f"Bridged accounts ({len(feeds)})", feed_items)
+
+    bulk_block = _bulk_follow_block(native, category, label)
 
     return f"""Title: {label} YouTubers
 Date: 2026-06-20
@@ -256,6 +443,7 @@ sortorder: {CATEGORY_SORTORDER.index(category) + 10}
 Summary: {label} YouTube creators and channel feeds on Mastodon.
 
 {native_block}{feeds_block}
+{bulk_block}{BULK_FOLLOW_SCRIPT if bulk_block else ""}
 """
 
 
@@ -332,9 +520,17 @@ one-by-one or all at once using PKCE OAuth.
 
 
 def main() -> None:
+    global FETCH_FEEDS
     parser = argparse.ArgumentParser(description="Generate Pelican pages from youtubers.json")
     parser.add_argument("--dry-run", action="store_true", help="Print output without writing files")
+    parser.add_argument(
+        "--no-feeds",
+        action="store_true",
+        help="Skip fetching YouTube RSS feeds (faster, fully offline build)",
+    )
     args = parser.parse_args()
+    # Skip network during dry runs and when explicitly disabled.
+    FETCH_FEEDS = not (args.no_feeds or args.dry_run)
     youtubers = youtuber_store.load()
     print(f"Loaded {len(youtubers)} YouTubers")
     youtubers, synced = sync_reviews(youtubers)
