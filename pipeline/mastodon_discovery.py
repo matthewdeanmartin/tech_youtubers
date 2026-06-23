@@ -14,7 +14,23 @@ from pipeline.mastodon import parse_profile_url
 
 DEFAULT_DB_PATH = Path(__file__).parent.parent / "data" / "mastodon_candidates.sqlite"
 YOUTUBE_HOSTS = {"youtube.com", "www.youtube.com", "m.youtube.com", "youtu.be", "www.youtu.be"}
+TWITCH_HOSTS = {"twitch.tv", "www.twitch.tv", "m.twitch.tv"}
+# PeerTube — the federated "Fediverse YouTube clone" — runs on hundreds of
+# independent instances, so we can't enumerate hosts. We recognise it by the
+# stable channel/account path shapes PeerTube uses, on any host. Well-known
+# flagship instances are listed to bias detection, but the path heuristic is
+# what actually generalises.
+PEERTUBE_HOSTS = {
+    "framatube.org", "tilvids.com", "video.ploud.fr", "peertube.tv",
+    "tube.tchncs.de", "diode.zone", "makertube.net", "spectra.video",
+}
+# A non-video Twitch path we should ignore (directory/category pages, not a channel).
+TWITCH_RESERVED = {"directory", "videos", "p", "settings", "subscriptions", "wallet", "downloads"}
 URL_RE = re.compile(r"https?://[^\s<>\"']+", re.IGNORECASE)
+
+
+def _strip_path(parsed) -> str:
+    return re.sub(r"/+", "/", parsed.path).rstrip("/")
 
 
 class _LinkParser(HTMLParser):
@@ -48,7 +64,7 @@ def canonical_youtube_url(url: str) -> str | None:
         # a stable channel URL suitable for the directory.
         return None
 
-    path = re.sub(r"/+", "/", parsed.path).rstrip("/")
+    path = _strip_path(parsed)
     if not path:
         return None
     first = path.split("/")[1].lower() if path.startswith("/") else ""
@@ -59,8 +75,86 @@ def canonical_youtube_url(url: str) -> str | None:
     return urlunparse(clean)
 
 
-def youtube_links(account: dict) -> list[tuple[str, str]]:
-    evidence: list[tuple[str, str]] = []
+def canonical_twitch_url(url: str) -> str | None:
+    candidate = html.unescape(url).strip().rstrip(".,;:!?)")
+    parsed = urlparse(candidate)
+    host = (parsed.hostname or "").lower()
+    if host not in TWITCH_HOSTS:
+        return None
+    path = _strip_path(parsed)
+    if not path:
+        return None
+    segments = [s for s in path.split("/") if s]
+    # A channel is twitch.tv/<name> — a single path segment that isn't a
+    # reserved app route.
+    if len(segments) != 1 or segments[0].lower() in TWITCH_RESERVED:
+        return None
+    clean = parsed._replace(
+        scheme="https", netloc="www.twitch.tv", path=f"/{segments[0]}", params="", query="", fragment=""
+    )
+    return urlunparse(clean)
+
+
+def _looks_like_peertube_path(segments: list[str]) -> bool:
+    """PeerTube channel/account permalinks: /c/<h>, /a/<h>, /video-channels/<h>,
+    or /accounts/<h> (optionally followed by /videos)."""
+    if not segments:
+        return False
+    head = segments[0].lower()
+    if head in {"c", "a", "video-channels", "accounts"} and len(segments) >= 2:
+        return True
+    return False
+
+
+def canonical_peertube_url(url: str) -> str | None:
+    candidate = html.unescape(url).strip().rstrip(".,;:!?)")
+    parsed = urlparse(candidate)
+    host = (parsed.hostname or "").lower()
+    if not host:
+        return None
+    path = _strip_path(parsed)
+    segments = [s for s in path.split("/") if s]
+    # Accept either a known flagship instance or any host whose path matches
+    # PeerTube's channel/account permalink shape.
+    if host not in PEERTUBE_HOSTS and not _looks_like_peertube_path(segments):
+        return None
+    if not _looks_like_peertube_path(segments):
+        return None
+    # Normalise to the channel/account permalink, dropping a trailing /videos.
+    if segments[-1].lower() == "videos":
+        segments = segments[:-1]
+    clean = parsed._replace(
+        scheme="https", netloc=host, path="/" + "/".join(segments), params="", query="", fragment=""
+    )
+    return urlunparse(clean)
+
+
+# Platform name -> canonicaliser. YouTube stays first so it wins for the
+# common case and remains the directory's primary platform.
+PLATFORM_CANONICALIZERS = (
+    ("youtube", canonical_youtube_url),
+    ("twitch", canonical_twitch_url),
+    ("peertube", canonical_peertube_url),
+)
+
+
+def canonical_channel_url(url: str) -> tuple[str, str] | None:
+    """Return ``(platform, canonical_url)`` for a recognised video channel link."""
+    for platform, canonicalize in PLATFORM_CANONICALIZERS:
+        result = canonicalize(url)
+        if result:
+            return platform, result
+    return None
+
+
+def youtube_links(account: dict) -> list[tuple[str, str, str]]:
+    """Return ``(channel_url, evidence_source, platform)`` for every recognised
+    video-channel link (YouTube, Twitch, or PeerTube) in the profile.
+
+    The name is kept for historical reasons; the directory now treats any of
+    these platforms as evidence that the account belongs to a video creator.
+    """
+    evidence: list[tuple[str, str, str]] = []
     sources = [("bio", account.get("note") or "")]
     for field in account.get("fields") or []:
         field_name = field.get("name") or "profile field"
@@ -69,10 +163,11 @@ def youtube_links(account: dict) -> list[tuple[str, str]]:
     seen: set[str] = set()
     for source, value in sources:
         for raw_url in _urls_from_html(value):
-            youtube_url = canonical_youtube_url(raw_url)
-            if youtube_url and youtube_url.casefold() not in seen:
-                seen.add(youtube_url.casefold())
-                evidence.append((youtube_url, source))
+            match = canonical_channel_url(raw_url)
+            if match and match[1].casefold() not in seen:
+                platform, channel_url = match
+                seen.add(channel_url.casefold())
+                evidence.append((channel_url, source, platform))
     return evidence
 
 
@@ -115,6 +210,7 @@ CREATE TABLE IF NOT EXISTS youtube_links (
     acct TEXT NOT NULL COLLATE NOCASE,
     youtube_url TEXT NOT NULL,
     evidence_source TEXT NOT NULL,
+    platform TEXT NOT NULL DEFAULT 'youtube',
     discovered_at TEXT NOT NULL,
     PRIMARY KEY (acct, youtube_url),
     FOREIGN KEY (acct) REFERENCES profiles(acct) ON DELETE CASCADE
@@ -150,7 +246,18 @@ def connect(path: Path = DEFAULT_DB_PATH) -> sqlite3.Connection:
     db.row_factory = sqlite3.Row
     db.execute("PRAGMA busy_timeout=30000")
     db.executescript(SCHEMA)
+    _migrate(db)
     return db
+
+
+def _migrate(db: sqlite3.Connection) -> None:
+    """Apply forward-only schema tweaks to pre-existing databases."""
+    columns = {row["name"] for row in db.execute("PRAGMA table_info(youtube_links)")}
+    if "platform" not in columns:
+        db.execute(
+            "ALTER TABLE youtube_links ADD COLUMN platform TEXT NOT NULL DEFAULT 'youtube'"
+        )
+        db.commit()
 
 
 def _json_default(value):
@@ -216,8 +323,9 @@ def store_account(
     )
     db.execute("DELETE FROM youtube_links WHERE acct = ?", (acct,))
     db.executemany(
-        "INSERT INTO youtube_links (acct, youtube_url, evidence_source, discovered_at) VALUES (?, ?, ?, ?)",
-        [(acct, url, source, now) for url, source in links],
+        "INSERT INTO youtube_links (acct, youtube_url, evidence_source, platform, discovered_at) "
+        "VALUES (?, ?, ?, ?, ?)",
+        [(acct, url, source, platform, now) for url, source, platform in links],
     )
     if query:
         db.execute(
@@ -240,13 +348,15 @@ class Candidate:
     profile_url: str
     youtube_url: str
     evidence_source: str
+    platform: str
     followers_count: int
 
 
 def candidates(db: sqlite3.Connection, limit: int | None = None) -> list[Candidate]:
     sql = """
         SELECT p.acct, p.display_name, p.profile_url, y.youtube_url,
-               y.evidence_source, COALESCE(p.followers_count, 0) AS followers_count
+               y.evidence_source, y.platform,
+               COALESCE(p.followers_count, 0) AS followers_count
         FROM profiles p
         JOIN youtube_links y USING (acct)
         ORDER BY followers_count DESC, p.acct COLLATE NOCASE

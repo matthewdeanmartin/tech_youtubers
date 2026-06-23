@@ -30,6 +30,12 @@ ACCOUNT_TYPE_LABELS = {
     "bot": "Bot",
 }
 
+# Account types that are unattended automation. They are collected on the
+# dedicated bots page (grouped by topic) rather than cluttering the topic
+# pages. Bridges are excluded because they are usually real people relayed
+# via a fedibridge instance.
+BOT_ACCOUNT_TYPES = {"rss-feed", "channel-feed", "bot"}
+
 
 def _social_link(url: str | None) -> str:
     if not url:
@@ -99,7 +105,7 @@ def generate_youtubers_page(youtubers: list[dict]) -> str:
     rows = []
     for creator in sorted_creators:
         name = html.escape(creator.get("name", ""))
-        youtube = html.escape(creator.get("youtube_url", ""), quote=True)
+        youtube = html.escape(creator.get("primary_url") or creator.get("youtube_url", ""), quote=True)
         category = CATEGORY_LABELS.get(creator.get("category", "other"), "Other")
         account_type = ACCOUNT_TYPE_LABELS.get(creator.get("account_type", "native"), "Other")
         followers = str(creator.get("followers") or "—")
@@ -177,59 +183,71 @@ def _lang_attr(creator: dict) -> str:
     return f' data-lang="{lang}"'
 
 
+def _creator_li(creator: dict, mastodon_label: str) -> str:
+    """Render one directory entry as a self-contained HTML list item.
+
+    We emit real HTML rather than Markdown because these `<li>` elements live
+    inside a raw `<ul>` block; Pelican's Markdown processor does not descend
+    into block-level raw HTML, so `**[name](url)**` would render literally.
+    """
+    lang = html.escape(creator.get("language") or "en", quote=True)
+    name = html.escape(creator["name"])
+    primary_url = html.escape(creator.get("primary_url") or creator["youtube_url"], quote=True)
+    mastodon_url = html.escape(creator["mastodon_url"], quote=True)
+    description = html.escape(creator.get("description") or "")
+    return (
+        f'<li data-lang="{lang}">'
+        f'<strong><a href="{primary_url}" target="_blank" rel="noopener noreferrer">{name}</a></strong>'
+        f' · <a href="{mastodon_url}" target="_blank" rel="noopener noreferrer">{mastodon_label}</a>'
+        f" — {description}"
+        "</li>"
+    )
+
+
+def _section(section_key: str, heading: str, list_items: list[str]) -> str:
+    """Wrap a heading and list items in a data-lang-section div.
+
+    Everything is real HTML — including the ``<h2>`` — because Markdown
+    syntax inside a block-level raw HTML element is not processed by Pelican.
+    """
+    return (
+        f'<div data-lang-section="{html.escape(section_key, quote=True)}">\n'
+        f"<h2>{html.escape(heading)}</h2>\n\n"
+        "<ul>\n" + "\n".join(list_items) + "\n</ul>\n"
+        "</div>"
+    )
+
+
 def generate_category_page(category: str, youtubers: list[dict]) -> str:
     label = CATEGORY_LABELS[category]
     items = [item for item in youtubers if item.get("category") == category]
+    # Bot/feed accounts are surfaced on their own page (see generate_bots_page),
+    # so topic pages only carry native accounts and human-operated bridges.
+    items = [item for item in items if item.get("account_type") not in BOT_ACCOUNT_TYPES]
     native = [item for item in items if item.get("account_type") == "native"]
     feeds = [item for item in items if item.get("account_type") != "native"]
 
     # Native section — wrapped in a data-lang-section div so JS can collapse
     # the whole block when all items are filtered out.
-    native_items = []
-    for creator in sorted(native, key=lambda item: item.get("name", "").casefold()):
-        lang = html.escape(creator.get("language") or "en", quote=True)
-        name = html.escape(creator["name"])
-        youtube_url = html.escape(creator["youtube_url"], quote=True)
-        mastodon_url = html.escape(creator["mastodon_url"], quote=True)
-        description = html.escape(creator.get("description") or "")
-        native_items.append(
-            f'<li data-lang="{lang}">'
-            f"**[{name}]({youtube_url})** · "
-            f"[Mastodon]({mastodon_url}) — {description}"
-            "</li>"
-        )
+    native_items = [
+        _creator_li(creator, "Mastodon")
+        for creator in sorted(native, key=lambda item: item.get("name", "").casefold())
+    ]
 
     if native_items:
-        native_block = (
-            f'<div data-lang-section="native">\n'
-            f"## Native Mastodon accounts ({len(native)})\n\n"
-            "<ul>\n" + "\n".join(native_items) + "\n</ul>\n"
-            "</div>"
-        )
+        native_block = _section("native", f"Native Mastodon accounts ({len(native)})", native_items)
     else:
-        native_block = f"## Native Mastodon accounts ({len(native)})\n\nNo native accounts in this category yet."
+        native_block = (
+            f"<h2>Native Mastodon accounts ({len(native)})</h2>\n\nNo native accounts in this category yet."
+        )
 
     feeds_block = ""
     if feeds:
-        feed_items = []
-        for creator in sorted(feeds, key=lambda item: item.get("name", "").casefold()):
-            lang = html.escape(creator.get("language") or "en", quote=True)
-            name = html.escape(creator["name"])
-            youtube_url = html.escape(creator["youtube_url"], quote=True)
-            mastodon_url = html.escape(creator["mastodon_url"], quote=True)
-            description = html.escape(creator.get("description") or "")
-            feed_items.append(
-                f'<li data-lang="{lang}">'
-                f"**[{name}]({youtube_url})** · "
-                f"[Feed]({mastodon_url}) — {description}"
-                "</li>"
-            )
-        feeds_block = (
-            f'\n<div data-lang-section="feeds">\n'
-            f"## Automated channel feeds ({len(feeds)})\n\n"
-            "<ul>\n" + "\n".join(feed_items) + "\n</ul>\n"
-            "</div>"
-        )
+        feed_items = [
+            _creator_li(creator, "Bridge")
+            for creator in sorted(feeds, key=lambda item: item.get("name", "").casefold())
+        ]
+        feeds_block = "\n" + _section("feeds", f"Bridged accounts ({len(feeds)})", feed_items)
 
     return f"""Title: {label} YouTubers
 Date: 2026-06-20
@@ -238,6 +256,40 @@ sortorder: {CATEGORY_SORTORDER.index(category) + 10}
 Summary: {label} YouTube creators and channel feeds on Mastodon.
 
 {native_block}{feeds_block}
+"""
+
+
+def generate_bots_page(youtubers: list[dict]) -> str:
+    """Collect every automated feed/bot account on one page, grouped by topic."""
+    bots = [item for item in youtubers if item.get("account_type") in BOT_ACCOUNT_TYPES]
+
+    sections = []
+    for category in CATEGORY_SORTORDER:
+        in_category = [item for item in bots if item.get("category") == category]
+        if not in_category:
+            continue
+        label = CATEGORY_LABELS[category]
+        bot_items = [
+            _creator_li(creator, "Feed")
+            for creator in sorted(in_category, key=lambda item: item.get("name", "").casefold())
+        ]
+        sections.append(_section(f"bots-{category}", f"{label} ({len(in_category)})", bot_items))
+
+    body = "\n\n".join(sections) if sections else "No automated feeds in the directory yet."
+
+    return f"""Title: Automated Feeds & Bots
+Date: 2026-06-20
+Slug: bots
+sortorder: 8
+Summary: Automated channel feeds and bot accounts that relay YouTube content to Mastodon.
+
+## Automated Feeds & Bots
+
+These {len(bots)} accounts are unattended automation — RSS feeds and bots that mirror a
+channel's uploads to the Fediverse. They are grouped here, by topic, so the topic pages stay
+focused on accounts you can actually interact with.
+
+{body}
 """
 
 
@@ -291,6 +343,7 @@ def main() -> None:
 
     generated = {
         "youtubers.md": generate_youtubers_page(youtubers),
+        "bots.md": generate_bots_page(youtubers),
         "bulk-follow.md": generate_bulk_follow_page(youtubers),
         **{
             f"{category}.md": generate_category_page(category, youtubers)

@@ -48,6 +48,7 @@
                     <p class="section-nav__title">Browse</p>
                     <ul>
                         <li{% if page is defined and page.slug == "youtubers" %} class="active"{% endif %}><a href="{{ SITEURL }}/youtubers/">All YouTubers</a></li>
+                        <li{% if page is defined and page.slug == "bots" %} class="active"{% endif %}><a href="{{ SITEURL }}/bots/">Automated Feeds &amp; Bots</a></li>
                         <li{% if page is defined and page.slug == "bulk-follow" %} class="active"{% endif %}><a href="{{ SITEURL }}/bulk-follow/">Bulk Follow Guide</a></li>
                         <li{% if page is defined and page.slug == "mastodon-follow" %} class="active"{% endif %}><a href="{{ SITEURL }}/mastodon-follow/">Follow on Mastodon</a></li>
                         <li{% if page is defined and page.slug == "about" %} class="active"{% endif %}><a href="{{ SITEURL }}/about/">About</a></li>

@@ -8,6 +8,7 @@ import unicodedata
 from pathlib import Path
 
 from pipeline import categorize, mastodon_discovery, youtuber_store
+from pipeline.language import detect_language
 
 CATEGORY_OVERRIDES_PATH = Path(__file__).parent.parent / "data" / "category_overrides.json"
 
@@ -39,6 +40,9 @@ def choose_youtube(rows: list[sqlite3.Row]) -> sqlite3.Row:
     return sorted(
         rows,
         key=lambda row: (
+            # Prefer a YouTube channel — the directory's primary platform —
+            # over Twitch/PeerTube links when an account lists several.
+            row["platform"] != "youtube",
             not row["youtube_url"].split("/")[-1].startswith("@"),
             len(row["youtube_url"]),
         ),
@@ -89,30 +93,42 @@ def build_catalog(db: sqlite3.Connection) -> list[dict]:
             creator_id = f"{base_id}-{suffix}"
             suffix += 1
         used_ids.add(creator_id)
-        catalog.append(
-            {
-                "id": creator_id,
-                "name": old.get("name") or name,
-                "category": category,
-                "category_confidence": "curated" if override else row["confidence"],
-                "category_evidence": (
-                    [override["reason"]]
-                    if override.get("reason")
-                    else json.loads(row["matched_terms_json"])
-                ),
-                "account_type": row["account_type"],
-                "youtube_url": row["youtube_url"],
-                "youtube_evidence_source": row["evidence_source"],
-                "mastodon_url": mastodon_url,
-                "mastodon_acct": acct,
-                "description": old.get("description") or description(account),
-                "followers": row["followers_count"],
-                "reviewed": old.get("reviewed", False),
-                "review_slug": old.get("review_slug", creator_id),
-            }
-        )
+        entry = {
+            "id": creator_id,
+            "name": old.get("name") or name,
+            "category": category,
+            "category_confidence": "curated" if override else row["confidence"],
+            "category_evidence": (
+                [override["reason"]]
+                if override.get("reason")
+                else json.loads(row["matched_terms_json"])
+            ),
+            "account_type": row["account_type"],
+            "platform": row["platform"],
+            "youtube_url": row["youtube_url"],
+            "primary_url": row["youtube_url"],
+            "youtube_evidence_source": row["evidence_source"],
+            "mastodon_url": mastodon_url,
+            "mastodon_acct": acct,
+            "description": old.get("description") or description(account),
+            "followers": row["followers_count"],
+            "reviewed": old.get("reviewed", False),
+            "review_slug": old.get("review_slug", creator_id),
+        }
+        # A manual language override on the existing entry wins; otherwise detect.
+        entry["language"] = old.get("language") or detect_language(entry)
+        catalog.append(entry)
+
+    # Executive decision: the directory is English-only. Most visitors read one
+    # language, so non-English accounts are suppressed at the source rather than
+    # merely hidden client-side. Manual `language` overrides in youtubers.json
+    # are respected, so an account can be force-kept by setting "language": "en".
+    english_only = [item for item in catalog if item.get("language") == "en"]
+    dropped = len(catalog) - len(english_only)
+    if dropped:
+        print(f"Dropped {dropped} non-English accounts (English-only directory).")
     return sorted(
-        catalog,
+        english_only,
         key=lambda item: (
             categorize.CATEGORY_SORTORDER.index(item["category"]),
             item["account_type"] != "native",

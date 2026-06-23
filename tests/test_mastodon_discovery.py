@@ -2,7 +2,13 @@ from __future__ import annotations
 
 import unittest
 
-from pipeline.mastodon_discovery import canonical_youtube_url, youtube_links
+from pipeline.mastodon_discovery import (
+    canonical_channel_url,
+    canonical_peertube_url,
+    canonical_twitch_url,
+    canonical_youtube_url,
+    youtube_links,
+)
 from pipeline.categorize import classify
 
 
@@ -19,7 +25,25 @@ class YouTubeEvidenceTests(unittest.TestCase):
         }
         self.assertEqual(
             youtube_links(account),
-            [("https://www.youtube.com/@ExampleTech", "field:YouTube")],
+            [("https://www.youtube.com/@ExampleTech", "field:YouTube", "youtube")],
+        )
+
+    def test_twitch_and_peertube_links_are_evidence(self) -> None:
+        account = {
+            "note": '<p>Streams on <a href="https://twitch.tv/SomeStreamer">Twitch</a>.</p>',
+            "fields": [
+                {
+                    "name": "PeerTube",
+                    "value": '<a href="https://tilvids.com/c/mychannel/videos">PeerTube</a>',
+                }
+            ],
+        }
+        self.assertEqual(
+            youtube_links(account),
+            [
+                ("https://www.twitch.tv/SomeStreamer", "bio", "twitch"),
+                ("https://tilvids.com/c/mychannel", "field:PeerTube", "peertube"),
+            ],
         )
 
     def test_text_claim_without_link_is_not_evidence(self) -> None:
@@ -42,6 +66,35 @@ class YouTubeEvidenceTests(unittest.TestCase):
             canonical_youtube_url("https://m.youtube.com/@SomeCreator/videos"),
             "https://www.youtube.com/@SomeCreator/videos",
         )
+
+    def test_twitch_channel_vs_reserved_routes(self) -> None:
+        self.assertEqual(
+            canonical_twitch_url("https://twitch.tv/SomeStreamer"),
+            "https://www.twitch.tv/SomeStreamer",
+        )
+        # App routes and multi-segment paths are not channels.
+        self.assertIsNone(canonical_twitch_url("https://www.twitch.tv/directory"))
+        self.assertIsNone(canonical_twitch_url("https://twitch.tv/foo/bar"))
+
+    def test_peertube_channel_permalinks(self) -> None:
+        # Recognised by path shape on any instance, with trailing /videos dropped.
+        self.assertEqual(
+            canonical_peertube_url("https://anyinstance.example/video-channels/cool/videos"),
+            "https://anyinstance.example/video-channels/cool",
+        )
+        self.assertEqual(
+            canonical_peertube_url("https://tilvids.com/a/someuser"),
+            "https://tilvids.com/a/someuser",
+        )
+        # A bare host with no channel path is not evidence.
+        self.assertIsNone(canonical_peertube_url("https://framatube.org/about"))
+
+    def test_canonical_channel_url_reports_platform(self) -> None:
+        self.assertEqual(
+            canonical_channel_url("https://www.youtube.com/@x"),
+            ("youtube", "https://www.youtube.com/@x"),
+        )
+        self.assertIsNone(canonical_channel_url("https://example.com/random"))
 
 
 class CategorizationTests(unittest.TestCase):

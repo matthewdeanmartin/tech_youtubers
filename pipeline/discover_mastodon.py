@@ -35,6 +35,15 @@ DEFAULT_QUERIES = [
     "linux youtube",
     "cybersecurity youtube",
     "hardware youtube",
+    # Twitch streamers and PeerTube (the Fediverse video platform) creators are
+    # now first-class evidence alongside YouTube.
+    "twitch",
+    "twitch streamer",
+    "gaming twitch",
+    "live streamer",
+    "peertube",
+    "peertube creator",
+    "video creator fediverse",
 ]
 
 

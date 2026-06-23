@@ -14,56 +14,11 @@ from __future__ import annotations
 
 import argparse
 import sys
-import unicodedata
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from pipeline import youtuber_store
-
-
-# ---------------------------------------------------------------------------
-# Heuristics
-# ---------------------------------------------------------------------------
-
-def _cjk_ratio(text: str) -> float:
-    """Fraction of *letter* codepoints that are CJK / kana / hangul."""
-    if not text:
-        return 0.0
-    letters = [c for c in text if unicodedata.category(c).startswith("L")]
-    if not letters:
-        return 0.0
-    cjk = [
-        c for c in letters
-        if (
-            "\u3000" <= c <= "\u9fff"   # CJK unified + kana blocks
-            or "\uac00" <= c <= "\ud7ff"  # Hangul
-            or "\uf900" <= c <= "\ufaff"  # CJK compatibility
-            or "\u3400" <= c <= "\u4dbf"  # CJK extension A
-        )
-    ]
-    return len(cjk) / len(letters)
-
-
-def detect_language(creator: dict) -> str:
-    """Return a BCP 47 base language tag for the creator."""
-    name = creator.get("name") or ""
-    description = creator.get("description") or ""
-
-    # RSS-bot accounts on rss-mstdn.studiofreesia.com always append Japanese
-    # boilerplate to the description; only trust the channel name for those.
-    is_rss_bot = "rss-mstdn.studiofreesia.com" in (creator.get("mastodon_acct") or "")
-    if is_rss_bot:
-        text = name
-    else:
-        # Weight name heavily: repeat it 5 times so a Japanese name wins over
-        # an incidental CJK character in an otherwise English description.
-        text = (name + " ") * 5 + description
-
-    if _cjk_ratio(text) > 0.15:
-        return "ja"
-    # Future heuristics (German, French, ...) can slot in here.
-    return "en"
-
+from pipeline.language import detect_language
 
 
 # ---------------------------------------------------------------------------
