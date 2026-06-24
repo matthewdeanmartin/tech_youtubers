@@ -347,7 +347,6 @@
             <button id="btnFollowAll" class="btn btn-primary" type="button" disabled>
               ⚡ Follow All (slowly)
             </button>
-            <button id="btnResolveAll" class="btn" type="button" disabled>Resolve All</button>
             <button id="btnSelectAll" class="btn" type="button">Select All</button>
             <button id="btnSelectNone" class="btn" type="button">Deselect All</button>
           </div>
@@ -374,33 +373,22 @@
     </footer>
   </div>
 
+<script src="{{SITEURL}}/mastodon-follow/follow-core.js"></script>
 <script>
 /* ================================================================
-   YouTubers on Mastodon – Follow Pack
-   Security model
-   ─────────────────────────────────────────────────────────────────
-   • PKCE flow: a random code_verifier is hashed (SHA-256) to a
-     code_challenge sent to the Mastodon auth endpoint. The
-     code_verifier is only kept in sessionStorage during the auth
-     handshake, then deleted. PKCE protects the authorization code
-     against interception.
-   • Mastodon's /oauth/token endpoint authenticates the *app* with
-     client_id + client_secret even when PKCE is used (it does not
-     support secret-less public clients), so we must keep and send
-     the client_secret. Without it the token call returns
-     401 invalid_client.
-   • Access tokens live in sessionStorage (per-tab).
-     sessionStorage is NOT accessible from other pages/tabs on the
-     same origin, so XSS on a sibling GitHub Pages path cannot
-     steal it — unlike localStorage which would be shared.
-   • client_id + client_secret are cached in localStorage so users
-     don't have to re-register the app on every page load. This is a
-     per-instance app credential, not the user's password; the worst
-     case is that someone could register/identify this app. The
-     user's access token never touches localStorage.
+   YouTubers on Mastodon – Follow Pack (UI)
+   ----------------------------------------------------------------
+   All OAuth + resolve + follow logic lives in follow-core.js
+   (window.MastodonFollow). This file is just the page's UI: the
+   instance input, connect/logout buttons, the creator cards, the
+   "Follow All" runner, and the activity log. The shared core is
+   also loaded on category pages so inline Follow buttons work
+   everywhere using the same per-tab session token.
 ================================================================ */
 (() => {
   "use strict";
+
+  const MF = window.MastodonFollow;
 
   /* ── Creators (generated from data/youtubers.json) ───────────── */
   /* DATA:START */
@@ -443,11 +431,9 @@
   ];
   /* DATA:END */
 
-  const APP_NAME    = "YouTubers on Mastodon Follow Pack";
   const APP_WEBSITE = "https://matthewdeanmartin.github.io/tech_youtubers/";
-  const DEFAULT_SCOPES = "profile read:accounts read:search read:follows write:follows";
 
-  /* ── Helpers ─────────────────────────────────────────────────── */
+  /* ── DOM ─────────────────────────────────────────────────────── */
   function qs(sel) { return document.querySelector(sel); }
 
   const els = {
@@ -455,7 +441,6 @@
     btnConnect:   qs("#btnConnect"),
     btnLogout:    qs("#btnLogout"),
     btnFollowAll: qs("#btnFollowAll"),
-    btnResolveAll:qs("#btnResolveAll"),
     btnSelectAll: qs("#btnSelectAll"),
     btnSelectNone:qs("#btnSelectNone"),
     accountList:  qs("#accountList"),
@@ -463,7 +448,7 @@
     log:          qs("#log"),
   };
 
-  /* ── Logging ─────────────────────────────────────────────────── */
+  /* ── Logging (wired into the shared core) ────────────────────── */
   function log(msg, level = "info") {
     const ts   = new Date().toLocaleTimeString();
     const cls  = level === "error" ? "log-err" : level === "warn" ? "log-warn" : "log-ok";
@@ -474,282 +459,43 @@
     els.log.scrollTop = els.log.scrollHeight;
     console[level === "error" ? "error" : "log"](msg);
   }
+  MF.init({ log });
 
-  /* ── Instance helpers ────────────────────────────────────────── */
-  function normalizeInstance(raw) {
-    return (raw || "").trim().replace(/^https?:\/\//i, "").replace(/\/+$/g, "");
-  }
-
-  function instanceBase() {
-    const inst = normalizeInstance(els.instance.value);
-    if (!inst) throw new Error("Enter your Mastodon instance first (e.g. mastodon.social).");
-    return `https://${inst}`;
-  }
-
-  function redirectUri() {
-    // Works both on file:// (dev) and https:// (GitHub Pages)
-    if (location.origin === "null") {
-      return location.href.split("?")[0].split("#")[0];
-    }
-    return location.origin + location.pathname;
-  }
-
-  /* ── PKCE helpers ────────────────────────────────────────────── */
-  function generateVerifier() {
-    const arr = new Uint8Array(64);
-    crypto.getRandomValues(arr);
-    return btoa(String.fromCharCode(...arr))
-      .replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
-  }
-
-  async function sha256Base64Url(plain) {
-    const data = new TextEncoder().encode(plain);
-    const hash = await crypto.subtle.digest("SHA-256", data);
-    return btoa(String.fromCharCode(...new Uint8Array(hash)))
-      .replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
-  }
-
-  /* ── Storage (sessionStorage for secrets, localStorage for public) */
-  const LS_INSTANCE_KEY = "mf-pack:lastInstance";
-
-  function lsAppKey(inst) { return `mf-pack:${inst}:app`; }
-
-  // App credentials (client_id + client_secret) for this instance.
-  function getApp(inst) {
-    const raw = localStorage.getItem(lsAppKey(inst));
-    return raw ? JSON.parse(raw) : null;
-  }
-  function setApp(inst, app) {
-    localStorage.setItem(lsAppKey(inst), JSON.stringify(app));
-  }
-
-  // Token ONLY in sessionStorage (per-tab, XSS-isolated from other pages)
-  function getToken() {
-    const inst = normalizeInstance(els.instance.value);
-    const raw = sessionStorage.getItem(`mf-pack:${inst}:token`);
-    return raw ? JSON.parse(raw) : null;
-  }
-  function setToken(inst, tokenObj) {
-    sessionStorage.setItem(`mf-pack:${inst}:token`, JSON.stringify(tokenObj));
-  }
-  function clearToken(inst) {
-    sessionStorage.removeItem(`mf-pack:${inst}:token`);
-  }
-
-  // code_verifier is transient – sessionStorage only
-  function getVerifier()        { return sessionStorage.getItem("mf-pack:pkce:verifier"); }
-  function setVerifier(v)       { sessionStorage.setItem("mf-pack:pkce:verifier", v); }
-  function clearVerifier()      { sessionStorage.removeItem("mf-pack:pkce:verifier"); }
-  function getOAuthState()      { return sessionStorage.getItem("mf-pack:pkce:state"); }
-  function setOAuthState(s)     { sessionStorage.setItem("mf-pack:pkce:state", s); }
-  function clearOAuthState()    { sessionStorage.removeItem("mf-pack:pkce:state"); }
-
-  /* ── API fetch ───────────────────────────────────────────────── */
-  async function apiFetch(path, options = {}) {
-    const url = path.startsWith("http") ? path : `${instanceBase()}${path}`;
-    const res  = await fetch(url, options);
-    const text = await res.text();
-    let   data = null;
-    try { data = text ? JSON.parse(text) : null; } catch { data = text; }
-    if (!res.ok) {
-      const detail = (typeof data === "object" && data && data.error) ? data.error : text;
-      throw new Error(`${res.status} ${res.statusText}: ${detail}`);
-    }
-    return data;
-  }
-
-  /* ── App registration (fetches/caches client_id, PKCE = no secret) */
-  async function ensureAppRegistered(inst) {
-    const cached = getApp(inst);
-    // Re-register if the cached app predates client_secret storage or used a
-    // different redirect URI (e.g. the user moved instances/paths).
-    if (cached && cached.client_id && cached.client_secret && cached.redirect_uri === redirectUri()) {
-      return cached;
-    }
-
-    const body = new FormData();
-    body.set("client_name",    APP_NAME);
-    body.set("redirect_uris",  redirectUri());
-    body.set("scopes",         DEFAULT_SCOPES);
-    body.set("website",        APP_WEBSITE);
-
-    const app = await apiFetch("/api/v1/apps", { method: "POST", body });
-    const record = {
-      client_id:     app.client_id,
-      client_secret: app.client_secret,
-      redirect_uri:  redirectUri(),
-      scopes:        DEFAULT_SCOPES,
-    };
-    setApp(inst, record);
-    log(`App registered on ${inst} (client credentials cached).`);
-    return record;
-  }
-
-  /* ── Connect / authorize flow ────────────────────────────────── */
+  /* ── Connect / logout ────────────────────────────────────────── */
   async function connect() {
-    const inst = normalizeInstance(els.instance.value);
-    if (!inst) throw new Error("Enter an instance first.");
-    localStorage.setItem(LS_INSTANCE_KEY, inst);
-
-    const app        = await ensureAppRegistered(inst);
-    const clientId   = app.client_id;
-    const verifier   = generateVerifier();
-    const challenge  = await sha256Base64Url(verifier);
-    const state      = crypto.randomUUID();
-
-    // Store verifier + state temporarily in sessionStorage
-    setVerifier(verifier);
-    setOAuthState(state);
-
-    const params = new URLSearchParams({
-      response_type:         "code",
-      client_id:             clientId,
-      redirect_uri:          redirectUri(),
-      scope:                 DEFAULT_SCOPES,
-      state,
-      code_challenge:        challenge,
-      code_challenge_method: "S256",
-    });
-
-    log("Redirecting to Mastodon authorization…");
-    location.href = `https://${inst}/oauth/authorize?${params}`;
-  }
-
-  /* ── Handle OAuth callback ───────────────────────────────────── */
-  async function handleCallback() {
-    const url  = new URL(location.href);
-    const code = url.searchParams.get("code");
-    if (!code) return;
-
-    // Restore instance from localStorage (survives the redirect)
-    const inst = localStorage.getItem(LS_INSTANCE_KEY) || "";
-    if (inst) els.instance.value = inst;
-
-    const expectedState = getOAuthState();
-    const returnedState = url.searchParams.get("state");
-    if (expectedState && returnedState !== expectedState) {
-      clearVerifier(); clearOAuthState();
-      throw new Error("OAuth state mismatch – possible CSRF. Aborting.");
-    }
-
-    const verifier = getVerifier();
-    if (!verifier) throw new Error("PKCE verifier missing from session. Please try connecting again.");
-
-    const app = getApp(inst);
-    if (!app || !app.client_id || !app.client_secret) {
-      throw new Error("No app registration found. Please try connecting again.");
-    }
-
-    // Exchange the code for a token. Mastodon requires the app's
-    // client_secret here in addition to the PKCE code_verifier — it does not
-    // accept secret-less public clients, and omitting it returns
-    // 401 invalid_client.
-    const body = new URLSearchParams({
-      grant_type:    "authorization_code",
-      code,
-      client_id:     app.client_id,
-      client_secret: app.client_secret,
-      redirect_uri:  redirectUri(),
-      scope:         DEFAULT_SCOPES,
-      code_verifier: verifier,
-    });
-
-    const token = await apiFetch("/oauth/token", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body,
-    });
-
-    // Store token in sessionStorage ONLY (not localStorage)
-    setToken(inst, {
-      access_token: token.access_token,
-      token_type:   token.token_type,
-      scope:        token.scope,
-      created_at:   new Date().toISOString(),
-    });
-
-    // Clean up transient PKCE data
-    clearVerifier();
-    clearOAuthState();
-
-    // Remove code/state from address bar
-    history.replaceState({}, document.title, redirectUri());
-    log("Authorization successful. Token stored in session (this tab only).", "ok");
-  }
-
-  /* ── Auth helpers ────────────────────────────────────────────── */
-  function authHeaders() {
-    const token = getToken();
-    if (!token || !token.access_token) throw new Error("Not logged in. Click 'Connect & Authorize' first.");
-    return { Authorization: `Bearer ${token.access_token}` };
-  }
-
-  async function verifyCredentials() {
-    const acct = await apiFetch("/api/v1/accounts/verify_credentials", { headers: authHeaders() });
-    log(`Logged in as @${acct.acct} on ${normalizeInstance(els.instance.value)}.`, "ok");
-    return acct;
+    const inst = MF.setInstance(els.instance.value);
+    if (!inst) throw new Error("Enter an instance first (e.g. mastodon.social).");
+    await MF.beginAuthorize();  // navigates away, returns to this page
   }
 
   function logout() {
-    const inst = normalizeInstance(els.instance.value);
-    if (!inst) return;
-    clearToken(inst);
-    clearVerifier(); clearOAuthState();
-    localStorage.removeItem(lsAppKey(inst));
+    MF.setInstance(els.instance.value);
+    MF.logout();
     updateAuthStatus();
-    log(`Session and cached app credentials cleared for ${inst}. (The app may still exist on your Mastodon account; revoke it there if desired.)`);
   }
 
   /* ── Auth status UI ──────────────────────────────────────────── */
+  function esc(str) {
+    return String(str)
+      .replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;").replaceAll("'", "&#039;");
+  }
+
   function updateAuthStatus() {
-    const inst  = normalizeInstance(els.instance.value);
-    const token = inst ? getToken() : null;
-    const cid   = inst ? (getApp(inst) || {}).client_id : null;
+    const inst  = MF.normalizeInstance(els.instance.value) || MF.getInstance();
+    const app   = inst ? MF.getApp(inst) : null;
+    const cid   = app ? app.client_id : null;
+    const connected = MF.isConnected();
 
     const parts = [];
-    if (inst)  parts.push(`Instance: <code>${esc(inst)}</code>`);
-    if (cid)   parts.push(`<span class="pill pill-ok">✓ app registered</span>`);
-    else       parts.push(`<span class="pill pill-warn">⚠ app not yet registered</span>`);
-    if (token) parts.push(`<span class="pill pill-ok">✓ token (session-only)</span>`);
-    else       parts.push(`<span class="pill pill-warn">⚠ not authorized</span>`);
-
+    if (inst)      parts.push(`Instance: <code>${esc(inst)}</code>`);
+    if (cid)       parts.push(`<span class="pill pill-ok">✓ app registered</span>`);
+    else           parts.push(`<span class="pill pill-warn">⚠ app not yet registered</span>`);
+    if (connected) parts.push(`<span class="pill pill-ok">✓ token (session-only)</span>`);
+    else           parts.push(`<span class="pill pill-warn">⚠ not authorized</span>`);
     els.authStatus.innerHTML = parts.join(" &nbsp;·&nbsp; ");
 
-    const connected = !!(inst && token);
-    els.btnFollowAll.disabled  = !connected;
-    els.btnResolveAll.disabled = !connected;
-  }
-
-  /* ── Resolve & follow ────────────────────────────────────────── */
-  async function resolveAccount(acct) {
-    const params = new URLSearchParams({ q: acct, type: "accounts", resolve: "true", limit: "5" });
-    const result = await apiFetch(`/api/v2/search?${params}`, { headers: authHeaders() });
-    const accounts = result.accounts || [];
-    const wanted   = acct.toLowerCase();
-
-    const exact = accounts.find(a =>
-      String(a.acct || "").toLowerCase() === wanted ||
-      String(a.url  || "").toLowerCase().includes(`/@${wanted.split("@")[0]}`)
-    );
-    if (!exact) {
-      const cands = accounts.map(a => a.acct).filter(Boolean).join(", ");
-      throw new Error(`Could not resolve @${acct}${cands ? `. Candidates: ${cands}` : ""}`);
-    }
-    return exact;
-  }
-
-  async function followAccount(id) {
-    return apiFetch(`/api/v1/accounts/${encodeURIComponent(id)}/follow`, {
-      method:  "POST",
-      headers: authHeaders(),
-    });
-  }
-
-  async function getRelationship(id) {
-    const params = new URLSearchParams();
-    params.append("id[]", id);
-    const rels = await apiFetch(`/api/v1/accounts/relationships?${params}`, { headers: authHeaders() });
-    return rels[0] || null;
+    els.btnFollowAll.disabled = !connected;
   }
 
   /* ── Creator card rendering ──────────────────────────────────── */
@@ -764,43 +510,27 @@
     }
   }
 
-  function esc(str) {
-    return String(str)
-      .replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;").replaceAll("'", "&#039;");
+  // Map a core status string to a card message.
+  function cardStatusHandler(card, acct) {
+    return function (state) {
+      if (state === "resolving")           setCardStatus(card, `Resolving @${acct}…`);
+      else if (state === "following")      setCardStatus(card, `Following @${acct}…`);
+      else if (state === "already")        setCardStatus(card, `Already following @${acct}`, "ok");
+      else if (state === "following-done") setCardStatus(card, `✓ Following @${acct}`, "ok");
+      else if (state === "requested")      setCardStatus(card, `⏳ Follow request sent to @${acct}`, "warn");
+      else if (state === "unknown")        setCardStatus(card, `Unexpected state – check Mastodon manually`, "warn");
+    };
   }
 
-  async function runCard(card, action) {
+  async function followCard(card) {
     const acct = card.dataset.acct;
     if (!acct) return;
-
     try {
-      setCardStatus(card, `Resolving @${acct}…`);
-      const account = await resolveAccount(acct);
-      card.dataset.accountId = account.id;
-      setCardStatus(card, `Resolved · ${account.display_name || account.acct}`, "ok");
-      log(`Resolved @${acct} → id ${account.id}`, "ok");
-
-      if (action === "follow") {
-        const before = await getRelationship(account.id);
-        if (before && before.following) {
-          setCardStatus(card, `Already following @${acct}`, "ok");
-          log(`Already following @${acct}`, "ok");
-          return;
-        }
-        setCardStatus(card, `Following @${acct}…`);
-        const rel = await followAccount(account.id);
-        if (rel.following) {
-          setCardStatus(card, `✓ Following @${acct}`, "ok");
-          log(`Followed @${acct}`, "ok");
-        } else if (rel.requested) {
-          setCardStatus(card, `⏳ Follow request sent to @${acct}`, "warn");
-          log(`Follow request sent to @${acct}`, "warn");
-        } else {
-          setCardStatus(card, `Unexpected state – check Mastodon manually`, "warn");
-          log(`Unexpected relationship for @${acct}: ${JSON.stringify(rel)}`, "warn");
-        }
-      }
+      MF.setInstance(els.instance.value);
+      await MF.connectAndFollow(acct, {
+        onStatus: cardStatusHandler(card, acct),
+        promptInstance: () => els.instance.value,
+      });
     } catch (err) {
       setCardStatus(card, err.message, "err");
       log(`Error for @${acct}: ${err.message}`, "error");
@@ -809,7 +539,6 @@
 
   function renderList() {
     els.accountList.innerHTML = "";
-
     for (const creator of STARTER_ACCOUNTS) {
       const card = document.createElement("div");
       card.className = "creator-card";
@@ -832,19 +561,12 @@
       const actions = document.createElement("div");
       actions.className = "creator-actions";
 
-      const resolveBtn = document.createElement("button");
-      resolveBtn.type = "button";
-      resolveBtn.className = "btn";
-      resolveBtn.style.fontSize = "0.8rem";
-      resolveBtn.textContent = "Resolve";
-      resolveBtn.addEventListener("click", () => safely(() => runCard(card, "resolve")));
-
       const followBtn = document.createElement("button");
       followBtn.type = "button";
       followBtn.className = "btn btn-primary";
       followBtn.style.fontSize = "0.8rem";
       followBtn.textContent = "Follow";
-      followBtn.addEventListener("click", () => safely(() => runCard(card, "follow")));
+      followBtn.addEventListener("click", () => followCard(card));
 
       const openBtn = document.createElement("button");
       openBtn.type = "button";
@@ -852,11 +574,14 @@
       openBtn.style.fontSize = "0.8rem";
       openBtn.textContent = "🔍 Search";
       openBtn.addEventListener("click", () => {
-        const url = `${instanceBase()}/search?q=${encodeURIComponent("@" + creator.acct)}`;
-        window.open(url, "_blank", "noopener,noreferrer");
+        try {
+          MF.setInstance(els.instance.value);
+          const url = `${MF.instanceBase()}/search?q=${encodeURIComponent("@" + creator.acct)}`;
+          window.open(url, "_blank", "noopener,noreferrer");
+        } catch (err) { log(err.message, "error"); }
       });
 
-      actions.append(resolveBtn, followBtn, openBtn, checkbox);
+      actions.append(followBtn, openBtn, checkbox);
       card.append(info, actions);
       els.accountList.append(card);
     }
@@ -865,20 +590,12 @@
 
   function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-  async function resolveAll() {
-    for (const card of [...els.accountList.querySelectorAll(".creator-card")]) {
-      const cb = card.querySelector(".creator-select");
-      if (cb && !cb.checked) continue;
-      await runCard(card, "resolve");
-    }
-  }
-
   async function followAllSlowly() {
     const cards = [...els.accountList.querySelectorAll(".creator-card")];
     for (const card of cards) {
       const cb = card.querySelector(".creator-select");
       if (cb && !cb.checked) continue;
-      await runCard(card, "follow");
+      await followCard(card);
       await sleep(1500);  // rate-limit courtesy delay
     }
   }
@@ -887,25 +604,19 @@
     els.accountList.querySelectorAll(".creator-select").forEach(cb => cb.checked = state);
   }
 
-  /* ── Error wrapper ───────────────────────────────────────────── */
   async function safely(fn) {
     try { await fn(); }
-    catch (err) {
-      log(err.message || String(err), "error");
-    }
+    catch (err) { log(err.message || String(err), "error"); }
   }
 
   /* ── Initialise ──────────────────────────────────────────────── */
   async function init() {
-    // Restore last instance
-    const last = localStorage.getItem(LS_INSTANCE_KEY);
+    const last = MF.getInstance();
     if (last) els.instance.value = last;
 
-    // Wire buttons
     els.btnConnect.addEventListener("click",    () => safely(connect));
     els.btnLogout.addEventListener("click",     () => { logout(); });
     els.btnFollowAll.addEventListener("click",  () => safely(followAllSlowly));
-    els.btnResolveAll.addEventListener("click", () => safely(resolveAll));
     els.btnSelectAll.addEventListener("click",  () => selectAll(true));
     els.btnSelectNone.addEventListener("click", () => selectAll(false));
     els.instance.addEventListener("input",      updateAuthStatus);
@@ -913,12 +624,18 @@
     renderList();
     updateAuthStatus();
 
-    // Handle OAuth redirect
+    // Handle an OAuth redirect back to this page, then finish any pending
+    // follow (e.g. the user clicked Follow on a card before connecting).
     try {
-      await handleCallback();
+      const returned = await MF.handleCallback();
       updateAuthStatus();
-      const token = getToken();
-      if (token) await verifyCredentials();
+      if (returned && MF.isConnected()) await MF.verifyCredentials();
+      const pending = MF.getPendingFollow();
+      if (pending && MF.isConnected()) {
+        const card = [...els.accountList.querySelectorAll(".creator-card")]
+          .find(c => c.dataset.acct === pending);
+        await MF.resumePending(card ? cardStatusHandler(card, pending) : undefined);
+      }
     } catch (err) {
       log(`OAuth callback error: ${err.message}`, "error");
     }

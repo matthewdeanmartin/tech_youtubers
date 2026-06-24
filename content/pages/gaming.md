@@ -8,7 +8,7 @@ Summary: Gaming & VTubers YouTube creators and channel feeds on Mastodon.
 <h2>Native Mastodon accounts (1)</h2>
 
 <ul>
-<li data-lang="en"><strong><a href="https://www.youtube.com/@ArchetypicallyTV" target="_blank" rel="noopener noreferrer">Evan | Streamer &amp; Youtuber</a></strong> · <a href="https://mastodon.social/@ArchetypicalTV" target="_blank" rel="noopener noreferrer">Mastodon</a> — Casual streamer, Youtuber, and content creator. I play games like Geoguessr, PlateUp!, League, and Overwatch.</li>
+<li data-lang="en"><strong><a href="https://www.youtube.com/@ArchetypicallyTV" target="_blank" rel="noopener noreferrer">Evan | Streamer &amp; Youtuber</a></strong> · <a href="https://mastodon.social/@ArchetypicalTV" target="_blank" rel="noopener noreferrer">Mastodon</a> — Casual streamer, Youtuber, and content creator. I play games like Geoguessr, PlateUp!, League, and Overwatch.<button type="button" class="creator-follow" data-mastodon-acct="ArchetypicalTV@mastodon.social" hidden>Follow on Mastodon</button></li>
 </ul>
 </div>
 

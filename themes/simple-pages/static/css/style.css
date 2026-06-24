@@ -515,16 +515,10 @@ p, ul, ol, pre, table, blockquote {
     font-size: 0.92rem;
 }
 
-.recent-videos > summary {
-    cursor: pointer;
+.recent-videos__title {
+    margin: 0;
     color: var(--accent-strong);
     font-weight: 600;
-}
-
-.recent-videos > summary:hover,
-.recent-videos > summary:focus-visible {
-    text-decoration: underline;
-    outline: none;
 }
 
 .recent-videos ul {
@@ -539,4 +533,32 @@ p, ul, ol, pre, table, blockquote {
 .recent-videos time {
     color: var(--muted);
     font-variant-numeric: tabular-nums;
+}
+
+/* ── Inline per-creator Follow button ──────────────────────────────────── */
+.creator-follow {
+    display: inline-block;
+    margin: 0.35rem 0 0.1rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: #ffffff;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.creator-follow:hover:not(:disabled),
+.creator-follow:focus-visible:not(:disabled) {
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+    outline: none;
+}
+
+.creator-follow:disabled {
+    opacity: 0.7;
+    cursor: default;
 }

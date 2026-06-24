@@ -240,7 +240,7 @@ def creator_videos(creator: dict, limit: int = 5) -> list:
 
 
 def _recent_videos_html(videos: list) -> str:
-    """Render a creator's recent uploads as a collapsible <details> block.
+    """Render a creator's recent uploads as an always-visible list.
 
     ``videos`` is a list of pipeline.youtube_feed.Video. Returns "" when empty
     so creators whose feed could not be fetched simply show no widget.
@@ -260,10 +260,10 @@ def _recent_videos_html(videos: list) -> str:
         )
         items.append(f"<li>{date_html}{link}</li>")
     return (
-        '<details class="recent-videos">'
-        f"<summary>Recent uploads ({len(videos)})</summary>"
+        '<div class="recent-videos">'
+        f'<p class="recent-videos__title">Recent uploads ({len(videos)})</p>'
         "<ul>" + "".join(items) + "</ul>"
-        "</details>"
+        "</div>"
     )
 
 
@@ -280,11 +280,23 @@ def _creator_li(creator: dict, mastodon_label: str, recent_videos: list | None =
     mastodon_url = html.escape(creator["mastodon_url"], quote=True)
     description = html.escape(creator.get("description") or "")
     videos_html = _recent_videos_html(recent_videos or [])
+
+    # Inline one-click Follow for native accounts. The button is wired by the
+    # shared follow-core script (loaded site-wide) using data-mastodon-acct.
+    follow_html = ""
+    if creator.get("account_type") == "native":
+        acct = html.escape(_mastodon_account(creator["mastodon_url"]), quote=True)
+        follow_html = (
+            f'<button type="button" class="creator-follow" '
+            f'data-mastodon-acct="{acct}" hidden>Follow on Mastodon</button>'
+        )
+
     return (
         f'<li data-lang="{lang}">'
         f'<strong><a href="{primary_url}" target="_blank" rel="noopener noreferrer">{name}</a></strong>'
         f' · <a href="{mastodon_url}" target="_blank" rel="noopener noreferrer">{mastodon_label}</a>'
         f" — {description}"
+        f"{follow_html}"
         f"{videos_html}"
         "</li>"
     )
