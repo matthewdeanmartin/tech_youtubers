@@ -1,5 +1,26 @@
 [
   {
+    "id": "alfred-chow-maker-of-things",
+    "name": "Alfred Chow - Maker of Things",
+    "category": "art-making",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "maker"
+    ],
+    "account_type": "native",
+    "platform": "peertube",
+    "youtube_url": "https://makertube.net/a/maker_of_things/video-channels",
+    "primary_url": "https://makertube.net/a/maker_of_things/video-channels",
+    "youtube_evidence_source": "field:MakerTube Videos",
+    "mastodon_url": "https://cupoftea.social/@Maker_of_Things",
+    "mastodon_acct": "Maker_of_Things@cupoftea.social",
+    "description": "Professional maker, in wood and metal, from miniatures to museum installations. # MakersHour # ActuallyAutistic and a # Carer . He/Him/They # LGBTQI friendly. Currently building a community workshop in Salford, and writing the story of # HarrietAndDaisy . https://www. makerofthings.org.uk/ Married t…",
+    "followers": 889,
+    "reviewed": false,
+    "review_slug": "alfred-chow-maker-of-things",
+    "language": "en"
+  },
+  {
     "id": "bbc-music",
     "name": "BBC Music",
     "category": "art-making",
@@ -9,7 +30,9 @@
       "art"
     ],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@BBCMusic",
+    "primary_url": "https://www.youtube.com/@BBCMusic",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_BBCMusic",
     "mastodon_acct": "youtube_BBCMusic@rss-mstdn.studiofreesia.com",
@@ -17,6 +40,49 @@
     "followers": 38,
     "reviewed": false,
     "review_slug": "bbc-music",
+    "language": "en"
+  },
+  {
+    "id": "kevin-mcaleer-robot-maker",
+    "name": "Kevin McAleer 🤖 Robot Maker",
+    "category": "art-making",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "maker"
+    ],
+    "account_type": "native",
+    "platform": "youtube",
+    "youtube_url": "https://www.youtube.com/kevinmcaleer28",
+    "primary_url": "https://www.youtube.com/kevinmcaleer28",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://mastodon.social/@kevsmac",
+    "mastodon_acct": "kevsmac@mastodon.social",
+    "description": "I make videos about robots on YouTube! https://www. youtube.com/kevinmcaleer28 Also checkout www.kevsrobots.com for robot projects and downloadable files",
+    "followers": 786,
+    "reviewed": false,
+    "review_slug": "kevin-mcaleer-robot-maker",
+    "language": "en"
+  },
+  {
+    "id": "makergeek",
+    "name": "MakerGeek",
+    "category": "art-making",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "maker",
+      "3d"
+    ],
+    "account_type": "native",
+    "platform": "youtube",
+    "youtube_url": "https://www.youtube.com/makergeekuk",
+    "primary_url": "https://www.youtube.com/makergeekuk",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://hometech.social/@makergeek",
+    "mastodon_acct": "makergeek@hometech.social",
+    "description": "Maker|Geek I mess with CNC, laser, machining, 3d printing, woodwork, electronics, welding Also on tiktok",
+    "followers": 233,
+    "reviewed": false,
+    "review_slug": "makergeek",
     "language": "en"
   },
   {
@@ -29,7 +95,9 @@
       "designer"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@undecidedtechnology",
+    "primary_url": "https://www.youtube.com/@undecidedtechnology",
     "youtube_evidence_source": "bio",
     "mastodon_url": "https://mastodon.social/@mattferrell",
     "mastodon_acct": "mattferrell@mastodon.social",
@@ -48,33 +116,16 @@
       "film"
     ],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@boilerroom",
+    "primary_url": "https://www.youtube.com/@boilerroom",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_boilerroom",
     "mastodon_acct": "youtube_boilerroom@rss-mstdn.studiofreesia.com",
     "description": "Connecting club culture to the wider world, on screen and irl through parties, film and video. このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
-    "followers": 115,
+    "followers": 116,
     "reviewed": false,
     "review_slug": "boiler-room",
-    "language": "en"
-  },
-  {
-    "id": "tarantinotoriyama-youtube",
-    "name": "TarantinoToriyama (Youtube)",
-    "category": "culture-entertainment",
-    "category_confidence": "curated",
-    "category_evidence": [
-      "Spanish-language review and criticism channel."
-    ],
-    "account_type": "native",
-    "youtube_url": "https://www.youtube.com/channel/UCCUhe7cfOGwZwpu1K637b7A",
-    "youtube_evidence_source": "bio",
-    "mastodon_url": "https://mastodon.social/@tarantinotoriyama",
-    "mastodon_acct": "tarantinotoriyama@mastodon.social",
-    "description": "Con o sin tu ayuda no voy a rendirme. Trabajaré duro para que Tarantinotoriyama sea un canal de referencia en Youtube 💪💪 ⤵️⤵️ https://www. youtube.com/TarantinoToriyama ⭐NUEVO⭐ Canal⭐ CapitanHater 👇 Críticas⤵️⤵️ https://www. youtube.com/channel/UCCUhe7cfO GwZwpu1K637b7A",
-    "followers": 108,
-    "reviewed": false,
-    "review_slug": "tarantinotoriyama-youtube",
     "language": "en"
   },
   {
@@ -87,7 +138,9 @@
       "media"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/c/techhuthd",
+    "primary_url": "https://www.youtube.com/c/techhuthd",
     "youtube_evidence_source": "field:YouTube",
     "mastodon_url": "https://fosstodon.org/@techhut",
     "mastodon_acct": "techhut@fosstodon.org",
@@ -109,7 +162,9 @@
       "カプコン"
     ],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@capcom",
+    "primary_url": "https://www.youtube.com/@capcom",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_capcom",
     "mastodon_acct": "youtube_capcom@rss-mstdn.studiofreesia.com",
@@ -117,26 +172,6 @@
     "followers": 36,
     "reviewed": false,
     "review_slug": "capcomchannel",
-    "language": "en"
-  },
-  {
-    "id": "evan-streamer-youtuber",
-    "name": "Evan | Streamer & Youtuber",
-    "category": "gaming",
-    "category_confidence": "high",
-    "category_evidence": [
-      "geoguessr",
-      "streamer"
-    ],
-    "account_type": "native",
-    "youtube_url": "https://www.youtube.com/@ArchetypicallyTV",
-    "youtube_evidence_source": "field:Youtube",
-    "mastodon_url": "https://mastodon.social/@ArchetypicalTV",
-    "mastodon_acct": "ArchetypicalTV@mastodon.social",
-    "description": "Casual streamer, Youtuber, and content creator. I play games like Geoguessr, PlateUp!, League, and Overwatch.",
-    "followers": 0,
-    "reviewed": false,
-    "review_slug": "evan-streamer-youtuber",
     "language": "en"
   },
   {
@@ -148,7 +183,9 @@
       "playstation"
     ],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@PlayStationJapan",
+    "primary_url": "https://www.youtube.com/@PlayStationJapan",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_PlayStationJapan",
     "mastodon_acct": "youtube_PlayStationJapan@rss-mstdn.studiofreesia.com",
@@ -169,7 +206,9 @@
       "配信"
     ],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@HoshimachiSuisei",
+    "primary_url": "https://www.youtube.com/@HoshimachiSuisei",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_HoshimachiSuisei",
     "mastodon_acct": "youtube_HoshimachiSuisei@rss-mstdn.studiofreesia.com",
@@ -191,7 +230,9 @@
       "配信"
     ],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@TOMARI_MARI",
+    "primary_url": "https://www.youtube.com/@TOMARI_MARI",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_TOMARI_MARI",
     "mastodon_acct": "youtube_TOMARI_MARI@rss-mstdn.studiofreesia.com",
@@ -199,6 +240,28 @@
     "followers": 41,
     "reviewed": false,
     "review_slug": "tomari-mari-channel",
+    "language": "en"
+  },
+  {
+    "id": "gregandcin",
+    "name": "gregandcin",
+    "category": "gaming",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "gaming",
+      "twitch"
+    ],
+    "account_type": "native",
+    "platform": "youtube",
+    "youtube_url": "https://www.youtube.com/gregandcin",
+    "primary_url": "https://www.youtube.com/gregandcin",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://mindly.social/@gregandcin",
+    "mastodon_acct": "gregandcin@mindly.social",
+    "description": "I kinda like games and tech. Local connoAsseur. Rested and Sleeppilled. Admin #2 of Mindly.Social # fedi22 # tech # gaming # anime # manga # keyboards",
+    "followers": 1025,
+    "reviewed": false,
+    "review_slug": "gregandcin",
     "language": "en"
   },
   {
@@ -211,7 +274,9 @@
       "concert"
     ],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@arteconcert",
+    "primary_url": "https://www.youtube.com/@arteconcert",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_arteconcert",
     "mastodon_acct": "youtube_arteconcert@rss-mstdn.studiofreesia.com",
@@ -231,7 +296,9 @@
       "concert"
     ],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@blogotheque",
+    "primary_url": "https://www.youtube.com/@blogotheque",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_blogotheque",
     "mastodon_acct": "youtube_blogotheque@rss-mstdn.studiofreesia.com",
@@ -250,7 +317,9 @@
       "music"
     ],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@kexp",
+    "primary_url": "https://www.youtube.com/@kexp",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_kexp",
     "mastodon_acct": "youtube_kexp@rss-mstdn.studiofreesia.com",
@@ -270,7 +339,9 @@
       "concert"
     ],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@nprmusic",
+    "primary_url": "https://www.youtube.com/@nprmusic",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_nprmusic",
     "mastodon_acct": "youtube_nprmusic@rss-mstdn.studiofreesia.com",
@@ -289,7 +360,9 @@
       "music"
     ],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@NTSLIVEUK",
+    "primary_url": "https://www.youtube.com/@NTSLIVEUK",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_NTSLIVEUK",
     "mastodon_acct": "youtube_NTSLIVEUK@rss-mstdn.studiofreesia.com",
@@ -309,7 +382,9 @@
       "radio"
     ],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@rinsefm",
+    "primary_url": "https://www.youtube.com/@rinsefm",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_rinsefm",
     "mastodon_acct": "youtube_rinsefm@rss-mstdn.studiofreesia.com",
@@ -328,7 +403,9 @@
       "record label"
     ],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@subpop",
+    "primary_url": "https://www.youtube.com/@subpop",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_subpop",
     "mastodon_acct": "youtube_subpop@rss-mstdn.studiofreesia.com",
@@ -348,7 +425,9 @@
       "ニュース"
     ],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@ANNnewsCH",
+    "primary_url": "https://www.youtube.com/@ANNnewsCH",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_ANNnewsCH",
     "mastodon_acct": "youtube_ANNnewsCH@rss-mstdn.studiofreesia.com",
@@ -369,12 +448,14 @@
       "ニュース"
     ],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@BBCNewsJapan",
+    "primary_url": "https://www.youtube.com/@BBCNewsJapan",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_BBCNewsJapan",
     "mastodon_acct": "youtube_BBCNewsJapan@rss-mstdn.studiofreesia.com",
     "description": "BBCニュース日本語版のYouTubeチャンネルへようこそ！世界中のニュースを伝えるイギリス公共放送BBCから、選りすぐりの動画ニュースを日本語でお届けします。このほかにもさまざまなニュースをBBCニュース日本語版サイトでお届けしています。BBCニュースは公平・中立で正確な情報をお伝えする国際ニュースブランドです。 このアカウントはRSSフィードの内容を投稿するbotアカウントです。 このアカウントの投稿に関するお問い合わせは @ owner までお願いします。",
-    "followers": 217,
+    "followers": 218,
     "reviewed": false,
     "review_slug": "bbc-news-japan",
     "language": "en"
@@ -390,7 +471,9 @@
       "報道"
     ],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@mbsnews",
+    "primary_url": "https://www.youtube.com/@mbsnews",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_mbsnews",
     "mastodon_acct": "youtube_mbsnews@rss-mstdn.studiofreesia.com",
@@ -409,7 +492,9 @@
       "nhk"
     ],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@NHK",
+    "primary_url": "https://www.youtube.com/@NHK",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_NHK",
     "mastodon_acct": "youtube_NHK@rss-mstdn.studiofreesia.com",
@@ -429,7 +514,9 @@
       "ニュース"
     ],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@tbsnewsdig",
+    "primary_url": "https://www.youtube.com/@tbsnewsdig",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_tbsnewsdig",
     "mastodon_acct": "youtube_tbsnewsdig@rss-mstdn.studiofreesia.com",
@@ -440,30 +527,15 @@
     "language": "en"
   },
   {
-    "id": "youtuber-7",
-    "name": "YouTuber",
-    "category": "other",
-    "category_confidence": "low",
-    "category_evidence": [],
-    "account_type": "native",
-    "youtube_url": "https://www.youtube.com/channel/UC8XOX31MAHVCHKSMKCj8oDg",
-    "youtube_evidence_source": "bio",
-    "mastodon_url": "https://upvo.me/author/youtuber/",
-    "mastodon_acct": "youtuber@upvo.me",
-    "description": "SUBSCRIBE TO MY YOUTUBE CHANNEL",
-    "followers": 3,
-    "reviewed": false,
-    "review_slug": "youtuber-7",
-    "language": "en"
-  },
-  {
     "id": "atlustube",
     "name": "atlustube",
     "category": "other",
     "category_confidence": "low",
     "category_evidence": [],
     "account_type": "rss-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@atlustube",
+    "primary_url": "https://www.youtube.com/@atlustube",
     "youtube_evidence_source": "field:Website",
     "mastodon_url": "https://rss-mstdn.studiofreesia.com/@youtube_atlustube",
     "mastodon_acct": "youtube_atlustube@rss-mstdn.studiofreesia.com",
@@ -483,7 +555,9 @@
       "lecturer"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@InsiderPhD",
+    "primary_url": "https://www.youtube.com/@InsiderPhD",
     "youtube_evidence_source": "field:YouTube",
     "mastodon_url": "https://infosec.exchange/@insiderphd",
     "mastodon_acct": "insiderphd@infosec.exchange",
@@ -491,6 +565,50 @@
     "followers": 2308,
     "reviewed": false,
     "review_slug": "insiderphd",
+    "language": "en"
+  },
+  {
+    "id": "mathy-vanhoef",
+    "name": "Mathy Vanhoef",
+    "category": "science-education",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "science",
+      "math"
+    ],
+    "account_type": "native",
+    "platform": "youtube",
+    "youtube_url": "https://www.youtube.com/@vanhoefm",
+    "primary_url": "https://www.youtube.com/@vanhoefm",
+    "youtube_evidence_source": "field:YouTube",
+    "mastodon_url": "https://infosec.exchange/@vanhoefm",
+    "mastodon_acct": "vanhoefm@infosec.exchange",
+    "description": "Hacker at heart | Discovered KRACK and FragAttacks | Prof. Computer Science at @KU_Leuven (Belgium) | Did Postdoc at NYUAD | Network Security & Applied Crypto | Open to consultancy",
+    "followers": 1956,
+    "reviewed": false,
+    "review_slug": "mathy-vanhoef",
+    "language": "en"
+  },
+  {
+    "id": "matt-parker",
+    "name": "Matt Parker",
+    "category": "science-education",
+    "category_confidence": "high",
+    "category_evidence": [
+      "math",
+      "maths"
+    ],
+    "account_type": "native",
+    "platform": "youtube",
+    "youtube_url": "https://www.youtube.com/standupmaths",
+    "primary_url": "https://www.youtube.com/standupmaths",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://mathstodon.xyz/@standupmaths",
+    "mastodon_acct": "standupmaths@mathstodon.xyz",
+    "description": "#1 best-selling author, also maths clown. Humble Pi, a comedy of maths errors: https:// mathsgear.co.uk/collections/bo oks/products/humble-pi-signed-paperback Videos: http:// youtube.com/standupmaths",
+    "followers": 9931,
+    "reviewed": false,
+    "review_slug": "matt-parker",
     "language": "en"
   },
   {
@@ -503,7 +621,9 @@
       "classics"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/channel/UC90iyXKrUsJBCYbtdbgrmkg",
+    "primary_url": "https://www.youtube.com/channel/UC90iyXKrUsJBCYbtdbgrmkg",
     "youtube_evidence_source": "field:Tutubulus",
     "mastodon_url": "https://colloquium.social/@lingualatina",
     "mastodon_acct": "lingualatina@colloquium.social",
@@ -511,6 +631,49 @@
     "followers": 175,
     "reviewed": false,
     "review_slug": "open-latin",
+    "language": "en"
+  },
+  {
+    "id": "science",
+    "name": "Science",
+    "category": "science-education",
+    "category_confidence": "high",
+    "category_evidence": [
+      "science",
+      "research"
+    ],
+    "account_type": "native",
+    "platform": "peertube",
+    "youtube_url": "https://beehaw.org/c/space",
+    "primary_url": "https://beehaw.org/c/space",
+    "youtube_evidence_source": "bio",
+    "mastodon_url": "https://beehaw.org/c/science",
+    "mastodon_acct": "science@beehaw.org",
+    "description": "Studies, research findings, and interesting tidbits from the ever-expanding scientific world. Subcommunities on Beehaw: Space Be sure to also check out these other Fediverse science communities: lemmy.ml/c/science mander.xyz/c/science This community’s icon was made by Aaron Schneider, under the CC-B…",
+    "followers": 14929,
+    "reviewed": false,
+    "review_slug": "science",
+    "language": "en"
+  },
+  {
+    "id": "science-etonnante",
+    "name": "Science Étonnante",
+    "category": "science-education",
+    "category_confidence": "medium",
+    "category_evidence": [
+      "science"
+    ],
+    "account_type": "native",
+    "platform": "youtube",
+    "youtube_url": "https://www.youtube.com/scienceetonnante",
+    "primary_url": "https://www.youtube.com/scienceetonnante",
+    "youtube_evidence_source": "field:Youtube",
+    "mastodon_url": "https://piaille.fr/@scienceetonnante",
+    "mastodon_acct": "scienceetonnante@piaille.fr",
+    "description": "Je suis David Louapre, le créateur de Science Étonnante. Retrouvez ici les actualités de la chaîne Youtube, du blog, etc.",
+    "followers": 2867,
+    "reviewed": false,
+    "review_slug": "science-etonnante",
     "language": "en"
   },
   {
@@ -524,7 +687,9 @@
       "security"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/c/BlacksInCybersecurity",
+    "primary_url": "https://www.youtube.com/c/BlacksInCybersecurity",
     "youtube_evidence_source": "field:YouTube",
     "mastodon_url": "https://infosec.exchange/@blacksincyber",
     "mastodon_acct": "blacksincyber@infosec.exchange",
@@ -543,7 +708,9 @@
       "linux"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/channel/UCld68syR8Wi-GY_n4CaoJGA",
+    "primary_url": "https://www.youtube.com/channel/UCld68syR8Wi-GY_n4CaoJGA",
     "youtube_evidence_source": "field:YouTube",
     "mastodon_url": "https://mstdn.social/@BrodieOnLinux",
     "mastodon_acct": "BrodieOnLinux@mstdn.social",
@@ -563,7 +730,9 @@
       "tech"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@codinggrace",
+    "primary_url": "https://www.youtube.com/@codinggrace",
     "youtube_evidence_source": "field:Youtube",
     "mastodon_url": "https://mastodon.ie/@codinggrace",
     "mastodon_acct": "codinggrace@mastodon.ie",
@@ -571,28 +740,6 @@
     "followers": 91,
     "reviewed": false,
     "review_slug": "coding-grace",
-    "language": "en"
-  },
-  {
-    "id": "codingkurzgeschichten",
-    "name": "CodingKurzgeschichten",
-    "category": "technology",
-    "category_confidence": "medium",
-    "category_evidence": [
-      "software",
-      "programming",
-      "coding",
-      "informatik"
-    ],
-    "account_type": "native",
-    "youtube_url": "https://www.youtube.com/@CodingKurzgeschichten",
-    "youtube_evidence_source": "field:YouTube",
-    "mastodon_url": "https://mastodontech.de/@CodingKurzgeschichten",
-    "mastodon_acct": "CodingKurzgeschichten@mastodontech.de",
-    "description": "My name is Thomas Schlögl and I love coding 👨‍💻, maths and physics. I am teaching # Programming and # Softwaredevelopment in Vienna at # htldonaustadt in the # Informatik department. Other accounts: 🇦🇹 @ CodingShortStories mostly Vienna related stuff 📱 @hachyderm.io@7h0m45 coding stuff",
-    "followers": 141,
-    "reviewed": false,
-    "review_slug": "codingkurzgeschichten",
     "language": "en"
   },
   {
@@ -604,7 +751,9 @@
       "tech"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@EmilyBache-tech-coach",
+    "primary_url": "https://www.youtube.com/@EmilyBache-tech-coach",
     "youtube_evidence_source": "field:YouTube",
     "mastodon_url": "https://sw-development-is.social/@emilybache",
     "mastodon_acct": "emilybache@sw-development-is.social",
@@ -624,7 +773,9 @@
       "coding"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@shaharyarranjah1",
+    "primary_url": "https://www.youtube.com/@shaharyarranjah1",
     "youtube_evidence_source": "bio",
     "mastodon_url": "https://mastodon.social/@shaharyarranjah1",
     "mastodon_acct": "shaharyarranjah1@mastodon.social",
@@ -645,7 +796,9 @@
       "graphics programming"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/c/GraphicsProgrammingVirtualMeetup",
+    "primary_url": "https://www.youtube.com/c/GraphicsProgrammingVirtualMeetup",
     "youtube_evidence_source": "field:Youtube Channel",
     "mastodon_url": "https://mastodon.gamedev.place/@graphicsmeetup",
     "mastodon_acct": "graphicsmeetup@mastodon.gamedev.place",
@@ -666,7 +819,9 @@
       "mobile"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/c/LINMOBnet",
+    "primary_url": "https://www.youtube.com/c/LINMOBnet",
     "youtube_evidence_source": "field:youtube",
     "mastodon_url": "https://linuxmobile.social/@linmob",
     "mastodon_acct": "linmob@linuxmobile.social",
@@ -674,26 +829,6 @@
     "followers": 6465,
     "reviewed": false,
     "review_slug": "linux-on-mobile",
-    "language": "en"
-  },
-  {
-    "id": "linux-for-all",
-    "name": "Linux For All",
-    "category": "technology",
-    "category_confidence": "high",
-    "category_evidence": [
-      "linux",
-      "security"
-    ],
-    "account_type": "native",
-    "youtube_url": "https://www.youtube.com/channel/UCLi7utjkBxAYPtVQhTuiZ2Q",
-    "youtube_evidence_source": "field:YouTube",
-    "mastodon_url": "https://infosec.exchange/@llp",
-    "mastodon_acct": "llp@infosec.exchange",
-    "description": "GNU/Linux lover, so its content creator. Making people aware of GNU/Linux🐂🐧.  Daily tweets on GNU/Linux🐂🐧, Networking🌐, Shell Scripting✍️ and Security🥷",
-    "followers": 289,
-    "reviewed": false,
-    "review_slug": "linux-for-all",
     "language": "en"
   },
   {
@@ -707,7 +842,9 @@
       "open source"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@linuxlads",
+    "primary_url": "https://www.youtube.com/@linuxlads",
     "youtube_evidence_source": "field:YouTube",
     "mastodon_url": "https://mastodon.ie/@linuxlads",
     "mastodon_acct": "linuxlads@mastodon.ie",
@@ -715,25 +852,6 @@
     "followers": 762,
     "reviewed": false,
     "review_slug": "linux-lads-podcast",
-    "language": "en"
-  },
-  {
-    "id": "linux-trend",
-    "name": "Linux Trend",
-    "category": "technology",
-    "category_confidence": "medium",
-    "category_evidence": [
-      "linux"
-    ],
-    "account_type": "native",
-    "youtube_url": "https://www.youtube.com/channel/UCqif17xcnejoBb43IQTvBZw",
-    "youtube_evidence_source": "bio",
-    "mastodon_url": "https://mastodon.social/@linuxtrend",
-    "mastodon_acct": "linuxtrend@mastodon.social",
-    "description": "!!! MOVED to @ neoncipher account !!! https:// mastodon.social/@neoncipher https://www. youtube.com/channel/UCqif17xcn ejoBb43IQTvBZw",
-    "followers": 77,
-    "reviewed": false,
-    "review_slug": "linux-trend",
     "language": "en"
   },
   {
@@ -745,7 +863,9 @@
       "software"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@molten_software",
+    "primary_url": "https://www.youtube.com/@molten_software",
     "youtube_evidence_source": "field:Youtube!",
     "mastodon_url": "https://bitbang.social/@vileboss",
     "mastodon_acct": "vileboss@bitbang.social",
@@ -753,28 +873,6 @@
     "followers": 227,
     "reviewed": false,
     "review_slug": "molten-software",
-    "language": "en"
-  },
-  {
-    "id": "low-level-learning",
-    "name": "Nir Lichtman / Low Level Learning",
-    "category": "technology",
-    "category_confidence": "high",
-    "category_evidence": [
-      "programming",
-      "cyber",
-      "security",
-      "tech"
-    ],
-    "account_type": "native",
-    "youtube_url": "https://www.youtube.com/c/LowLevelLearning",
-    "youtube_evidence_source": "field:YouTube",
-    "mastodon_url": "https://infosec.exchange/@lowlevellearning",
-    "mastodon_acct": "lowlevellearning@infosec.exchange",
-    "description": "Low-level programming, operating systems, C, assembly, reverse engineering, and computer internals.",
-    "followers": 11,
-    "reviewed": false,
-    "review_slug": "low-level-learning",
     "language": "en"
   },
   {
@@ -786,7 +884,9 @@
       "opensource"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@open_titus",
+    "primary_url": "https://www.youtube.com/@open_titus",
     "youtube_evidence_source": "field:YouTube",
     "mastodon_url": "https://mastodon.uno/@opentitus",
     "mastodon_acct": "opentitus@mastodon.uno",
@@ -806,7 +906,9 @@
       "hardware"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@paulshardware",
+    "primary_url": "https://www.youtube.com/@paulshardware",
     "youtube_evidence_source": "bio",
     "mastodon_url": "https://techhub.social/@paulshardware",
     "mastodon_acct": "paulshardware@techhub.social",
@@ -814,25 +916,6 @@
     "followers": 250,
     "reviewed": false,
     "review_slug": "paul-s-hardware",
-    "language": "en"
-  },
-  {
-    "id": "raul-craveiro",
-    "name": "Raul Craveiro / Diolinux",
-    "category": "technology",
-    "category_confidence": "medium",
-    "category_evidence": [
-      "linux"
-    ],
-    "account_type": "native",
-    "youtube_url": "https://www.youtube.com/@raulcraveiro",
-    "youtube_evidence_source": "field:YouTube",
-    "mastodon_url": "https://mastodon.online/@raulcraveiro",
-    "mastodon_acct": "raulcraveiro@mastodon.online",
-    "description": "Portuguese-language Linux, open-source software, internet, and productivity content from the Diolinux team.",
-    "followers": 105,
-    "reviewed": false,
-    "review_slug": "raul-craveiro",
     "language": "en"
   },
   {
@@ -845,7 +928,9 @@
       "tech"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@swcraftstras",
+    "primary_url": "https://www.youtube.com/@swcraftstras",
     "youtube_evidence_source": "bio",
     "mastodon_url": "https://mobilizon.fr/@swcraftstras",
     "mastodon_acct": "swcraftstras@mobilizon.fr",
@@ -865,7 +950,9 @@
       "cloud"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@softwaredefinedtalk/live",
+    "primary_url": "https://www.youtube.com/@softwaredefinedtalk/live",
     "youtube_evidence_source": "field:YouTube",
     "mastodon_url": "https://hachyderm.io/@softwaredefinedtalk",
     "mastodon_acct": "softwaredefinedtalk@hachyderm.io",
@@ -887,7 +974,9 @@
       "pc"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@TechInterceptor",
+    "primary_url": "https://www.youtube.com/@TechInterceptor",
     "youtube_evidence_source": "field:YOUTUBE",
     "mastodon_url": "https://mastodon.online/@TechInterceptor",
     "mastodon_acct": "TechInterceptor@mastodon.online",
@@ -895,26 +984,6 @@
     "followers": 96,
     "reviewed": false,
     "review_slug": "tech-interceptor",
-    "language": "en"
-  },
-  {
-    "id": "tech-over-tea",
-    "name": "Tech Over Tea",
-    "category": "technology",
-    "category_confidence": "high",
-    "category_evidence": [
-      "linux",
-      "tech"
-    ],
-    "account_type": "native",
-    "youtube_url": "https://www.youtube.com/channel/UCBq5p-xOla8xhnrbhu8AIAg",
-    "youtube_evidence_source": "field:YouTube",
-    "mastodon_url": "https://mastodon.social/@TechOverTeaShow",
-    "mastodon_acct": "TechOverTeaShow@mastodon.social",
-    "description": "Sometimes there will be tech, maybe even some tea, but it'll always be an interesting ride. Hosted by @ BrodieOnLinux",
-    "followers": 417,
-    "reviewed": false,
-    "review_slug": "tech-over-tea",
     "language": "en"
   },
   {
@@ -927,7 +996,9 @@
       "tech"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/channel/UCoJhtqauQgAykvSLQSyu7UQ",
+    "primary_url": "https://www.youtube.com/channel/UCoJhtqauQgAykvSLQSyu7UQ",
     "youtube_evidence_source": "field:YouTube",
     "mastodon_url": "https://mas.to/@techtales",
     "mastodon_acct": "techtales@mas.to",
@@ -946,7 +1017,9 @@
       "tech"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/channel/UCerEIdrEW-IqwvlH8lTQUJQ",
+    "primary_url": "https://www.youtube.com/channel/UCerEIdrEW-IqwvlH8lTQUJQ",
     "youtube_evidence_source": "field:Youtube",
     "mastodon_url": "https://dialup.space/@TechTangents",
     "mastodon_acct": "TechTangents@dialup.space",
@@ -954,27 +1027,6 @@
     "followers": 3202,
     "reviewed": false,
     "review_slug": "tech-tangents",
-    "language": "en"
-  },
-  {
-    "id": "techhut",
-    "name": "TechHut",
-    "category": "technology",
-    "category_confidence": "high",
-    "category_evidence": [
-      "linux",
-      "tech",
-      "open source"
-    ],
-    "account_type": "native",
-    "youtube_url": "https://www.youtube.com/c/techhuthd",
-    "youtube_evidence_source": "field:YouTube",
-    "mastodon_url": "https://distrotoot.com/@tech",
-    "mastodon_acct": "tech@distrotoot.com",
-    "description": "Youtube content creator, Linux and open source enthusiast, overall geek.",
-    "followers": 127,
-    "reviewed": false,
-    "review_slug": "techhut",
     "language": "en"
   },
   {
@@ -988,7 +1040,9 @@
       "tech"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@techlore",
+    "primary_url": "https://www.youtube.com/@techlore",
     "youtube_evidence_source": "field:YouTube",
     "mastodon_url": "https://social.lol/@techlore",
     "mastodon_acct": "techlore@social.lol",
@@ -1008,7 +1062,9 @@
       "tech"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/@TechnologyConnections",
+    "primary_url": "https://www.youtube.com/@TechnologyConnections",
     "youtube_evidence_source": "field:YouTube",
     "mastodon_url": "https://mas.to/@TechConnectify",
     "mastodon_acct": "TechConnectify@mas.to",
@@ -1028,7 +1084,9 @@
       "tech"
     ],
     "account_type": "channel-feed",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q",
+    "primary_url": "https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q",
     "youtube_evidence_source": "field:Homepage",
     "mastodon_url": "https://feedsin.space/feed/youtube-TechnologyConnections",
     "mastodon_acct": "youtube-TechnologyConnections@feedsin.space",
@@ -1050,7 +1108,9 @@
       "engineering"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/c/cyberlibrarian",
+    "primary_url": "https://www.youtube.com/c/cyberlibrarian",
     "youtube_evidence_source": "field:Youtube",
     "mastodon_url": "https://infosec.exchange/@cyberlibrarian",
     "mastodon_acct": "cyberlibrarian@infosec.exchange",
@@ -1058,26 +1118,6 @@
     "followers": 973,
     "reviewed": false,
     "review_slug": "the-cybersecurity-librarian",
-    "language": "en"
-  },
-  {
-    "id": "tom-lawrence",
-    "name": "Tom Lawrence / Lawrence Systems",
-    "category": "technology",
-    "category_confidence": "high",
-    "category_evidence": [
-      "tech",
-      "open source"
-    ],
-    "account_type": "native",
-    "youtube_url": "https://www.youtube.com/@lawrencesystems",
-    "youtube_evidence_source": "field:YouTube",
-    "mastodon_url": "https://infosec.exchange/@tomlawrence",
-    "mastodon_acct": "tomlawrence@infosec.exchange",
-    "description": "Networking, pfSense/OPNsense, MSP business, and homelab. Practical deep-dives for IT professionals and self-hosters.",
-    "followers": 2193,
-    "reviewed": false,
-    "review_slug": "tom-lawrence",
     "language": "en"
   },
   {
@@ -1092,7 +1132,9 @@
       "server"
     ],
     "account_type": "native",
+    "platform": "youtube",
     "youtube_url": "https://www.youtube.com/c/WolfgangsChannel",
+    "primary_url": "https://www.youtube.com/c/WolfgangsChannel",
     "youtube_evidence_source": "field:YouTube",
     "mastodon_url": "https://tilde.zone/@notthebee",
     "mastodon_acct": "notthebee@tilde.zone",

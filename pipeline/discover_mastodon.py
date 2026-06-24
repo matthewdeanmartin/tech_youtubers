@@ -12,7 +12,7 @@ if str(SCRIPT_DIR) in sys.path:
 sys.path.insert(0, str(REPO_ROOT))
 
 from mastodon import MastodonAPIError, MastodonError
-from pipeline import categorize, mastodon, mastodon_discovery, youtuber_store
+from pipeline import categorize, mastodon, mastodon_discovery, publish_candidates, youtuber_store
 
 DEFAULT_QUERIES = [
     "youtube",
@@ -23,6 +23,12 @@ DEFAULT_QUERIES = [
     "music youtube",
     "art youtube",
     "science youtube",
+    "math youtube",
+    "mathematics youtube",
+    "physics youtube",
+    "engineering youtube",
+    "comedy youtube",
+    "maker youtube",
     "education youtube",
     "history youtube",
     "news youtube",
@@ -44,6 +50,22 @@ DEFAULT_QUERIES = [
     "peertube",
     "peertube creator",
     "video creator fediverse",
+]
+
+# Well-known creators whose Mastodon handle/display-name is NOT topical, so
+# Mastodon's account_search (which matches handle + display name, never bio
+# text) misses them under topic queries. We look these up directly by address.
+# They still have to pass the normal gates at publish time: a YouTube channel
+# link in the profile, recent activity, and English-language detection. This is
+# a discovery aid, not a force-include — a handle here that fails the evidence
+# or activity check simply won't be published.
+KNOWN_CREATOR_HANDLES = [
+    "standupmaths@mathstodon.xyz",   # Matt Parker — verified, links to youtube.com/standupmaths
+    # Add more verified handles here as they're confirmed. Entries that don't
+    # exist (404) or lack a YouTube channel link are skipped automatically, so
+    # it's safe to leave aspirational handles in — but keep this list curated to
+    # avoid noise. Many big YouTubers simply aren't on Mastodon, or post under a
+    # handle that doesn't match their channel name.
 ]
 
 
@@ -117,6 +139,34 @@ def seed(args: argparse.Namespace) -> int:
     return 1 if failures else 0
 
 
+def seed_known(args: argparse.Namespace) -> int:
+    """Look up curated well-known creators by address and store them.
+
+    Bypasses fuzzy account_search (which can't see bio text) so creators whose
+    handle isn't topical — e.g. Matt Parker @standupmaths — are still found.
+    """
+    api = mastodon.client_from_env()
+    db = mastodon_discovery.connect(args.db)
+    handles = args.handle or KNOWN_CREATOR_HANDLES
+    found = with_links = 0
+    for handle in handles:
+        try:
+            account = api.account_lookup(handle)
+        except (MastodonError, ValueError) as exc:
+            print(f"WARN {handle}: lookup failed: {exc}", file=sys.stderr)
+            continue
+        acct, links = mastodon_discovery.store_account(
+            db, account, source_instance="seed-known", query="known-creator"
+        )
+        found += 1
+        with_links += bool(links)
+        note = f"{links} channel link(s)" if links else "no channel link — won't publish"
+        print(f"{handle}: @{acct} ({note})")
+    db.commit()
+    print(f"Looked up {found}/{len(handles)} known creators; {with_links} have channel evidence.")
+    return 0
+
+
 def audit(args: argparse.Namespace) -> int:
     api = mastodon.client_from_env()
     db = mastodon_discovery.connect(args.db)
@@ -133,6 +183,9 @@ def audit(args: argparse.Namespace) -> int:
             links = mastodon_discovery.youtube_links(account)
             if not links:
                 removed.append((creator, "Mastodon profile has no direct YouTube channel link"))
+                continue
+            if not publish_candidates.is_active(account.get("last_status_at")):
+                removed.append((creator, "No Mastodon post in the last year (inactive)"))
                 continue
             kept.append(creator)
         except (MastodonError, ValueError) as exc:
@@ -192,6 +245,12 @@ def parser() -> argparse.ArgumentParser:
 
     seed_parser = commands.add_parser("seed", help="Fetch current directory profiles into SQLite.")
     seed_parser.set_defaults(func=seed)
+
+    seed_known_parser = commands.add_parser(
+        "seed-known", help="Look up curated well-known creators by address (bypasses fuzzy search)."
+    )
+    seed_known_parser.add_argument("--handle", action="append", help="user@instance; may be repeated.")
+    seed_known_parser.set_defaults(func=seed_known)
 
     audit_parser = commands.add_parser(
         "audit", help="Keep only directory entries whose Mastodon profile links to YouTube."

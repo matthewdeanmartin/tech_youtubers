@@ -8,17 +8,17 @@ Summary: Gaming & VTubers YouTube creators and channel feeds on Mastodon.
 <h2>Native Mastodon accounts (1)</h2>
 
 <ul>
-<li data-lang="en"><strong><a href="https://www.youtube.com/@ArchetypicallyTV" target="_blank" rel="noopener noreferrer">Evan | Streamer &amp; Youtuber</a></strong> · <a href="https://mastodon.social/@ArchetypicalTV" target="_blank" rel="noopener noreferrer">Mastodon</a> — Casual streamer, Youtuber, and content creator. I play games like Geoguessr, PlateUp!, League, and Overwatch.<button type="button" class="creator-follow" data-mastodon-acct="ArchetypicalTV@mastodon.social" hidden>Follow on Mastodon</button></li>
+<li data-lang="en"><strong><a href="https://www.youtube.com/gregandcin" target="_blank" rel="noopener noreferrer">gregandcin</a></strong> · <a href="https://mindly.social/@gregandcin" target="_blank" rel="noopener noreferrer">Mastodon</a> — I kinda like games and tech. Local connoAsseur. Rested and Sleeppilled. Admin #2 of Mindly.Social # fedi22 # tech # gaming # anime # manga # keyboards<button type="button" class="creator-follow" data-mastodon-acct="gregandcin@mindly.social" hidden>Follow on Mastodon</button><div class="recent-videos"><p class="recent-videos__title">Recent uploads (5)</p><ul><li><time datetime="2017-06-23">2017-06-23</time> · <a href="https://www.youtube.com/watch?v=dcksMdWlmXA" target="_blank" rel="noopener noreferrer">I&#x27;M NOT EVEN MAD</a></li><li><time datetime="2017-05-26">2017-05-26</time> · <a href="https://www.youtube.com/watch?v=2op2CCg1xZ0" target="_blank" rel="noopener noreferrer">I just bought this - Overwatch Livestream May 22, 2017</a></li><li><time datetime="2017-05-26">2017-05-26</time> · <a href="https://www.youtube.com/watch?v=Q8u8lGMQx8E" target="_blank" rel="noopener noreferrer">1v1 Scrub - Overwatch Livestream May 23, 2017</a></li><li><time datetime="2017-05-26">2017-05-26</time> · <a href="https://www.youtube.com/watch?v=ULaOkdACeWQ" target="_blank" rel="noopener noreferrer">NEW OPERATION GUYS - CS:GO Livestream May 23, 2017</a></li><li><time datetime="2017-05-25">2017-05-25</time> · <a href="https://www.youtube.com/watch?v=LAEMjzC4HtU" target="_blank" rel="noopener noreferrer">gregandcin Live Live Stream</a></li></ul></div></li>
 </ul>
 </div>
 
-<section class="bulk-follow" data-bulk-scope="gaming" data-bulk-handles="[&quot;@ArchetypicalTV@mastodon.social&quot;]">
+<section class="bulk-follow" data-bulk-scope="gaming" data-bulk-handles="[&quot;@gregandcin@mindly.social&quot;]">
 <h2>Follow this account</h2>
 <p>Copy the handles below, or download a CSV to import via your Mastodon server's
 <strong>Preferences &rarr; Import and export &rarr; Import &rarr; Following list</strong>.
 Prefer one click? Use the <a href="../mastodon-follow/">Follow on Mastodon</a> tool.</p>
 <label class="bulk-follow__label" for="bulk-follow-gaming">Native accounts in Gaming &amp; VTubers</label>
-<textarea id="bulk-follow-gaming" class="bulk-follow__text" rows="6" readonly spellcheck="false">@ArchetypicalTV@mastodon.social</textarea>
+<textarea id="bulk-follow-gaming" class="bulk-follow__text" rows="6" readonly spellcheck="false">@gregandcin@mindly.social</textarea>
 <div class="bulk-follow__actions">
 <button type="button" class="bulk-follow__copy" data-bulk-copy>Copy handles</button>
 <a class="bulk-follow__download" data-bulk-download href="#" download>Download CSV</a>

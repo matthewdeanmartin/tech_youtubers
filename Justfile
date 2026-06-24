@@ -28,6 +28,10 @@ discover-mastodon *args:
 seed-mastodon:
     uv run python -m pipeline.discover_mastodon seed
 
+# Look up curated well-known creators by address (finds non-topical handles).
+seed-known:
+    uv run python -m pipeline.discover_mastodon seed-known
+
 # Preview removal of entries without Mastodon-hosted YouTube channel evidence.
 audit-creators:
     uv run python -m pipeline.discover_mastodon audit

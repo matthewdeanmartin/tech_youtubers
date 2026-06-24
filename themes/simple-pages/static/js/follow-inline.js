@@ -34,15 +34,23 @@
   }
 
   function statusHandler(btn, acct) {
-    var label = btn.textContent;
     return function (state) {
       if (state === "resolving")           setButtonState(btn, "Resolving…", true);
       else if (state === "following")      setButtonState(btn, "Following…", true);
-      else if (state === "already")        setButtonState(btn, "✓ Already following", true);
-      else if (state === "following-done") setButtonState(btn, "✓ Following", true);
-      else if (state === "requested")      setButtonState(btn, "⏳ Requested", true);
+      else if (state === "already")        markFollowing(btn);
+      else if (state === "following-done") markFollowing(btn);
+      else if (state === "requested")      markRequested(btn);
       else if (state === "unknown")        setButtonState(btn, "Check Mastodon", false);
     };
+  }
+
+  function markFollowing(btn) {
+    setButtonState(btn, "✓ Following", true);
+    btn.classList.add("creator-follow--following");
+  }
+  function markRequested(btn) {
+    setButtonState(btn, "⏳ Requested", true);
+    btn.classList.add("creator-follow--following");
   }
 
   function promptInstance() {
@@ -96,15 +104,40 @@
     if (!MF.isConnected()) return;
 
     var pending = MF.getPendingFollow();
-    if (!pending) return;
-    var btn = null;
-    buttons.forEach(function (b) {
-      if (b.getAttribute("data-mastodon-acct") === pending) btn = b;
+    if (pending) {
+      var pendBtn = null;
+      buttons.forEach(function (b) {
+        if (b.getAttribute("data-mastodon-acct") === pending) pendBtn = b;
+      });
+      try {
+        await MF.resumePending(pendBtn ? statusHandler(pendBtn, pending) : undefined);
+      } catch (err) {
+        console.error("Pending follow failed: " + err.message);
+      }
+    }
+
+    // Pre-mark creators already followed in this account. One search per
+    // handle (locally-known only) + a single batched relationships call.
+    await markAlreadyFollowing(buttons);
+  }
+
+  async function markAlreadyFollowing(buttons) {
+    var byAcct = {};
+    var accts = [];
+    buttons.forEach(function (btn) {
+      var acct = btn.getAttribute("data-mastodon-acct");
+      if (acct) { byAcct[acct] = btn; accts.push(acct); }
     });
+    if (!accts.length) return;
     try {
-      await MF.resumePending(btn ? statusHandler(btn, pending) : undefined);
+      await MF.followStatuses(accts, function (acct, state) {
+        var btn = byAcct[acct];
+        if (!btn) return;
+        if (state === "following") markFollowing(btn);
+        else if (state === "requested") markRequested(btn);
+      });
     } catch (err) {
-      console.error("Pending follow failed: " + err.message);
+      console.error("Follow-status check failed: " + err.message);
     }
   }
 

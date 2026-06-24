@@ -5,12 +5,36 @@ import json
 import re
 import sqlite3
 import unicodedata
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 from pipeline import categorize, mastodon_discovery, youtuber_store
 from pipeline.language import detect_language
 
 CATEGORY_OVERRIDES_PATH = Path(__file__).parent.parent / "data" / "category_overrides.json"
+
+# An account with no post in this window is treated as "not really on Mastodon"
+# and excluded from the directory.
+INACTIVE_AFTER = timedelta(days=365)
+
+
+def is_active(last_status_at, *, now: datetime | None = None) -> bool:
+    """True if the account posted within INACTIVE_AFTER. A missing/blank/invalid
+    last_status_at counts as inactive (never observed posting). Accepts either an
+    ISO string or a datetime (mastodon.py returns datetimes)."""
+    if not last_status_at:
+        return False
+    if isinstance(last_status_at, datetime):
+        when = last_status_at
+    else:
+        try:
+            when = datetime.fromisoformat(str(last_status_at))
+        except ValueError:
+            return False
+    if when.tzinfo is None:
+        when = when.replace(tzinfo=UTC)
+    now = now or datetime.now(UTC)
+    return (now - when) <= INACTIVE_AFTER
 
 
 def slugify(value: str) -> str:
@@ -58,7 +82,7 @@ def build_catalog(db: sqlite3.Connection) -> list[dict]:
     )
     rows = db.execute(
         """
-        SELECT p.*, y.youtube_url, y.evidence_source, c.category, c.confidence,
+        SELECT p.*, y.youtube_url, y.evidence_source, y.platform, c.category, c.confidence,
                c.matched_terms_json, c.account_type
         FROM profiles p
         JOIN youtube_links y USING (acct)
@@ -76,8 +100,15 @@ def build_catalog(db: sqlite3.Connection) -> list[dict]:
     }
     used_ids: set[str] = set()
     catalog: list[dict] = []
+    inactive_dropped = 0
     for acct, account_rows in grouped.items():
         row = choose_youtube(account_rows)
+        # Exclude accounts with no post in the last year — if they haven't
+        # posted, they aren't really reachable on Mastodon. A manual language
+        # override can't rescue these; inactivity is judged purely on activity.
+        if not is_active(row["last_status_at"]):
+            inactive_dropped += 1
+            continue
         account = json.loads(row["raw_json"])
         override = overrides.get(acct, {})
         category = override.get("category", row["category"])
@@ -123,6 +154,9 @@ def build_catalog(db: sqlite3.Connection) -> list[dict]:
     # language, so non-English accounts are suppressed at the source rather than
     # merely hidden client-side. Manual `language` overrides in youtubers.json
     # are respected, so an account can be force-kept by setting "language": "en".
+    if inactive_dropped:
+        print(f"Dropped {inactive_dropped} inactive accounts (no post in the last year).")
+
     english_only = [item for item in catalog if item.get("language") == "en"]
     dropped = len(catalog) - len(english_only)
     if dropped:

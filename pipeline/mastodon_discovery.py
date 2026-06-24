@@ -26,6 +26,14 @@ PEERTUBE_HOSTS = {
 }
 # A non-video Twitch path we should ignore (directory/category pages, not a channel).
 TWITCH_RESERVED = {"directory", "videos", "p", "settings", "subscriptions", "wallet", "downloads"}
+# YouTube app routes that look like a one-segment vanity URL (youtube.com/<x>)
+# but are NOT a channel. Everything else of that shape is a legacy custom URL
+# (e.g. youtube.com/standupmaths) and is accepted as a channel.
+YOUTUBE_RESERVED = {
+    "watch", "playlist", "results", "feed", "shorts", "live", "embed", "hashtag",
+    "channel", "c", "user", "premium", "gaming", "music", "movies", "about",
+    "account", "upload", "redirect", "playables", "podcasts", "source", "@",
+}
 URL_RE = re.compile(r"https?://[^\s<>\"']+", re.IGNORECASE)
 
 
@@ -67,11 +75,22 @@ def canonical_youtube_url(url: str) -> str | None:
     path = _strip_path(parsed)
     if not path:
         return None
-    first = path.split("/")[1].lower() if path.startswith("/") else ""
-    if not (path.startswith("/@") or first in {"channel", "c", "user"}):
+    segments = [s for s in path.split("/") if s]
+    first = segments[0].lower() if segments else ""
+
+    if path.startswith("/@") or first in {"channel", "c", "user"}:
+        # Modern handle (/@name) or explicit /channel|/c|/user channel URL.
+        canonical_path = path
+    elif len(segments) == 1 and first not in YOUTUBE_RESERVED:
+        # Legacy vanity URL: youtube.com/<name> (e.g. youtube.com/standupmaths).
+        # Single non-reserved segment is a custom channel URL.
+        canonical_path = "/" + segments[0]
+    else:
         return None
 
-    clean = parsed._replace(scheme="https", netloc="www.youtube.com", path=path, params="", query="", fragment="")
+    clean = parsed._replace(
+        scheme="https", netloc="www.youtube.com", path=canonical_path, params="", query="", fragment=""
+    )
     return urlunparse(clean)
 
 

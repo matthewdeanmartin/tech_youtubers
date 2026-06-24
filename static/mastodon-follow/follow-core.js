@@ -268,6 +268,58 @@
     return rels[0] || null;
   }
 
+  /* Resolve a handle WITHOUT forcing the home instance to fetch it remotely
+     (resolve=false). This only returns accounts the instance already knows —
+     crucially, every account you already follow — so it is cheap enough to run
+     for a whole page on load. Returns the matching account or null. */
+  async function resolveKnown(acct) {
+    var params = new URLSearchParams({ q: acct, type: "accounts", resolve: "false", limit: "5" });
+    var result = await apiFetch("/api/v2/search?" + params, { headers: authHeaders() });
+    var accounts = result.accounts || [];
+    var wanted = acct.toLowerCase();
+    return accounts.find(function (a) {
+      return String(a.acct || "").toLowerCase() === wanted ||
+        String(a.url || "").toLowerCase().indexOf("/@" + wanted.split("@")[0]) !== -1;
+    }) || null;
+  }
+
+  /* For a list of handles, return a map acct -> "following" | "requested" | null.
+     Used on page load (when connected) to pre-mark creators you already follow.
+     Resolves only locally-known accounts and batches the relationships call, so
+     the cost is one search per handle plus a single relationships request.
+     Never throws: on any error a handle is simply reported as null (unknown). */
+  async function followStatuses(accts, onResolve) {
+    onResolve = onResolve || noop;
+    var result = {};
+    var idToAcct = {};
+    var ids = [];
+    for (var i = 0; i < accts.length; i++) {
+      var acct = accts[i];
+      result[acct] = null;
+      try {
+        var account = await resolveKnown(acct);
+        if (account && account.id) {
+          idToAcct[account.id] = acct;
+          ids.push(account.id);
+        }
+      } catch (e) { /* leave as null */ }
+    }
+    if (!ids.length) return result;
+    try {
+      var params = new URLSearchParams();
+      ids.forEach(function (id) { params.append("id[]", id); });
+      var rels = await apiFetch("/api/v1/accounts/relationships?" + params, { headers: authHeaders() });
+      (rels || []).forEach(function (rel) {
+        var acct = idToAcct[rel.id];
+        if (!acct) return;
+        var state = rel.following ? "following" : rel.requested ? "requested" : null;
+        result[acct] = state;
+        onResolve(acct, state);
+      });
+    } catch (e) { /* leave resolved-but-unknown as null */ }
+    return result;
+  }
+
   /* Resolve + follow a handle. Returns a status string:
      "following" | "requested" | "already" | "unknown". Throws on error. */
   async function follow(acct, onStatus) {
@@ -351,6 +403,7 @@
     verifyCredentials: verifyCredentials,
     resolveAccount: resolveAccount,
     follow: follow,
+    followStatuses: followStatuses,
     connectAndFollow: connectAndFollow,
     resumePending: resumePending,
     getPendingFollow: getPendingFollow,

@@ -67,6 +67,36 @@ class YouTubeEvidenceTests(unittest.TestCase):
             "https://www.youtube.com/@SomeCreator/videos",
         )
 
+    def test_legacy_vanity_url_is_accepted(self) -> None:
+        # youtube.com/<name> is a legacy custom channel URL (e.g. Matt Parker).
+        self.assertEqual(
+            canonical_youtube_url("http://youtube.com/standupmaths"),
+            "https://www.youtube.com/standupmaths",
+        )
+        self.assertEqual(
+            canonical_youtube_url("https://youtube.com/standupmaths"),
+            "https://www.youtube.com/standupmaths",
+        )
+
+    def test_reserved_single_segment_paths_are_not_channels(self) -> None:
+        for url in (
+            "https://youtube.com/results",
+            "https://youtube.com/shorts",
+            "https://youtube.com/feed",
+            "https://youtube.com/premium",
+        ):
+            self.assertIsNone(canonical_youtube_url(url), url)
+
+    def test_vanity_url_in_bio_is_evidence(self) -> None:
+        account = {
+            "note": '<p>Videos: <a href="http://youtube.com/standupmaths">youtube.com/standupmaths</a></p>',
+            "fields": [],
+        }
+        self.assertEqual(
+            youtube_links(account),
+            [("https://www.youtube.com/standupmaths", "bio", "youtube")],
+        )
+
     def test_twitch_channel_vs_reserved_routes(self) -> None:
         self.assertEqual(
             canonical_twitch_url("https://twitch.tv/SomeStreamer"),
