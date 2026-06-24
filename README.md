@@ -69,6 +69,27 @@ just publish-candidates
 just build
 ```
 
+### Seeding from Wikidata
+
+Wikidata records both a YouTube channel ID (property `P2397`) and a Mastodon
+address (`P4033`) for many notable creators and organisations. That makes it a
+*YouTube-first* seed source: instead of guessing topical search terms, we pull
+accounts already cross-referenced to a channel, then run each Mastodon handle
+through the same evidence store and publish gates.
+
+```bash
+# Fetch Wikidata creators (cached to .cache/), resolve each Mastodon handle,
+# and store it with the Wikidata channel as fallback evidence.
+just seed-wikidata
+just seed-wikidata --refresh            # re-query Wikidata instead of using the cache
+just seed-wikidata --max-items 200      # cap how many items to process
+```
+
+The Wikidata YouTube channel is only used as fallback evidence — a channel link
+found in the profile itself always wins. Non-English and inactive accounts (e.g.
+the many German institutional accounts Wikidata surfaces) are pruned by the
+existing publish gates, so no manual filtering is required.
+
 Candidates are stored in `data/mastodon_candidates.sqlite`, including the raw Mastodon account,
 the query that found it, and the exact bio/profile-field evidence for each YouTube channel link.
 A profile mentioning YouTube without linking a channel does not qualify. Category, confidence,

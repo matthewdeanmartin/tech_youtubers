@@ -292,7 +292,15 @@ def store_account(
     source_instance: str,
     query: str | None = None,
     result_offset: int = 0,
+    extra_links: list[tuple[str, str, str]] | None = None,
 ) -> tuple[str, int]:
+    """Store a Mastodon profile and its video-channel evidence.
+
+    ``extra_links`` lets a caller contribute ``(channel_url, evidence_source,
+    platform)`` evidence that doesn't appear in the profile itself — e.g. a
+    YouTube channel cross-referenced from Wikidata. Links already discovered in
+    the profile win, so an extra link only fills a gap.
+    """
     acct = canonical_acct(account)
     now = utc_now()
     last_status = account.get("last_status_at")
@@ -300,6 +308,12 @@ def store_account(
         last_status = last_status.isoformat()
     fields = account.get("fields") or []
     links = youtube_links(account)
+    if extra_links:
+        seen = {url.casefold() for url, _, _ in links}
+        for url, source, platform in extra_links:
+            if url.casefold() not in seen:
+                links.append((url, source, platform))
+                seen.add(url.casefold())
     db.execute(
         """
         INSERT INTO profiles (

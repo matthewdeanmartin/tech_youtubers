@@ -32,6 +32,10 @@ seed-mastodon:
 seed-known:
     uv run python -m pipeline.discover_mastodon seed-known
 
+# Seed from Wikidata: items with both a YouTube channel (P2397) and Mastodon (P4033).
+seed-wikidata *args:
+    uv run python -m pipeline.discover_mastodon seed-wikidata {{args}}
+
 # Preview removal of entries without Mastodon-hosted YouTube channel evidence.
 audit-creators:
     uv run python -m pipeline.discover_mastodon audit
