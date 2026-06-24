@@ -254,6 +254,19 @@
     return exact;
   }
 
+  async function accountStatuses(id, opts) {
+    opts = opts || {};
+    var params = new URLSearchParams({
+      limit: String(opts.limit || 10),
+      exclude_replies: "true",
+      exclude_reblogs: "false",
+    });
+    return apiFetch(
+      "/api/v1/accounts/" + encodeURIComponent(id) + "/statuses?" + params,
+      { headers: authHeaders() }
+    );
+  }
+
   async function followAccountId(id) {
     return apiFetch("/api/v1/accounts/" + encodeURIComponent(id) + "/follow", {
       method: "POST",
@@ -402,6 +415,7 @@
     handleCallback: handleCallback,
     verifyCredentials: verifyCredentials,
     resolveAccount: resolveAccount,
+    accountStatuses: accountStatuses,
     follow: follow,
     followStatuses: followStatuses,
     connectAndFollow: connectAndFollow,

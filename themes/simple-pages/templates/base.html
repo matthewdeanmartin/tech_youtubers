@@ -24,6 +24,7 @@
                     <a{% if page is defined and page.slug == "bulk-follow" %} class="active"{% endif %} href="{{ SITEURL }}/bulk-follow/">Bulk Follow</a>
                     <a{% if page is defined and page.slug == "mastodon-follow" %} class="active"{% endif %} href="{{ SITEURL }}/mastodon-follow/">Follow on Mastodon</a>
                 </nav>
+                <div id="header-auth" class="header-auth" aria-live="polite"></div>
             </div>
         </header>
 
@@ -61,6 +62,8 @@
     </div>
     <script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/lang-filter.js"></script>
     <script src="{{ SITEURL }}/mastodon-follow/follow-core.js"></script>
+    <script src="{{ SITEURL }}/mastodon-follow/header-auth.js"></script>
+    <script src="{{ SITEURL }}/mastodon-follow/creator-profile.js"></script>
     <script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/follow-inline.js"></script>
 </body>
 </html>

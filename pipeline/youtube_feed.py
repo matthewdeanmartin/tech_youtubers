@@ -50,11 +50,32 @@ _ATOM_NS = {
 _CHANNEL_ID_RE = re.compile(r"UC[0-9A-Za-z_-]{22}")
 
 
+_VIDEO_ID_RE = re.compile(r"[?&]v=([0-9A-Za-z_-]{11})")
+
+
+def video_id_from_url(url: str) -> str | None:
+    """Extract the 11-char YouTube video id from a watch / youtu.be URL."""
+    if not url:
+        return None
+    match = _VIDEO_ID_RE.search(url)
+    if match:
+        return match.group(1)
+    # youtu.be/<id> short form.
+    path = urlparse(url).path.strip("/")
+    if len(path) == 11 and re.fullmatch(r"[0-9A-Za-z_-]{11}", path):
+        return path
+    return None
+
+
 @dataclass(frozen=True)
 class Video:
     title: str
     url: str
     published: str  # ISO date (YYYY-MM-DD) for display
+
+    @property
+    def video_id(self) -> str | None:
+        return video_id_from_url(self.url)
 
 
 def _session():

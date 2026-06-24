@@ -77,12 +77,90 @@ a:hover {
 
 .site-header__inner {
     padding: 1.2rem 0;
+    /* Branding on the left, auth widget pinned to the top-right corner; the
+       nav (full width) wraps onto the next row. */
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 0 1rem;
 }
 
 .site-branding {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+}
+
+/* ── Header auth widget (Log in / profile) ──────────────────────── */
+.header-auth {
+    grid-column: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.2rem;
+}
+
+.header-auth__login,
+.header-auth__logout {
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: #ffffff;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.header-auth__login:hover,
+.header-auth__login:focus-visible,
+.header-auth__logout:hover,
+.header-auth__logout:focus-visible {
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+    outline: none;
+}
+
+.header-auth__logout {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--muted);
+}
+
+.header-auth__profile {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.header-auth__avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+}
+
+.header-auth__name {
+    max-width: 12rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.top-nav {
+    grid-column: 1 / -1;
+}
+
+/* Follow button sits on its own line after the blurb. */
+.creator-follow-line {
+    margin: 0.4rem 0 0.1rem;
 }
 
 .site-title {
@@ -569,4 +647,151 @@ p, ul, ol, pre, table, blockquote {
     border-color: rgba(16, 185, 129, 0.4);
     color: #10b981;
     opacity: 1;
+}
+
+/* ── Creator profile page ───────────────────────────────────────── */
+.creator-profile__category {
+    margin: 0 0 0.25rem;
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.creator-profile__links {
+    margin: 0.4rem 0;
+    font-weight: 600;
+}
+
+.creator-profile__bio {
+    margin: 0.6rem 0;
+    color: var(--text);
+    max-width: 60ch;
+}
+
+.creator-stat {
+    margin: 0.3rem 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+/* ── Lite-embed video cards ─────────────────────────────────────── */
+.video-cards {
+    margin-top: 1.5rem;
+}
+
+.video-cards__grid {
+    list-style: none;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.video-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.video-card__play {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #000;
+    cursor: pointer;
+    aspect-ratio: 16 / 9;
+}
+
+.video-card__thumb,
+.video-card__iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: cover;
+}
+
+.video-card__iframe {
+    border-radius: 10px;
+    aspect-ratio: 16 / 9;
+}
+
+.video-card__badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.65);
+    color: #ffffff;
+    font-size: 1.2rem;
+    transition: background 0.15s;
+}
+
+.video-card__play:hover .video-card__badge,
+.video-card__play:focus-visible .video-card__badge {
+    background: var(--accent);
+}
+
+.video-card__title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.video-card__meta time {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+/* ── Live Mastodon posts ────────────────────────────────────────── */
+.creator-live {
+    margin-top: 2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--border);
+}
+
+.creator-live__hint {
+    color: var(--muted);
+}
+
+.creator-posts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.creator-post {
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--panel);
+}
+
+.creator-post__body {
+    overflow-wrap: anywhere;
+}
+
+.creator-post__permalink {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: var(--muted);
+    font-size: 0.85rem;
 }

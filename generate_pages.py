@@ -58,6 +58,17 @@ def _mastodon_account(url: str) -> str:
     return f"{username}@{parsed.netloc}"
 
 
+def _creator_page_url(creator: dict) -> str:
+    """Pelican intrasite link to a creator's profile page.
+
+    ``{filename}`` is resolved by Pelican's link processing (it scans href/src
+    in raw HTML too), so the link works under any SITEURL — including the
+    GitHub Pages subpath in production — without hardcoding a base.
+    """
+    cid = html.escape(creator["id"], quote=True)
+    return f"{{filename}}creator/{cid}.md"
+
+
 def nonempty_categories(youtubers: list[dict]) -> list[str]:
     """Categories whose page has at least one non-bot (interactive) account.
 
@@ -223,6 +234,39 @@ def _lang_attr(creator: dict) -> str:
     return f' data-lang="{lang}"'
 
 
+# Mastodon serialises profile links across <span class="invisible"> elements,
+# e.g. "https://www." + "example.com". Our plain-text extraction joins those
+# spans with a space, leaving artifacts like "https://www. example.com" or
+# "https:// example.com" in the stored description. Stitch that single space
+# back so the URL is whole before we linkify. Only the space immediately after
+# the scheme / "www." boundary is repaired — ordinary prose spaces are left
+# alone.
+_URL_SPLIT_RE = re.compile(r"(https?://(?:www\.)?)\s+(?=[^\s<>\"'])", re.IGNORECASE)
+
+# Bare http(s) URLs in a creator blurb. Trailing punctuation that is usually
+# sentence/parenthesis grammar rather than part of the link is excluded.
+_URL_IN_TEXT_RE = re.compile(r"https?://[^\s<>\"']+[^\s<>\"'.,;:!?)\]]")
+
+
+def _linkify(text: str) -> str:
+    """HTML-escape ``text`` and turn any bare http(s) URL into a link that opens
+    in a new tab. Escaping happens first, so the surrounding text is always
+    safe; the matched URL is then escaped again for the href attribute."""
+    repaired = _URL_SPLIT_RE.sub(r"\1", text or "")
+    escaped = html.escape(repaired)
+
+    def repl(match: re.Match[str]) -> str:
+        url = match.group(0)
+        href = html.escape(url, quote=True)
+        return f'<a href="{href}" target="_blank" rel="noopener noreferrer">{url}</a>'
+
+    # Run against the already-escaped text. URLs contain no characters that
+    # html.escape rewrites except '&', which is rare in URLs and harmless here
+    # because the regex stops at whitespace/quotes; an escaped '&amp;' simply
+    # ends the match early, which is acceptable for display.
+    return _URL_IN_TEXT_RE.sub(repl, escaped)
+
+
 def creator_videos(creator: dict, limit: int = 5) -> list:
     """Fetch (and memoize) recent uploads for a creator's YouTube channel.
 
@@ -237,6 +281,57 @@ def creator_videos(creator: dict, limit: int = 5) -> list:
     if url not in _FEED_CACHE:
         _FEED_CACHE[url] = youtube_feed.recent_videos(url, limit=limit)
     return _FEED_CACHE[url]
+
+
+def _lite_embed_html(video) -> str:
+    """Render one video as a lite-embed card: a thumbnail with a play button
+    that only loads the heavy YouTube iframe on click (wired by
+    creator-profile.js). Falls back to a plain thumbnail link when the video id
+    can't be determined, so a card always renders something useful."""
+    title = html.escape(video.title)
+    url = html.escape(video.url, quote=True)
+    date = html.escape(video.published)
+    vid = video.video_id
+    date_html = f'<time datetime="{date}">{date}</time>' if date else ""
+
+    if not vid:
+        return (
+            '<li class="video-card video-card--link">'
+            f'<a href="{url}" target="_blank" rel="noopener noreferrer">{title}</a>'
+            f"{date_html}</li>"
+        )
+
+    vid_attr = html.escape(vid, quote=True)
+    # mqdefault is light (320×180) and exists for every video, unlike maxres.
+    thumb = f"https://i.ytimg.com/vi/{vid_attr}/mqdefault.jpg"
+    return (
+        '<li class="video-card">'
+        f'<button type="button" class="video-card__play" '
+        f'data-video-id="{vid_attr}" data-video-title="{title}" '
+        f'aria-label="Play: {title}">'
+        f'<img class="video-card__thumb" src="{thumb}" alt="" loading="lazy" '
+        f'width="320" height="180" />'
+        '<span class="video-card__badge" aria-hidden="true">▶</span>'
+        "</button>"
+        '<div class="video-card__meta">'
+        f'<a class="video-card__title" href="{url}" target="_blank" rel="noopener noreferrer">{title}</a>'
+        f"{date_html}"
+        "</div>"
+        "</li>"
+    )
+
+
+def _video_cards_html(videos: list) -> str:
+    """Render recent uploads as a grid of lite-embed cards (creator page)."""
+    if not videos:
+        return ""
+    cards = "".join(_lite_embed_html(v) for v in videos)
+    return (
+        '<section class="video-cards">'
+        f'<h2>Recent uploads ({len(videos)})</h2>'
+        f'<ul class="video-cards__grid">{cards}</ul>'
+        "</section>"
+    )
 
 
 def _recent_videos_html(videos: list) -> str:
@@ -278,22 +373,31 @@ def _creator_li(creator: dict, mastodon_label: str, recent_videos: list | None =
     name = html.escape(creator["name"])
     primary_url = html.escape(creator.get("primary_url") or creator["youtube_url"], quote=True)
     mastodon_url = html.escape(creator["mastodon_url"], quote=True)
-    description = html.escape(creator.get("description") or "")
+    page_url = _creator_page_url(creator)
+    # Blurbs sometimes contain a bare URL (e.g. a personal site); make it a
+    # real, new-tab link instead of plain text.
+    description = _linkify(creator.get("description") or "")
     videos_html = _recent_videos_html(recent_videos or [])
 
-    # Inline one-click Follow for native accounts. The button is wired by the
-    # shared follow-core script (loaded site-wide) using data-mastodon-acct.
+    # Inline one-click Follow for native accounts, on its own line *after* the
+    # blurb. The button is wired by the shared follow-core script (loaded
+    # site-wide) using data-mastodon-acct.
     follow_html = ""
     if creator.get("account_type") == "native":
         acct = html.escape(_mastodon_account(creator["mastodon_url"]), quote=True)
         follow_html = (
+            '<p class="creator-follow-line">'
             f'<button type="button" class="creator-follow" '
             f'data-mastodon-acct="{acct}" hidden>Follow on Mastodon</button>'
+            "</p>"
         )
 
+    # The name links to the creator's own profile page; YouTube and Mastodon
+    # remain as explicit secondary links.
     return (
         f'<li data-lang="{lang}">'
-        f'<strong><a href="{primary_url}" target="_blank" rel="noopener noreferrer">{name}</a></strong>'
+        f'<strong><a href="{page_url}">{name}</a></strong>'
+        f' · <a href="{primary_url}" target="_blank" rel="noopener noreferrer">YouTube</a>'
         f' · <a href="{mastodon_url}" target="_blank" rel="noopener noreferrer">{mastodon_label}</a>'
         f" — {description}"
         f"{follow_html}"
@@ -459,6 +563,82 @@ Summary: {label} YouTube creators and channel feeds on Mastodon.
 """
 
 
+def generate_creator_page(creator: dict, videos: list | None = None) -> str:
+    """Generate a per-creator profile page at /creator/{id}/.
+
+    The page is static and crawlable: name, category, blurb (links live),
+    YouTube + Mastodon links, and lite-embed cards for recent uploads. A
+    ``data-creator-live`` placeholder lets creator-profile.js enrich the page
+    with the creator's recent Mastodon posts and richer profile *when the
+    visitor is logged in*; logged-out visitors still get the full static page.
+    """
+    name = html.escape(creator["name"])
+    category = CATEGORY_LABELS.get(creator.get("category", "other"), "Other")
+    primary_url = html.escape(creator.get("primary_url") or creator["youtube_url"], quote=True)
+    mastodon_url = html.escape(creator["mastodon_url"], quote=True)
+    acct = html.escape(_mastodon_account(creator["mastodon_url"]), quote=True)
+    description = _linkify(creator.get("description") or "")
+    followers = creator.get("followers")
+    lang = html.escape(creator.get("language") or "en", quote=True)
+    is_native = creator.get("account_type") == "native"
+
+    follow_html = ""
+    if is_native:
+        follow_html = (
+            '<p class="creator-follow-line">'
+            f'<button type="button" class="creator-follow" '
+            f'data-mastodon-acct="{acct}" hidden>Follow on Mastodon</button>'
+            "</p>"
+        )
+
+    followers_html = (
+        f'<p class="creator-stat">Mastodon followers: <strong>{html.escape(str(followers))}</strong></p>'
+        if followers
+        else ""
+    )
+
+    cards = _video_cards_html(videos or [])
+
+    # Live-enrichment target. data-* attributes give the client script what it
+    # needs to query the visitor's Mastodon instance for this creator.
+    live_section = (
+        '<section class="creator-live" data-creator-live '
+        f'data-mastodon-acct="{acct}" data-mastodon-url="{mastodon_url}">'
+        '<h2>Recent posts on Mastodon</h2>'
+        '<p class="creator-live__hint" data-creator-live-hint>'
+        "Log in (top-right) to load this creator's recent Mastodon posts."
+        "</p>"
+        '<div class="creator-live__feed" data-creator-live-feed hidden></div>'
+        "</section>"
+    )
+
+    return f"""Title: {creator['name']}
+Date: 2026-06-20
+Slug: {creator['id']}
+save_as: creator/{creator['id']}/index.html
+url: creator/{creator['id']}/
+status: hidden
+Summary: {category} creator {creator['name']} on YouTube and Mastodon.
+
+<article class="creator-profile" data-lang="{lang}">
+<header class="creator-profile__header">
+<p class="creator-profile__category">{html.escape(category)}</p>
+<p class="creator-profile__links">
+<a href="{primary_url}" target="_blank" rel="noopener noreferrer">YouTube channel</a>
+ · <a href="{mastodon_url}" target="_blank" rel="noopener noreferrer">@{acct}</a>
+</p>
+{followers_html}
+<p class="creator-profile__bio">{description}</p>
+{follow_html}
+</header>
+
+{cards}
+
+{live_section}
+</article>
+"""
+
+
 def generate_bots_page(youtubers: list[dict]) -> str:
     """Collect every automated feed/bot account on one page, grouped by topic."""
     bots = [item for item in youtubers if item.get("account_type") in BOT_ACCOUNT_TYPES]
@@ -565,6 +745,25 @@ def main() -> None:
         else:
             path.write_text(content, encoding="utf-8")
             print(f"Wrote {path}")
+
+    # Per-creator profile pages under content/pages/creator/. Written even on
+    # --no-feeds (the live section and links still render); only the video
+    # cards are skipped when feeds are disabled.
+    creator_dir = PAGES_DIR / "creator"
+    creator_dir.mkdir(parents=True, exist_ok=True)
+    creator_count = 0
+    for creator in youtubers:
+        if not creator.get("id"):
+            continue
+        content = generate_creator_page(creator, creator_videos(creator))
+        if args.dry_run:
+            if creator_count < 1:
+                print(f"\n--- creator/{creator['id']} ---\n{content[:400]}...")
+        else:
+            (creator_dir / f"{creator['id']}.md").write_text(content, encoding="utf-8")
+        creator_count += 1
+    print(f"{'Would write' if args.dry_run else 'Wrote'} {creator_count} creator profile pages")
+
     if not args.dry_run:
         sync_follow_tool(youtubers)
         print(f"Updated {FOLLOW_TOOL_PATH}")
