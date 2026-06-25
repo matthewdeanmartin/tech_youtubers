@@ -13,6 +13,7 @@ Summary: Other creator Linus Torvalds on YouTube and Mastodon.
 <a href="https://www.youtube.com/channel/UCTRlMXh1ucCFQ9fZWCFfXWA" target="_blank" rel="noopener noreferrer">YouTube channel</a>
  · <a href="https://social.kernel.org/users/torvalds" target="_blank" rel="noopener noreferrer">@users/torvalds@social.kernel.org</a>
 </p>
+<p class="creator-stat">YouTube subscribers: <strong>2,450</strong></p>
 <p class="creator-stat">Mastodon followers: <strong>45990</strong></p>
 <p class="creator-profile__bio"></p>
 <p class="creator-follow-line"><button type="button" class="creator-follow" data-mastodon-acct="users/torvalds@social.kernel.org" hidden>Follow on Mastodon</button></p>

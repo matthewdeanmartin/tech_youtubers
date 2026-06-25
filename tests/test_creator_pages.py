@@ -90,5 +90,55 @@ class CreatorPageTests(unittest.TestCase):
         self.assertEqual(url, "{filename}creator/example-creator.md")
 
 
+class PopularityScoreTests(unittest.TestCase):
+    def test_score_combines_normalised_metrics(self) -> None:
+        creators = [
+            {"subscriber_count": 100, "followers": 10},
+            {"subscriber_count": 300, "followers": 30},
+        ]
+        generate_pages.compute_popularity_baselines(creators)
+        # avg subs = 200, avg followers = 20.
+        # creator 2: (300/200) * (30/20) = 1.5 * 1.5 = 2.25
+        self.assertAlmostEqual(generate_pages.popularity_score(creators[1]), 2.25)
+
+    def test_missing_metric_scores_zero(self) -> None:
+        generate_pages.compute_popularity_baselines(
+            [{"subscriber_count": 100, "followers": 10}]
+        )
+        self.assertEqual(generate_pages.popularity_score({"subscriber_count": 100}), 0.0)
+        self.assertEqual(generate_pages.popularity_score({"followers": 10}), 0.0)
+        self.assertEqual(generate_pages.popularity_score({}), 0.0)
+
+
+class CategoryControlsTests(unittest.TestCase):
+    def test_controls_toolbar_has_search_and_sorts(self) -> None:
+        out = generate_pages._category_controls("native")
+        self.assertIn('data-controls="native"', out)
+        self.assertIn("data-controls-search", out)
+        for mode in ("score", "subscribers", "followers", "alpha", "shuffle"):
+            self.assertIn(f'data-controls-sort="{mode}"', out)
+
+    def test_creator_li_stamps_sort_attributes(self) -> None:
+        generate_pages.compute_popularity_baselines(
+            [{"subscriber_count": 1000, "followers": 50}]
+        )
+        creator = {
+            "id": "x",
+            "name": "Zeta",
+            "account_type": "native",
+            "youtube_url": "https://www.youtube.com/channel/UCabcdEFGHij_klmnopqrstu",
+            "primary_url": "https://www.youtube.com/channel/UCabcdEFGHij_klmnopqrstu",
+            "mastodon_url": "https://mastodon.social/@zeta",
+            "subscriber_count": 1000,
+            "followers": 50,
+            "language": "en",
+        }
+        out = generate_pages._creator_li(creator, "Mastodon", [])
+        self.assertIn('data-name="zeta"', out)
+        self.assertIn('data-subscribers="1000"', out)
+        self.assertIn('data-followers="50"', out)
+        self.assertIn("data-score=", out)
+
+
 if __name__ == "__main__":
     unittest.main()

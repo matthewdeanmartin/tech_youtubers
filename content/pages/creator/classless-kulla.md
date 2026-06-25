@@ -13,6 +13,7 @@ Summary: Technology & Computing creator classless Kulla on YouTube and Mastodon.
 <a href="https://www.youtube.com/channel/UCkorWUITYCI1Lykddx1zZSA" target="_blank" rel="noopener noreferrer">YouTube channel</a>
  · <a href="https://mstdn.social/@classless" target="_blank" rel="noopener noreferrer">@classless@mstdn.social</a>
 </p>
+<p class="creator-stat">YouTube subscribers: <strong>2</strong></p>
 <p class="creator-stat">Mastodon followers: <strong>523</strong></p>
 <p class="creator-profile__bio">mostly English/Deutsch - travelling lecturer, writer, vocalist, dj - class struggle, ideology, altered states &amp; pleasure - always looking for gigs/shows - classless.org</p>
 <p class="creator-follow-line"><button type="button" class="creator-follow" data-mastodon-acct="classless@mstdn.social" hidden>Follow on Mastodon</button></p>

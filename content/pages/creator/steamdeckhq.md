@@ -13,6 +13,7 @@ Summary: News, Politics & Society creator SteamDeckHQ on YouTube and Mastodon.
 <a href="https://www.youtube.com/@sdhq" target="_blank" rel="noopener noreferrer">YouTube channel</a>
  · <a href="https://mastodon.world/@steamdeckhq" target="_blank" rel="noopener noreferrer">@steamdeckhq@mastodon.world</a>
 </p>
+<p class="creator-stat">YouTube subscribers: <strong>238</strong></p>
 <p class="creator-stat">Mastodon followers: <strong>6497</strong></p>
 <p class="creator-profile__bio">The #1 unofficial Steam Deck optimization website! We review and optimize games, curate news, and create guides relating to the Steam Deck.</p>
 <p class="creator-follow-line"><button type="button" class="creator-follow" data-mastodon-acct="steamdeckhq@mastodon.world" hidden>Follow on Mastodon</button></p>

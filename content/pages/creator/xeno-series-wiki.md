@@ -13,6 +13,7 @@ Summary: Gaming & VTubers creator Xeno Series Wiki on YouTube and Mastodon.
 <a href="https://www.youtube.com/channel/UCbZxHVvlbD7KVe1cxM2kqEQ" target="_blank" rel="noopener noreferrer">YouTube channel</a>
  · <a href="https://mastodon.social/@XenoSeriesWiki" target="_blank" rel="noopener noreferrer">@XenoSeriesWiki@mastodon.social</a>
 </p>
+<p class="creator-stat">YouTube subscribers: <strong>30</strong></p>
 <p class="creator-stat">Mastodon followers: <strong>52</strong></p>
 <p class="creator-profile__bio">Independent wiki for the &quot;Xeno&quot; game series. This is our Mastodon account where we share updates about the wiki, the series and occasionally some trivia.</p>
 <p class="creator-follow-line"><button type="button" class="creator-follow" data-mastodon-acct="XenoSeriesWiki@mastodon.social" hidden>Follow on Mastodon</button></p>

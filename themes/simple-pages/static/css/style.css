@@ -513,6 +513,80 @@ p, ul, ol, pre, table, blockquote {
     font-size: 0.95rem;
 }
 
+/* ── Search + sort controls (category listing pages) ───────────────────── */
+.list-controls {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0 0 1.5rem;
+}
+
+.list-controls__search {
+    flex: 1 1 16rem;
+    min-width: 12rem;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--panel-strong);
+    color: inherit;
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+.list-controls__search:focus-visible {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.list-controls__buttons {
+    display: inline-flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.list-controls__btn {
+    padding: 0.35rem 0.9rem;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--accent-strong);
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s;
+    white-space: nowrap;
+}
+
+.list-controls__btn:hover,
+.list-controls__btn:focus-visible {
+    background: var(--accent);
+    color: #ffffff;
+    outline: none;
+}
+
+.list-controls__btn.is-active {
+    background: var(--accent);
+    color: #ffffff;
+}
+
+.list-controls__empty {
+    flex-basis: 100%;
+    margin: 0;
+    padding: 0.6rem 0.9rem;
+    background: var(--panel-strong);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+/* Search misses; composes with lang-filter's [hidden] attribute. */
+.is-search-hidden {
+    display: none !important;
+}
+
 /* ── Inline bulk-follow widget (category & listing pages) ───────────────── */
 .bulk-follow {
     margin-top: 2.5rem;

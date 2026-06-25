@@ -42,6 +42,40 @@ ACCOUNT_TYPE_LABELS = {
 # via a fedibridge instance.
 BOT_ACCOUNT_TYPES = {"rss-feed", "channel-feed", "bot"}
 
+# Mean YouTube subscriber and Mastodon follower counts across all creators that
+# have the respective metric. Populated once by compute_popularity_baselines()
+# at the start of main() so the popularity score is computed against the whole
+# directory, not just the creators on a single page. Defaults keep scoring
+# defined (score 0) before baselines are computed, e.g. in unit tests.
+_AVG_SUBSCRIBERS = 1.0
+_AVG_FOLLOWERS = 1.0
+
+
+def compute_popularity_baselines(youtubers: list[dict]) -> None:
+    """Compute and store the mean subscriber/follower counts for scoring."""
+    global _AVG_SUBSCRIBERS, _AVG_FOLLOWERS
+    subs = [c["subscriber_count"] for c in youtubers if isinstance(c.get("subscriber_count"), int)]
+    folls = [c["followers"] for c in youtubers if isinstance(c.get("followers"), int) and c["followers"] > 0]
+    if subs:
+        _AVG_SUBSCRIBERS = sum(subs) / len(subs)
+    if folls:
+        _AVG_FOLLOWERS = sum(folls) / len(folls)
+
+
+def popularity_score(creator: dict) -> float:
+    """Combined popularity score for default sorting.
+
+    Implements ``(subs / avg_subs) * (followers / avg_followers)`` — a creator
+    weighted both by YouTube reach and Mastodon reach, each normalised to the
+    directory average so the two scales combine fairly. A creator missing either
+    metric scores 0 and sorts to the bottom (we cannot rank it on this basis).
+    """
+    subs = creator.get("subscriber_count")
+    folls = creator.get("followers")
+    if not isinstance(subs, int) or not isinstance(folls, int) or folls <= 0:
+        return 0.0
+    return (subs / _AVG_SUBSCRIBERS) * (folls / _AVG_FOLLOWERS)
+
 
 def _social_link(url: str | None) -> str:
     if not url:
@@ -392,10 +426,22 @@ def _creator_li(creator: dict, mastodon_label: str, recent_videos: list | None =
             "</p>"
         )
 
+    # Sort/filter metadata for category-controls.js: data-name drives the
+    # search box and alpha sort; data-score is the combined popularity score
+    # (the default sort); data-followers/data-subscribers back the individual
+    # sort options. Missing counts sort to the bottom via -1 / 0.
+    sort_name = html.escape(creator.get("name", "").casefold(), quote=True)
+    followers_n = creator.get("followers")
+    followers_attr = int(followers_n) if isinstance(followers_n, int) else -1
+    subs_n = creator.get("subscriber_count")
+    subs_attr = int(subs_n) if isinstance(subs_n, int) else -1
+    score_attr = f"{popularity_score(creator):.6g}"
+
     # The name links to the creator's own profile page; YouTube and Mastodon
     # remain as explicit secondary links.
     return (
-        f'<li data-lang="{lang}">'
+        f'<li data-lang="{lang}" data-name="{sort_name}" data-score="{score_attr}"'
+        f' data-followers="{followers_attr}" data-subscribers="{subs_attr}">'
         f'<strong><a href="{page_url}">{name}</a></strong>'
         f' · <a href="{primary_url}" target="_blank" rel="noopener noreferrer">YouTube</a>'
         f' · <a href="{mastodon_url}" target="_blank" rel="noopener noreferrer">{mastodon_label}</a>'
@@ -519,6 +565,39 @@ BULK_FOLLOW_SCRIPT = """
 """
 
 
+def _category_controls(target_section: str) -> str:
+    """Render a search + sort toolbar for a category listing.
+
+    ``target_section`` is the ``data-lang-section`` value of the ``<ul>`` whose
+    items the controls operate on. category-controls.js reads ``data-controls``
+    to locate that section and its ``<li>`` items (which carry ``data-name`` and
+    ``data-followers``). The toolbar is inert without JS — the static page still
+    renders the default popularity-sorted list.
+    """
+    target = html.escape(target_section, quote=True)
+    return (
+        f'<div class="list-controls" data-controls="{target}" hidden>'
+        '<input type="search" class="list-controls__search" '
+        'placeholder="Filter by name…" aria-label="Filter accounts by name" '
+        'data-controls-search />'
+        '<div class="list-controls__buttons">'
+        '<button type="button" class="list-controls__btn" data-controls-sort="score">'
+        "Top picks</button>"
+        '<button type="button" class="list-controls__btn" data-controls-sort="subscribers">'
+        "Most subscribers</button>"
+        '<button type="button" class="list-controls__btn" data-controls-sort="followers">'
+        "Most followed</button>"
+        '<button type="button" class="list-controls__btn" data-controls-sort="alpha">'
+        "A–Z</button>"
+        '<button type="button" class="list-controls__btn" data-controls-sort="shuffle">'
+        "Shuffle</button>"
+        "</div>"
+        '<p class="list-controls__empty" data-controls-empty hidden>'
+        "No accounts match your search.</p>"
+        "</div>\n"
+    )
+
+
 def generate_category_page(category: str, youtubers: list[dict]) -> str:
     label = CATEGORY_LABELS[category]
     items = [item for item in youtubers if item.get("category") == category]
@@ -529,14 +608,23 @@ def generate_category_page(category: str, youtubers: list[dict]) -> str:
     feeds = [item for item in items if item.get("account_type") != "native"]
 
     # Native section — wrapped in a data-lang-section div so JS can collapse
-    # the whole block when all items are filtered out.
+    # the whole block when all items are filtered out. Default order is by the
+    # combined popularity score (YouTube subscribers × Mastodon followers, each
+    # normalised to the directory average); category-controls.js can re-sort by
+    # the individual metrics, alphabetically, or shuffle client-side.
+    native_default = sorted(
+        native,
+        key=lambda item: (-popularity_score(item), item.get("name", "").casefold()),
+    )
     native_items = [
         _creator_li(creator, "Mastodon", creator_videos(creator))
-        for creator in sorted(native, key=lambda item: item.get("name", "").casefold())
+        for creator in native_default
     ]
 
     if native_items:
-        native_block = _section("native", f"Native Mastodon accounts ({len(native)})", native_items)
+        native_block = _category_controls("native") + _section(
+            "native", f"Native Mastodon accounts ({len(native)})", native_items
+        )
     else:
         native_block = (
             f"<h2>Native Mastodon accounts ({len(native)})</h2>\n\nNo native accounts in this category yet."
@@ -591,11 +679,17 @@ def generate_creator_page(creator: dict, videos: list | None = None) -> str:
             "</p>"
         )
 
-    followers_html = (
-        f'<p class="creator-stat">Mastodon followers: <strong>{html.escape(str(followers))}</strong></p>'
-        if followers
-        else ""
-    )
+    subscribers = creator.get("subscriber_count")
+    stat_lines = []
+    if subscribers:
+        stat_lines.append(
+            f'<p class="creator-stat">YouTube subscribers: <strong>{subscribers:,}</strong></p>'
+        )
+    if followers:
+        stat_lines.append(
+            f'<p class="creator-stat">Mastodon followers: <strong>{html.escape(str(followers))}</strong></p>'
+        )
+    followers_html = "\n".join(stat_lines)
 
     cards = _video_cards_html(videos or [])
 
@@ -725,6 +819,7 @@ def main() -> None:
     FETCH_FEEDS = not (args.no_feeds or args.dry_run)
     youtubers = youtuber_store.load()
     print(f"Loaded {len(youtubers)} YouTubers")
+    compute_popularity_baselines(youtubers)
     youtubers, synced = sync_reviews(youtubers)
     if synced and not args.dry_run:
         youtuber_store.save(youtubers)

@@ -13,6 +13,7 @@ Summary: Culture & Entertainment creator Andy Gibson 💭 on YouTube and Mastodo
 <a href="https://www.youtube.com/channel/UCwy4q7ym3ulLiiNpC2JSV-Q" target="_blank" rel="noopener noreferrer">YouTube channel</a>
  · <a href="https://mastodon.social/@gandy" target="_blank" rel="noopener noreferrer">@gandy@mastodon.social</a>
 </p>
+<p class="creator-stat">YouTube subscribers: <strong>2</strong></p>
 <p class="creator-stat">Mastodon followers: <strong>393</strong></p>
 <p class="creator-profile__bio">Thinking about thinking and sometimes worrying about it. Speaker, writer, tinkerer, Head Gardener at Mindapples, author of the Mind Manual. Into # psychology , # mentalhealth , # education , # democracy and # hats .</p>
 <p class="creator-follow-line"><button type="button" class="creator-follow" data-mastodon-acct="gandy@mastodon.social" hidden>Follow on Mastodon</button></p>

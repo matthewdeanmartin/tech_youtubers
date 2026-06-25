@@ -13,6 +13,7 @@ Summary: Technology & Computing creator SuperTux on YouTube and Mastodon.
 <a href="https://www.youtube.com/channel/UC5F32B9jxpVcnMUqxXd-LIQ" target="_blank" rel="noopener noreferrer">YouTube channel</a>
  · <a href="https://floss.social/@supertux" target="_blank" rel="noopener noreferrer">@supertux@floss.social</a>
 </p>
+<p class="creator-stat">YouTube subscribers: <strong>237</strong></p>
 <p class="creator-stat">Mastodon followers: <strong>1414</strong></p>
 <p class="creator-profile__bio">Official account for the SuperTux Project. If you&#x27;ve made or are currently making any addons or fan content, toot about it with # supertux and it will be boosted!</p>
 <p class="creator-follow-line"><button type="button" class="creator-follow" data-mastodon-acct="supertux@floss.social" hidden>Follow on Mastodon</button></p>
