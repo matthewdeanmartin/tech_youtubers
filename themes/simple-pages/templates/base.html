@@ -60,10 +60,12 @@
             </div>
         </footer>
     </div>
-    <script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/lang-filter.js"></script>
-    <script src="{{ SITEURL }}/mastodon-follow/follow-core.js"></script>
-    <script src="{{ SITEURL }}/mastodon-follow/header-auth.js"></script>
-    <script src="{{ SITEURL }}/mastodon-follow/creator-profile.js"></script>
-    <script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/follow-inline.js"></script>
+    {# ?v=GENERATED_DATE busts the browser cache on every build, so a deploy
+       never serves a stale follow-core.js missing newly added API methods. #}
+    <script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/lang-filter.js?v={{ GENERATED_DATE }}"></script>
+    <script src="{{ SITEURL }}/mastodon-follow/follow-core.js?v={{ GENERATED_DATE }}"></script>
+    <script src="{{ SITEURL }}/mastodon-follow/header-auth.js?v={{ GENERATED_DATE }}"></script>
+    <script src="{{ SITEURL }}/mastodon-follow/creator-profile.js?v={{ GENERATED_DATE }}"></script>
+    <script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/follow-inline.js?v={{ GENERATED_DATE }}"></script>
 </body>
 </html>

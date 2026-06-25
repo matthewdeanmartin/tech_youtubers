@@ -18,7 +18,7 @@ Summary: Other creator Enciclopedia Wikitólica on YouTube and Mastodon.
 
 </header>
 
-<section class="video-cards"><h2>Recent uploads (5)</h2><ul class="video-cards__grid"><li class="video-card video-card--link"><a href="https://www.youtube.com/shorts/pSHeT4hxLvo" target="_blank" rel="noopener noreferrer">📜✝️ ¿Qué es un dogma y cuáles son los más importantes?</a><time datetime="2026-06-23">2026-06-23</time></li><li class="video-card video-card--link"><a href="https://www.youtube.com/shorts/pbDRvJyHYmc" target="_blank" rel="noopener noreferrer">📜✝️ ¿Qué es un dogma y cuáles son los más importantes?</a><time datetime="2026-06-23">2026-06-23</time></li><li class="video-card video-card--link"><a href="https://www.youtube.com/shorts/sozrBBMI7yA" target="_blank" rel="noopener noreferrer">Sigue 👉 @wikitolica</a><time datetime="2026-06-23">2026-06-23</time></li><li class="video-card video-card--link"><a href="https://www.youtube.com/shorts/LJZjFZ5zqv8" target="_blank" rel="noopener noreferrer">📜✝️ ¿Qué es un dogma y cuáles son los más importantes?</a><time datetime="2026-06-23">2026-06-23</time></li><li class="video-card video-card--link"><a href="https://www.youtube.com/shorts/6lHcoODpTXo" target="_blank" rel="noopener noreferrer">📜✝️ ¿Qué es un dogma y cuáles son los más importantes?</a><time datetime="2026-06-23">2026-06-23</time></li></ul></section>
+
 
 <section class="creator-live" data-creator-live data-mastodon-acct="wikitolica@mastodon.social" data-mastodon-url="https://mastodon.social/@wikitolica"><h2>Recent posts on Mastodon</h2><p class="creator-live__hint" data-creator-live-hint>Log in (top-right) to load this creator's recent Mastodon posts.</p><div class="creator-live__feed" data-creator-live-feed hidden></div></section>
 </article>

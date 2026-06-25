@@ -100,6 +100,27 @@
     );
   }
 
+  // Fallback for a stale follow-core.js that predates MF.accountStatuses.
+  // Reads the token the same way the core does (sessionStorage), so it works
+  // without any new core method.
+  async function fetchStatusesDirect(id) {
+    var base = MF.instanceBase ? MF.instanceBase() : "";
+    var inst = MF.getInstance ? MF.getInstance() : "";
+    var raw = inst ? sessionStorage.getItem("mf-pack:" + inst + ":token") : null;
+    var token = raw ? JSON.parse(raw) : null;
+    if (!base || !token || !token.access_token) throw new Error("Not connected.");
+    var url =
+      base +
+      "/api/v1/accounts/" +
+      encodeURIComponent(id) +
+      "/statuses?limit=10&exclude_replies=true";
+    var resp = await fetch(url, {
+      headers: { Authorization: "Bearer " + token.access_token },
+    });
+    if (!resp.ok) throw new Error("HTTP " + resp.status);
+    return resp.json();
+  }
+
   async function enrichCreator(section) {
     if (!MF || !MF.isConnected()) return; // logged-out: leave static page as-is.
     var acct = section.getAttribute("data-mastodon-acct");
@@ -110,7 +131,11 @@
 
     try {
       var account = await MF.resolveAccount(acct);
-      var statuses = await MF.accountStatuses(account.id, { limit: 10 });
+      // Prefer the core helper; fall back to a direct fetch when an older,
+      // cached follow-core.js is in play (the helper was added later).
+      var statuses = MF.accountStatuses
+        ? await MF.accountStatuses(account.id, { limit: 10 })
+        : await fetchStatusesDirect(account.id);
       if (hint) hint.hidden = true;
       if (!statuses.length) {
         if (hint) {

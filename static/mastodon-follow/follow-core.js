@@ -31,7 +31,7 @@
 
   var APP_NAME = "YouTubers on Mastodon Follow Pack";
   var APP_WEBSITE = "https://matthewdeanmartin.github.io/tech_youtubers/";
-  var DEFAULT_SCOPES = "profile read:accounts read:search read:follows write:follows";
+  var DEFAULT_SCOPES = "profile read:accounts read:search read:statuses read:follows write:follows";
 
   var noop = function () {};
   var _log = noop;
@@ -135,7 +135,16 @@
   /* ── App registration ────────────────────────────────────────── */
   async function ensureAppRegistered(inst) {
     var cached = getApp(inst);
-    if (cached && cached.client_id && cached.client_secret && cached.redirect_uri === redirectUri()) {
+    // Re-use the cached registration only when both the redirect_uri AND the
+    // scopes match. If DEFAULT_SCOPES has grown (e.g. read:statuses was added),
+    // the old app can't grant the new scope, so we must re-register.
+    if (
+      cached &&
+      cached.client_id &&
+      cached.client_secret &&
+      cached.redirect_uri === redirectUri() &&
+      cached.scopes === DEFAULT_SCOPES
+    ) {
       return cached;
     }
     var body = new FormData();
